@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Home",
+    "howItWorks": "How It Works",
+    "coverage": "Coverage",
+    "track": "Track Your Pet",
+    "quote": "Get a Quote",
+    "faq": "FAQ"
+  },
+  "hero": {
+    "title": "Safe Paws Across Europe",
+    "subtitle": "Premium pet transport with love, vet care, and real-time updates at every step.",
+    "trackCta": "Track your pet",
+    "quoteCta": "Get a quote"
+  },
+  "trust": {
+    "petsDelivered": "Pets safely delivered",
+    "euCompliant": "EU pet-passport compliant",
+    "vetChecked": "Vet-checked at every step"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1Title": "Book",
+    "step1Desc": "Tell us about your pet and the journey. We'll prepare a custom quote.",
+    "step2Title": "Docs & Vet",
+    "step2Desc": "We handle microchip, vaccinations, health certificate, and EU passport.",
+    "step3Title": "Travel",
+    "step3Desc": "Your pet travels in comfort with rest stops, climate control, and love.",
+    "step4Title": "Reunion",
+    "step4Desc": "Safe delivery to the family. A magical moment, guaranteed."
+  },
+  "care": {
+    "title": "Our Care",
+    "subtitle": "Your pet's wellbeing comes first",
+    "crateComfort": "Spacious, comfortable crates",
+    "restStops": "Scheduled rest stops",
+    "temperature": "Climate-controlled throughout",
+    "accompaniment": "Dedicated accompaniment"
+  },
+  "tracking": {
+    "title": "Track Your Pet",
+    "inputPlaceholder": "Enter your tracking code",
+    "inputHint": "e.g. IT-7H4K-2Q",
+    "searchButton": "Search",
+    "notFound": "We couldn't find that code. Double-check it or contact us.",
+    "loading": "Searching...",
+    "estimatedDelivery": "Estimated delivery",
+    "liveUpdates": "Live updates"
+  },
+  "quote": {
+    "title": "Request a Quote",
+    "subtitle": "Tell us about your pet's journey and we'll get back to you within 24 hours.",
+    "petSpecies": "Species",
+    "petBreed": "Breed",
+    "originCity": "Origin city",
+    "originCountry": "Origin country",
+    "destinationCity": "Destination city",
+    "destinationCountry": "Destination country",
+    "preferredDate": "Preferred date",
+    "customerName": "Your name",
+    "customerEmail": "Your email",
+    "message": "Message (optional)",
+    "submit": "Send Request",
+    "success": "Request sent! We'll get back to you soon.",
+    "dog": "Dog",
+    "cat": "Cat",
+    "other": "Other"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions"
+  },
+  "footer": {
+    "tagline": "Premium pet transport across Europe.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact"
+  },
+  "status": {
+    "registered": "Registered",
+    "documentation": "Documentation",
+    "awaiting_departure": "Awaiting Departure",
+    "in_transit": "In Transit",
+    "border_crossing": "Border Crossing",
+    "arrival_hub": "Arrival Hub",
+    "out_for_delivery": "Out for Delivery",
+    "delivered": "Delivered",
+    "on_hold": "On Hold",
+    "delayed": "Delayed"
+  },
+  "statusMessages": {
+    "registered": "{petName} has been registered in our system. We're taking care of everything.",
+    "documentation": "We're preparing all documents and vet checks for {petName}.",
+    "awaiting_departure": "{petName} is ready and comfortable in the crate. Ready to go!",
+    "in_transit": "{petName} is on the move! Everything is going smoothly.",
+    "border_crossing": "EU passport check for {petName}. Routine procedure.",
+    "arrival_hub": "{petName} has arrived at the destination hub and is resting.",
+    "out_for_delivery": "{petName} is on the final leg to the family!",
+    "delivered": "{petName} has been reunited with the family! Journey complete.",
+    "on_hold": "{petName} is resting safely. We paused travel for their comfort.",
+    "delayed": "There's a small delay for {petName}. Don't worry, they're safe and cared for."
+  }
+}

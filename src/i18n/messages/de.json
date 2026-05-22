@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "howItWorks": "So funktioniert's",
+    "coverage": "Abdeckung",
+    "track": "Tier verfolgen",
+    "quote": "Angebot anfordern",
+    "faq": "FAQ"
+  },
+  "hero": {
+    "title": "Sichere Pfoten durch Europa",
+    "subtitle": "Premium-Tiertransport mit Liebe, tierarztlicher Betreuung und Echtzeit-Updates bei jedem Schritt.",
+    "trackCta": "Tier verfolgen",
+    "quoteCta": "Angebot anfordern"
+  },
+  "trust": {
+    "petsDelivered": "Tiere sicher transportiert",
+    "euCompliant": "EU-Heimtierausweis konform",
+    "vetChecked": "Tierarztlich gepruft bei jedem Schritt"
+  },
+  "howItWorks": {
+    "title": "So funktioniert's",
+    "step1Title": "Buchen",
+    "step1Desc": "Erzahlen Sie uns von Ihrem Tier und der Reise. Wir erstellen ein individuelles Angebot.",
+    "step2Title": "Dokumente & Tierarzt",
+    "step2Desc": "Wir kummern uns um Mikrochip, Impfungen, Gesundheitszeugnis und EU-Pass.",
+    "step3Title": "Reise",
+    "step3Desc": "Ihr Tier reist komfortabel mit Rastpausen, Klimakontrolle und Liebe.",
+    "step4Title": "Wiedersehen",
+    "step4Desc": "Sichere Ubergabe an die Familie. Ein magischer Moment, garantiert."
+  },
+  "care": {
+    "title": "Unsere Fursorge",
+    "subtitle": "Das Wohlbefinden Ihres Tieres steht an erster Stelle",
+    "crateComfort": "Geraumige, komfortable Transportboxen",
+    "restStops": "Geplante Rastpausen",
+    "temperature": "Klimakontrolliert wahrend der gesamten Reise",
+    "accompaniment": "Engagierte Begleitung"
+  },
+  "tracking": {
+    "title": "Tier verfolgen",
+    "inputPlaceholder": "Tracking-Code eingeben",
+    "inputHint": "z.B. DE-7H4K-2Q",
+    "searchButton": "Suchen",
+    "notFound": "Wir konnten diesen Code nicht finden. Uberprufen Sie ihn oder kontaktieren Sie uns.",
+    "loading": "Suche lauft...",
+    "estimatedDelivery": "Voraussichtliche Lieferung",
+    "liveUpdates": "Live-Updates"
+  },
+  "quote": {
+    "title": "Angebot anfordern",
+    "subtitle": "Erzahlen Sie uns von der Reise Ihres Tieres und wir melden uns innerhalb von 24 Stunden.",
+    "petSpecies": "Tierart",
+    "petBreed": "Rasse",
+    "originCity": "Abfahrtsstadt",
+    "originCountry": "Abfahrtsland",
+    "destinationCity": "Zielstadt",
+    "destinationCountry": "Zielland",
+    "preferredDate": "Wunschdatum",
+    "customerName": "Ihr Name",
+    "customerEmail": "Ihre E-Mail",
+    "message": "Nachricht (optional)",
+    "submit": "Anfrage senden",
+    "success": "Anfrage gesendet! Wir melden uns bald.",
+    "dog": "Hund",
+    "cat": "Katze",
+    "other": "Andere"
+  },
+  "faq": {
+    "title": "Haufig gestellte Fragen"
+  },
+  "footer": {
+    "tagline": "Premium-Tiertransport durch Europa.",
+    "privacy": "Datenschutz",
+    "terms": "AGB",
+    "contact": "Kontakt"
+  },
+  "status": {
+    "registered": "Registriert",
+    "documentation": "Dokumentation",
+    "awaiting_departure": "Wartet auf Abfahrt",
+    "in_transit": "Unterwegs",
+    "border_crossing": "Grenzubergang",
+    "arrival_hub": "Ankunfts-Hub",
+    "out_for_delivery": "In Zustellung",
+    "delivered": "Zugestellt",
+    "on_hold": "Pausiert",
+    "delayed": "Verzogert"
+  },
+  "statusMessages": {
+    "registered": "{petName} wurde in unserem System registriert. Wir kummern uns um alles.",
+    "documentation": "Wir bereiten alle Dokumente und tierarztlichen Untersuchungen fur {petName} vor.",
+    "awaiting_departure": "{petName} ist bereit und gemutlich in der Transportbox. Bereit zur Abfahrt!",
+    "in_transit": "{petName} ist unterwegs! Alles lauft reibungslos.",
+    "border_crossing": "EU-Pass-Kontrolle fur {petName}. Routineverfahren.",
+    "arrival_hub": "{petName} ist am Ziel-Hub angekommen und ruht sich aus.",
+    "out_for_delivery": "{petName} ist auf dem letzten Abschnitt zur Familie!",
+    "delivered": "{petName} wurde mit der Familie wiedervereinigt! Reise abgeschlossen.",
+    "on_hold": "{petName} ruht sich sicher aus. Wir haben die Reise fur sein Wohlbefinden pausiert.",
+    "delayed": "Es gibt eine kleine Verzogerung fur {petName}. Keine Sorge, er/sie ist sicher und gut versorgt."
+  }
+}

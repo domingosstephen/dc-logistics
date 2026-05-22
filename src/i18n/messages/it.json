@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "home": "Home",
+    "howItWorks": "Come Funziona",
+    "coverage": "Copertura",
+    "track": "Traccia il Tuo Pet",
+    "quote": "Richiedi Preventivo",
+    "faq": "FAQ"
+  },
+  "hero": {
+    "title": "Zampe sicure attraverso l'Europa",
+    "subtitle": "Trasporto premium per animali domestici con amore, cure veterinarie e aggiornamenti in tempo reale ad ogni passo.",
+    "trackCta": "Traccia il tuo pet",
+    "quoteCta": "Richiedi un preventivo"
+  },
+  "trust": {
+    "petsDelivered": "Pet trasportati con successo",
+    "euCompliant": "Conforme al passaporto EU per animali",
+    "vetChecked": "Controllo veterinario ad ogni tappa"
+  },
+  "howItWorks": {
+    "title": "Come Funziona",
+    "step1Title": "Prenota",
+    "step1Desc": "Raccontaci del tuo pet e del viaggio. Ti prepariamo un preventivo personalizzato.",
+    "step2Title": "Documenti & Veterinario",
+    "step2Desc": "Gestiamo microchip, vaccinazioni, certificato sanitario e passaporto EU.",
+    "step3Title": "Viaggio",
+    "step3Desc": "Il tuo pet viaggia in comfort con soste di riposo, clima controllato e amore.",
+    "step4Title": "Riunione",
+    "step4Desc": "Consegna sicura alla famiglia. Momento magico garantito."
+  },
+  "care": {
+    "title": "La Nostra Cura",
+    "subtitle": "Il benessere del tuo animale viene prima di tutto",
+    "crateComfort": "Trasportini spaziosi e confortevoli",
+    "restStops": "Soste di riposo programmate",
+    "temperature": "Clima controllato durante tutto il viaggio",
+    "accompaniment": "Accompagnamento dedicato"
+  },
+  "tracking": {
+    "title": "Traccia il Tuo Pet",
+    "inputPlaceholder": "Inserisci il codice di tracciamento",
+    "inputHint": "Es. IT-7H4K-2Q",
+    "searchButton": "Cerca",
+    "notFound": "Non abbiamo trovato quel codice. Controlla e riprova, oppure contattaci.",
+    "loading": "Ricerca in corso...",
+    "estimatedDelivery": "Consegna stimata",
+    "liveUpdates": "Aggiornamenti in tempo reale"
+  },
+  "quote": {
+    "title": "Richiedi un Preventivo",
+    "subtitle": "Raccontaci del viaggio del tuo pet e ti ricontatteremo entro 24 ore.",
+    "petSpecies": "Specie",
+    "petBreed": "Razza",
+    "originCity": "Citta di partenza",
+    "originCountry": "Paese di partenza",
+    "destinationCity": "Citta di destinazione",
+    "destinationCountry": "Paese di destinazione",
+    "preferredDate": "Data preferita",
+    "customerName": "Il tuo nome",
+    "customerEmail": "La tua email",
+    "message": "Messaggio (opzionale)",
+    "submit": "Invia Richiesta",
+    "success": "Richiesta inviata! Ti ricontatteremo presto.",
+    "dog": "Cane",
+    "cat": "Gatto",
+    "other": "Altro"
+  },
+  "faq": {
+    "title": "Domande Frequenti"
+  },
+  "footer": {
+    "tagline": "Trasporto premium per animali domestici attraverso l'Europa.",
+    "privacy": "Privacy",
+    "terms": "Termini",
+    "contact": "Contatti"
+  },
+  "status": {
+    "registered": "Registrato",
+    "documentation": "Documentazione",
+    "awaiting_departure": "In attesa di partenza",
+    "in_transit": "In transito",
+    "border_crossing": "Attraversamento frontiera",
+    "arrival_hub": "Arrivo al hub",
+    "out_for_delivery": "In consegna",
+    "delivered": "Consegnato",
+    "on_hold": "In pausa",
+    "delayed": "Ritardato"
+  },
+  "statusMessages": {
+    "registered": "{petName} e stato registrato nel nostro sistema. Ci prendiamo cura di tutto.",
+    "documentation": "Stiamo preparando tutti i documenti e i controlli veterinari per {petName}.",
+    "awaiting_departure": "{petName} e pronto e comodo nel trasportino. Pronti a partire!",
+    "in_transit": "{petName} e in viaggio! Tutto procede bene.",
+    "border_crossing": "Controllo del passaporto EU per {petName}. Procedura di routine.",
+    "arrival_hub": "{petName} e arrivato all'hub di destinazione e si sta riposando.",
+    "out_for_delivery": "{petName} e nell'ultima tappa del viaggio verso la famiglia!",
+    "delivered": "{petName} e stato riunito con la famiglia! Buon viaggio completato.",
+    "on_hold": "{petName} sta riposando al sicuro. Abbiamo messo in pausa il viaggio per il suo comfort.",
+    "delayed": "C'e un piccolo ritardo per {petName}. Non preoccuparti, e al sicuro e accudito."
+  }
+}
