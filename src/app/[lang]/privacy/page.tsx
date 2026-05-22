@@ -22,7 +22,7 @@ export default async function PrivacyPage({ params }: Props) {
       <Section>
         <div className="max-w-3xl mx-auto space-y-8">
           <p className="text-ink/70 leading-relaxed">
-            {lang === "it" ? "PetVoyage si impegna a proteggere la privacy dei propri clienti." : lang === "de" ? "PetVoyage verpflichtet sich zum Schutz der Privatsphare seiner Kunden." : lang === "es" ? "PetVoyage se compromete a proteger la privacidad de sus clientes." : "PetVoyage is committed to protecting the privacy of its customers."}
+            {lang === "it" ? "InfoAnimaleCarico si impegna a proteggere la privacy dei propri clienti." : lang === "de" ? "InfoAnimaleCarico verpflichtet sich zum Schutz der Privatsphare seiner Kunden." : lang === "es" ? "InfoAnimaleCarico se compromete a proteger la privacidad de sus clientes." : "InfoAnimaleCarico is committed to protecting the privacy of its customers."}
           </p>
           <p className="text-ink/70 leading-relaxed">
             {lang === "it" ? "Raccogliamo nome, email, informazioni sul pet e dettagli del viaggio quando richiedi un preventivo." : lang === "de" ? "Wir erfassen Name, E-Mail, Tierinformationen und Reisedetails bei Angebotsanfragen." : lang === "es" ? "Recopilamos nombre, email, informacion de la mascota y detalles del viaje al solicitar un presupuesto." : "We collect name, email, pet information, and journey details when you request a quote."}
@@ -31,7 +31,7 @@ export default async function PrivacyPage({ params }: Props) {
             {lang === "it" ? "I dati di tracciamento sono accessibili solo tramite il codice univoco e non espongono informazioni personali." : lang === "de" ? "Tracking-Daten sind nur uber den Code zuganglich und enthalten keine personlichen Daten." : lang === "es" ? "Los datos de rastreo solo son accesibles con el codigo unico y no exponen informacion personal." : "Tracking data is only accessible via the unique code and never exposes personal information."}
           </p>
           <p className="text-ink/70 leading-relaxed">
-            {lang === "it" ? "Contatti:" : lang === "de" ? "Kontakt:" : lang === "es" ? "Contacto:" : "Contact:"} privacy@petvoyage.eu
+            {lang === "it" ? "Contatti:" : lang === "de" ? "Kontakt:" : lang === "es" ? "Contacto:" : "Contact:"} privacy@infoanimalecarico.com
           </p>
         </div>
       </Section>

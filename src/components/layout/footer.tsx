@@ -14,7 +14,7 @@ export function Footer({ lang, dict }: FooterProps) {
           {/* Brand */}
           <div className="md:col-span-2">
             <span className="font-display text-2xl font-semibold text-paper">
-              PetVoyage
+              InfoAnimaleCarico
             </span>
             <p className="mt-4 text-sm text-paper/60 max-w-md leading-relaxed">
               {dict.footer.tagline}
@@ -74,7 +74,7 @@ export function Footer({ lang, dict }: FooterProps) {
 
         <div className="mt-12 pt-8 border-t border-paper/10 text-center">
           <p className="text-xs text-paper/40">
-            &copy; {new Date().getFullYear()} PetVoyage.{" "}
+            &copy; {new Date().getFullYear()} InfoAnimaleCarico.{" "}
             {lang === "it"
               ? "Tutti i diritti riservati."
               : lang === "de"

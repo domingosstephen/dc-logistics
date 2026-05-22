@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <h1 className="font-display text-3xl font-semibold text-paper">
-            PetVoyage
+            InfoAnimaleCarico
           </h1>
           <p className="text-paper/50 text-sm mt-2">Admin Panel</p>
         </div>
@@ -59,7 +59,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="admin@petvoyage.eu"
+                placeholder="admin@infoanimalecarico.com"
                 className="mt-1.5 rounded-xl border-pine/20 bg-mist"
               />
             </div>
