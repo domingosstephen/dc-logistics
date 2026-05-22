@@ -15,16 +15,16 @@ const statusColors: Record<ShipmentStatus, string> = {
 };
 
 const statusLabels: Record<ShipmentStatus, string> = {
-  registered: "Registrato",
-  documentation: "Documentazione",
-  awaiting_departure: "In attesa",
-  in_transit: "In transito",
-  border_crossing: "Frontiera",
-  arrival_hub: "Arrivo hub",
-  out_for_delivery: "In consegna",
-  delivered: "Consegnato",
-  on_hold: "In pausa",
-  delayed: "Ritardato",
+  registered: "Registered",
+  documentation: "Documentation",
+  awaiting_departure: "Awaiting Departure",
+  in_transit: "In Transit",
+  border_crossing: "Border Crossing",
+  arrival_hub: "Arrival Hub",
+  out_for_delivery: "Out for Delivery",
+  delivered: "Delivered",
+  on_hold: "On Hold",
+  delayed: "Delayed",
 };
 
 interface StatusBadgeProps {

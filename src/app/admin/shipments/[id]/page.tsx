@@ -94,7 +94,7 @@ export default function ShipmentDetailPage({
   if (loading) {
     return (
       <div className="min-h-screen bg-mist flex items-center justify-center">
-        <p className="text-ink/40">Caricamento...</p>
+        <p className="text-ink/40">Loading...</p>
       </div>
     );
   }
@@ -102,7 +102,7 @@ export default function ShipmentDetailPage({
   if (!shipment) {
     return (
       <div className="min-h-screen bg-mist flex items-center justify-center">
-        <p className="text-ink/40">Spedizione non trovata</p>
+        <p className="text-ink/40">Shipment not found</p>
       </div>
     );
   }
@@ -120,7 +120,7 @@ export default function ShipmentDetailPage({
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
         <Link href="/admin" className="text-sm text-pine hover:text-pine-deep mb-4 inline-block">
-          ← Torna alla lista
+          ← Back to list
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -136,23 +136,23 @@ export default function ShipmentDetailPage({
 
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-ink/40">Codice</p>
+                  <p className="text-ink/40">Code</p>
                   <p className="font-mono text-pine font-medium">{shipment.tracking_code}</p>
                 </div>
                 <div>
-                  <p className="text-ink/40">Specie / Razza</p>
+                  <p className="text-ink/40">Species / Breed</p>
                   <p>{shipment.pet_species} {shipment.pet_breed && `- ${shipment.pet_breed}`}</p>
                 </div>
                 <div>
-                  <p className="text-ink/40">Rotta</p>
+                  <p className="text-ink/40">Route</p>
                   <p>{shipment.origin_city}, {shipment.origin_country} → {shipment.destination_city}, {shipment.destination_country}</p>
                 </div>
                 <div>
-                  <p className="text-ink/40">Consegna stimata</p>
-                  <p>{shipment.estimated_delivery ? new Date(shipment.estimated_delivery).toLocaleDateString("it-IT") : "—"}</p>
+                  <p className="text-ink/40">Estimated Delivery</p>
+                  <p>{shipment.estimated_delivery ? new Date(shipment.estimated_delivery).toLocaleDateString("en-GB") : "—"}</p>
                 </div>
                 <div>
-                  <p className="text-ink/40">Cliente</p>
+                  <p className="text-ink/40">Customer</p>
                   <p>{shipment.customer_name || "—"}</p>
                 </div>
                 <div>
@@ -163,7 +163,7 @@ export default function ShipmentDetailPage({
 
               {/* Photo */}
               <div className="mt-6 pt-4 border-t border-pine/5">
-                <p className="text-sm text-ink/40 mb-2">Foto pet</p>
+                <p className="text-sm text-ink/40 mb-2">Pet Photo</p>
                 <div className="flex items-end gap-4">
                   {shipment.pet_photo_path ? (
                     <img
@@ -173,7 +173,7 @@ export default function ShipmentDetailPage({
                     />
                   ) : (
                     <div className="w-24 h-24 rounded-xl bg-mist flex items-center justify-center text-ink/20 text-xs">
-                      Nessuna foto
+                      No photo
                     </div>
                   )}
                   <div className="flex-1">
@@ -190,7 +190,7 @@ export default function ShipmentDetailPage({
                         size="sm"
                         className="mt-2 bg-pine text-paper hover:bg-pine-deep rounded-lg text-xs"
                       >
-                        {uploading ? "Caricamento..." : "Carica foto"}
+                        {uploading ? "Uploading..." : "Upload Photo"}
                       </Button>
                     )}
                   </div>
@@ -201,7 +201,7 @@ export default function ShipmentDetailPage({
             {/* Event timeline */}
             <div className="bg-paper rounded-xl p-6">
               <h2 className="font-display text-lg font-semibold text-ink mb-4">
-                Cronologia Eventi
+                Event Timeline
               </h2>
 
               <div className="space-y-4">
@@ -215,7 +215,7 @@ export default function ShipmentDetailPage({
                           <span className="text-xs text-ink/40">{event.location}</span>
                         )}
                         <span className="text-xs text-ink/30">
-                          {new Date(event.happened_at).toLocaleDateString("it-IT", {
+                          {new Date(event.happened_at).toLocaleDateString("en-GB", {
                             day: "numeric",
                             month: "short",
                             hour: "2-digit",
@@ -237,12 +237,12 @@ export default function ShipmentDetailPage({
           <div>
             <div className="bg-paper rounded-xl p-6 sticky top-24">
               <h2 className="font-display text-lg font-semibold text-ink mb-4">
-                Aggiungi Aggiornamento
+                Add Update
               </h2>
 
               <form onSubmit={handleAddEvent} className="space-y-4">
                 <div>
-                  <Label htmlFor="event_status">Stato</Label>
+                  <Label htmlFor="event_status">Status</Label>
                   <select
                     id="event_status"
                     value={newStatus}
@@ -255,22 +255,22 @@ export default function ShipmentDetailPage({
                   </select>
                 </div>
                 <div>
-                  <Label htmlFor="event_location">Posizione</Label>
+                  <Label htmlFor="event_location">Location</Label>
                   <Input
                     id="event_location"
                     value={newLocation}
                     onChange={(e) => setNewLocation(e.target.value)}
-                    placeholder="Es. Milano, IT"
+                    placeholder="e.g. Milan, IT"
                     className="mt-1.5 rounded-lg border-pine/20 bg-mist"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="event_note">Nota (pubblica)</Label>
+                  <Label htmlFor="event_note">Note (public-facing)</Label>
                   <Textarea
                     id="event_note"
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
-                    placeholder="Nota visibile al cliente..."
+                    placeholder="Note visible to the customer..."
                     rows={3}
                     className="mt-1.5 rounded-lg border-pine/20 bg-mist resize-none"
                   />
@@ -280,7 +280,7 @@ export default function ShipmentDetailPage({
                   disabled={posting}
                   className="w-full bg-pine text-paper hover:bg-pine-deep rounded-lg"
                 >
-                  {posting ? "Pubblicazione..." : "Pubblica Aggiornamento"}
+                  {posting ? "Publishing..." : "Publish Update"}
                 </Button>
               </form>
             </div>

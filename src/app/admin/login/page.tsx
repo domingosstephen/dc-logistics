@@ -26,7 +26,7 @@ export default function AdminLoginPage() {
     });
 
     if (error) {
-      setError("Credenziali non valide. Riprova.");
+      setError("Invalid credentials. Please try again.");
       setLoading(false);
       return;
     }
@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
 
         <div className="bg-paper rounded-2xl shadow-[var(--shadow-soft)] p-8">
           <h2 className="font-display text-xl font-semibold text-ink mb-6">
-            Accedi
+            Sign In
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
               disabled={loading}
               className="w-full h-10 rounded-xl bg-pine text-paper hover:bg-pine-deep"
             >
-              {loading ? "Accesso..." : "Accedi"}
+              {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
         </div>

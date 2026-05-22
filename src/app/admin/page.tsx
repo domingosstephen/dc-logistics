@@ -69,13 +69,13 @@ export default function AdminDashboard() {
           </div>
           <div className="flex items-center gap-3">
             <Link href="/" className="text-sm text-paper/60 hover:text-paper transition-colors">
-              Vai al sito
+              View Site
             </Link>
             <button
               onClick={handleLogout}
               className="text-sm text-paper/60 hover:text-paper transition-colors"
             >
-              Esci
+              Logout
             </button>
           </div>
         </div>
@@ -84,10 +84,10 @@ export default function AdminDashboard() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Actions bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <h1 className="font-display text-2xl font-semibold text-ink">Spedizioni</h1>
+          <h1 className="font-display text-2xl font-semibold text-ink">Shipments</h1>
           <Link href="/admin/shipments/new">
             <Button className="bg-pine text-paper hover:bg-pine-deep rounded-xl">
-              + Nuova Spedizione
+              + New Shipment
             </Button>
           </Link>
         </div>
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
         {/* Filters */}
         <div className="bg-paper rounded-xl p-4 mb-6 flex flex-col sm:flex-row gap-4">
           <Input
-            placeholder="Cerca per codice, pet o cliente..."
+            placeholder="Search by code, pet or customer..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="rounded-lg border-pine/20 bg-mist max-w-xs"
@@ -111,7 +111,7 @@ export default function AdminDashboard() {
                     : "border-pine/20 text-ink/60 hover:border-pine/40"
                 }`}
               >
-                {s === "all" ? "Tutti" : s.replace(/_/g, " ")}
+                {s === "all" ? "All" : s.replace(/_/g, " ")}
               </button>
             ))}
           </div>
@@ -120,19 +120,19 @@ export default function AdminDashboard() {
         {/* Table */}
         <div className="bg-paper rounded-xl overflow-hidden">
           {loading ? (
-            <div className="p-12 text-center text-ink/40">Caricamento...</div>
+            <div className="p-12 text-center text-ink/40">Loading...</div>
           ) : filtered.length === 0 ? (
-            <div className="p-12 text-center text-ink/40">Nessuna spedizione trovata</div>
+            <div className="p-12 text-center text-ink/40">No shipments found</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-pine/5 text-left">
-                    <th className="px-4 py-3 font-medium text-ink/50">Codice</th>
+                    <th className="px-4 py-3 font-medium text-ink/50">Code</th>
                     <th className="px-4 py-3 font-medium text-ink/50">Pet</th>
-                    <th className="px-4 py-3 font-medium text-ink/50">Rotta</th>
-                    <th className="px-4 py-3 font-medium text-ink/50">Stato</th>
-                    <th className="px-4 py-3 font-medium text-ink/50">Cliente</th>
+                    <th className="px-4 py-3 font-medium text-ink/50">Route</th>
+                    <th className="px-4 py-3 font-medium text-ink/50">Status</th>
+                    <th className="px-4 py-3 font-medium text-ink/50">Customer</th>
                     <th className="px-4 py-3 font-medium text-ink/50">ETA</th>
                     <th className="px-4 py-3"></th>
                   </tr>
@@ -161,7 +161,7 @@ export default function AdminDashboard() {
                       </td>
                       <td className="px-4 py-3 text-ink/60 text-xs">
                         {s.estimated_delivery
-                          ? new Date(s.estimated_delivery).toLocaleDateString("it-IT")
+                          ? new Date(s.estimated_delivery).toLocaleDateString("en-GB")
                           : "—"}
                       </td>
                       <td className="px-4 py-3">
@@ -169,7 +169,7 @@ export default function AdminDashboard() {
                           href={`/admin/shipments/${s.id}`}
                           className="text-pine text-xs font-medium hover:text-pine-deep"
                         >
-                          Dettagli →
+                          Details →
                         </Link>
                       </td>
                     </tr>

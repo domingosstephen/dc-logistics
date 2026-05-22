@@ -10,23 +10,23 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 const countries = [
-  { label: "Italia", code: "IT" },
-  { label: "Germania", code: "DE" },
-  { label: "Francia", code: "FR" },
-  { label: "Spagna", code: "ES" },
+  { label: "Italy", code: "IT" },
+  { label: "Germany", code: "DE" },
+  { label: "France", code: "FR" },
+  { label: "Spain", code: "ES" },
   { label: "Austria", code: "AT" },
-  { label: "Svizzera", code: "CH" },
-  { label: "Paesi Bassi", code: "NL" },
-  { label: "Belgio", code: "BE" },
-  { label: "Polonia", code: "PL" },
-  { label: "Rep. Ceca", code: "CZ" },
-  { label: "Croazia", code: "HR" },
+  { label: "Switzerland", code: "CH" },
+  { label: "Netherlands", code: "NL" },
+  { label: "Belgium", code: "BE" },
+  { label: "Poland", code: "PL" },
+  { label: "Czech Republic", code: "CZ" },
+  { label: "Croatia", code: "HR" },
   { label: "Slovenia", code: "SI" },
-  { label: "Ungheria", code: "HU" },
-  { label: "Regno Unito", code: "GB" },
-  { label: "Portogallo", code: "PT" },
+  { label: "Hungary", code: "HU" },
+  { label: "United Kingdom", code: "GB" },
+  { label: "Portugal", code: "PT" },
   { label: "Romania", code: "RO" },
-  { label: "Grecia", code: "GR" },
+  { label: "Greece", code: "GR" },
   { label: "Bulgaria", code: "BG" },
 ];
 
@@ -68,7 +68,7 @@ export default function NewShipmentPage() {
       .single();
 
     if (insertError || !shipment) {
-      setError("Errore nella creazione della spedizione.");
+      setError("Error creating shipment. Please try again.");
       setLoading(false);
       return;
     }
@@ -93,7 +93,7 @@ export default function NewShipmentPage() {
     await supabase.from("shipment_events").insert({
       shipment_id: shipment.id,
       status: "registered",
-      note: `${form.get("pet_name")} e stato registrato. Codice: ${trackingCode}`,
+      note: `${form.get("pet_name")} has been registered. Code: ${trackingCode}`,
       happened_at: new Date().toISOString(),
     });
 
@@ -115,37 +115,37 @@ export default function NewShipmentPage() {
 
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-8">
         <Link href="/admin" className="text-sm text-pine hover:text-pine-deep mb-4 inline-block">
-          ← Torna alla lista
+          ← Back to list
         </Link>
 
         <div className="bg-paper rounded-xl p-8">
           <h1 className="font-display text-2xl font-semibold text-ink mb-6">
-            Nuova Spedizione
+            New Shipment
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Pet info */}
             <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Informazioni Pet</legend>
+              <legend className="text-sm font-medium text-ink/50 mb-3">Pet Information</legend>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="pet_name">Nome Pet *</Label>
+                  <Label htmlFor="pet_name">Pet Name *</Label>
                   <Input id="pet_name" name="pet_name" required className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
                 <div>
-                  <Label htmlFor="pet_species">Specie *</Label>
+                  <Label htmlFor="pet_species">Species *</Label>
                   <select id="pet_species" name="pet_species" required className="mt-1.5 h-10 w-full rounded-lg border border-pine/20 bg-mist px-3 text-sm">
-                    <option value="dog">Cane</option>
-                    <option value="cat">Gatto</option>
-                    <option value="other">Altro</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
                 <div>
-                  <Label htmlFor="pet_breed">Razza</Label>
+                  <Label htmlFor="pet_breed">Breed</Label>
                   <Input id="pet_breed" name="pet_breed" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
                 <div>
-                  <Label htmlFor="pet_photo">Foto</Label>
+                  <Label htmlFor="pet_photo">Photo</Label>
                   <Input
                     id="pet_photo"
                     type="file"
@@ -159,14 +159,14 @@ export default function NewShipmentPage() {
 
             {/* Route */}
             <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Rotta</legend>
+              <legend className="text-sm font-medium text-ink/50 mb-3">Route</legend>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="origin_city">Citta di partenza *</Label>
+                  <Label htmlFor="origin_city">Origin City *</Label>
                   <Input id="origin_city" name="origin_city" required className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
                 <div>
-                  <Label htmlFor="origin_country">Paese di partenza *</Label>
+                  <Label htmlFor="origin_country">Origin Country *</Label>
                   <select
                     id="origin_country"
                     name="origin_country"
@@ -181,11 +181,11 @@ export default function NewShipmentPage() {
                   </select>
                 </div>
                 <div>
-                  <Label htmlFor="destination_city">Citta di destinazione *</Label>
+                  <Label htmlFor="destination_city">Destination City *</Label>
                   <Input id="destination_city" name="destination_city" required className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
                 <div>
-                  <Label htmlFor="destination_country">Paese di destinazione *</Label>
+                  <Label htmlFor="destination_country">Destination Country *</Label>
                   <select id="destination_country" name="destination_country" required className="mt-1.5 h-10 w-full rounded-lg border border-pine/20 bg-mist px-3 text-sm">
                     {countries.map((c) => (
                       <option key={c.code} value={c.code}>{c.label}</option>
@@ -193,7 +193,7 @@ export default function NewShipmentPage() {
                   </select>
                 </div>
                 <div>
-                  <Label htmlFor="estimated_delivery">Consegna stimata</Label>
+                  <Label htmlFor="estimated_delivery">Estimated Delivery</Label>
                   <Input id="estimated_delivery" name="estimated_delivery" type="date" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
               </div>
@@ -201,14 +201,14 @@ export default function NewShipmentPage() {
 
             {/* Customer */}
             <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Cliente</legend>
+              <legend className="text-sm font-medium text-ink/50 mb-3">Customer</legend>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="customer_name">Nome cliente</Label>
+                  <Label htmlFor="customer_name">Customer Name</Label>
                   <Input id="customer_name" name="customer_name" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
                 <div>
-                  <Label htmlFor="customer_email">Email cliente</Label>
+                  <Label htmlFor="customer_email">Customer Email</Label>
                   <Input id="customer_email" name="customer_email" type="email" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
               </div>
@@ -221,7 +221,7 @@ export default function NewShipmentPage() {
               disabled={loading}
               className="w-full h-10 rounded-xl bg-pine text-paper hover:bg-pine-deep"
             >
-              {loading ? "Creazione..." : "Crea Spedizione"}
+              {loading ? "Creating..." : "Create Shipment"}
             </Button>
           </form>
         </div>
