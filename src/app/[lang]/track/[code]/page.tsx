@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { createServerClient } from "@/lib/supabase/server";
+import { getDictionary, hasLocale } from "../../dictionaries";
+import type { Locale } from "../../dictionaries";
 import { TrackingResult } from "@/components/tracking/tracking-result";
 import { TrackingSearch } from "@/components/tracking/tracking-search";
 import type { PublicShipment } from "@/types/database";
 
 interface Props {
-  params: Promise<{ code: string }>;
+  params: Promise<{ lang: string; code: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
   return {
-    title: `Tracciamento ${decodeURIComponent(code)}`,
-    description: `Segui il viaggio del tuo pet con il codice ${decodeURIComponent(code)}`,
+    title: `Tracking ${decodeURIComponent(code)}`,
   };
 }
 
@@ -26,7 +28,9 @@ async function getShipment(code: string): Promise<PublicShipment | null> {
 }
 
 export default async function TrackingCodePage({ params }: Props) {
-  const { code } = await params;
+  const { lang, code } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = await getDictionary(lang as Locale);
   const decodedCode = decodeURIComponent(code);
   const shipment = await getShipment(decodedCode);
 
@@ -35,17 +39,17 @@ export default async function TrackingCodePage({ params }: Props) {
       <section className="bg-pine-deep text-paper py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-display text-4xl md:text-6xl font-semibold tracking-tight">
-            Traccia il Tuo Pet
+            {dict.tracking.title}
           </h1>
           <p className="mt-4 text-lg text-paper/60 max-w-xl mx-auto">
-            Codice: <span className="font-mono text-honey">{decodedCode}</span>
+            {lang === "it" ? "Codice" : lang === "de" ? "Code" : lang === "es" ? "Codigo" : "Code"}:{" "}
+            <span className="font-mono text-honey">{decodedCode}</span>
           </p>
         </div>
       </section>
-
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 -mt-8 mb-20">
         {shipment ? (
-          <TrackingResult shipment={shipment} code={decodedCode} />
+          <TrackingResult shipment={shipment} code={decodedCode} lang={lang as Locale} dict={dict} />
         ) : (
           <div className="bg-paper rounded-2xl shadow-[var(--shadow-soft)] p-8 md:p-10 text-center">
             <div className="w-16 h-16 rounded-full bg-honey/10 flex items-center justify-center mx-auto mb-5">
@@ -54,12 +58,10 @@ export default async function TrackingCodePage({ params }: Props) {
               </svg>
             </div>
             <h2 className="font-display text-xl font-semibold text-ink mb-2">
-              Codice non trovato
+              {lang === "it" ? "Codice non trovato" : lang === "de" ? "Code nicht gefunden" : lang === "es" ? "Codigo no encontrado" : "Code not found"}
             </h2>
-            <p className="text-ink/60 text-sm mb-8">
-              Non abbiamo trovato quel codice. Controlla e riprova, oppure contattaci.
-            </p>
-            <TrackingSearch />
+            <p className="text-ink/60 text-sm mb-8">{dict.tracking.notFound}</p>
+            <TrackingSearch lang={lang as Locale} dict={dict} />
           </div>
         )}
       </div>

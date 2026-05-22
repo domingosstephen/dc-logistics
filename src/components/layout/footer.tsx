@@ -1,6 +1,12 @@
 import Link from "next/link";
+import type { Locale, Dictionary } from "@/app/[lang]/dictionaries";
 
-export function Footer() {
+interface FooterProps {
+  lang: Locale;
+  dict: Dictionary;
+}
+
+export function Footer({ lang, dict }: FooterProps) {
   return (
     <footer className="bg-pine-deep text-paper/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
@@ -11,22 +17,22 @@ export function Footer() {
               PetVoyage
             </span>
             <p className="mt-4 text-sm text-paper/60 max-w-md leading-relaxed">
-              Trasporto premium per animali domestici attraverso l&apos;Europa.
-              Ogni viaggio e curato con amore, professionalita e attenzione al
-              benessere del tuo pet.
+              {dict.footer.tagline}
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="font-medium text-paper mb-4">Navigazione</h4>
+            <h4 className="font-medium text-paper mb-4">
+              {lang === "it" ? "Navigazione" : lang === "de" ? "Navigation" : lang === "es" ? "Navegacion" : "Navigation"}
+            </h4>
             <ul className="space-y-2.5">
               {[
-                { href: "/how-it-works", label: "Come Funziona" },
-                { href: "/coverage", label: "Copertura" },
-                { href: "/track", label: "Traccia il Tuo Pet" },
-                { href: "/quote", label: "Richiedi Preventivo" },
-                { href: "/faq", label: "FAQ" },
+                { href: `/${lang}/how-it-works`, label: dict.nav.howItWorks },
+                { href: `/${lang}/coverage`, label: dict.nav.coverage },
+                { href: `/${lang}/track`, label: dict.nav.track },
+                { href: `/${lang}/quote`, label: dict.nav.quote },
+                { href: `/${lang}/faq`, label: dict.nav.faq },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -42,22 +48,24 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="font-medium text-paper mb-4">Legale</h4>
+            <h4 className="font-medium text-paper mb-4">
+              {lang === "it" ? "Legale" : lang === "de" ? "Rechtliches" : lang === "es" ? "Legal" : "Legal"}
+            </h4>
             <ul className="space-y-2.5">
               <li>
                 <Link
-                  href="/privacy"
+                  href={`/${lang}/privacy`}
                   className="text-sm text-paper/60 hover:text-honey transition-colors"
                 >
-                  Privacy Policy
+                  {dict.footer.privacy}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/faq"
+                  href={`/${lang}/faq`}
                   className="text-sm text-paper/60 hover:text-honey transition-colors"
                 >
-                  Termini e Condizioni
+                  {dict.footer.terms}
                 </Link>
               </li>
             </ul>
@@ -66,8 +74,14 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-paper/10 text-center">
           <p className="text-xs text-paper/40">
-            &copy; {new Date().getFullYear()} PetVoyage. Tutti i diritti
-            riservati.
+            &copy; {new Date().getFullYear()} PetVoyage.{" "}
+            {lang === "it"
+              ? "Tutti i diritti riservati."
+              : lang === "de"
+              ? "Alle Rechte vorbehalten."
+              : lang === "es"
+              ? "Todos los derechos reservados."
+              : "All rights reserved."}
           </p>
         </div>
       </div>

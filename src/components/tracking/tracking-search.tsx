@@ -4,8 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import type { Locale, Dictionary } from "@/app/[lang]/dictionaries";
 
-export function TrackingSearch() {
+interface Props {
+  lang: Locale;
+  dict: Dictionary;
+}
+
+export function TrackingSearch({ lang, dict }: Props) {
   const [code, setCode] = useState("");
   const router = useRouter();
 
@@ -13,7 +19,7 @@ export function TrackingSearch() {
     e.preventDefault();
     const trimmed = code.trim().toUpperCase();
     if (trimmed) {
-      router.push(`/track/${encodeURIComponent(trimmed)}`);
+      router.push(`/${lang}/track/${encodeURIComponent(trimmed)}`);
     }
   };
 
@@ -23,14 +29,12 @@ export function TrackingSearch() {
         <div className="flex-1">
           <Input
             type="text"
-            placeholder="Inserisci il codice di tracciamento"
+            placeholder={dict.tracking.inputPlaceholder}
             value={code}
             onChange={(e) => setCode(e.target.value)}
             className="h-12 rounded-xl border-pine/20 bg-mist text-ink placeholder:text-ink/40 focus:border-pine focus:ring-pine"
           />
-          <p className="text-xs text-ink/40 mt-2 ml-1">
-            Es. IT-7H4K-2Q
-          </p>
+          <p className="text-xs text-ink/40 mt-2 ml-1">{dict.tracking.inputHint}</p>
         </div>
         <Button
           type="submit"
@@ -40,7 +44,7 @@ export function TrackingSearch() {
             <circle cx="7" cy="7" r="5" />
             <path strokeLinecap="round" d="M11 11l3 3" />
           </svg>
-          Cerca
+          {dict.tracking.searchButton}
         </Button>
       </form>
     </div>

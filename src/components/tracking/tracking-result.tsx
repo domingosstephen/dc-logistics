@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { createBrowserClient } from "@/lib/supabase/client";
 import { StatusBadge } from "@/components/ui/status-badge";
 import type { PublicShipment, PublicShipmentEvent, ShipmentStatus } from "@/types/database";
+import type { Locale, Dictionary } from "@/app/[lang]/dictionaries";
 
 const STATUS_ORDER: ShipmentStatus[] = [
   "registered",
@@ -17,25 +18,14 @@ const STATUS_ORDER: ShipmentStatus[] = [
   "delivered",
 ];
 
-const statusMessages: Record<ShipmentStatus, (name: string) => string> = {
-  registered: (n) => `${n} e stato registrato nel nostro sistema. Ci prendiamo cura di tutto.`,
-  documentation: (n) => `Stiamo preparando tutti i documenti e i controlli veterinari per ${n}.`,
-  awaiting_departure: (n) => `${n} e pronto e comodo nel trasportino. Pronti a partire!`,
-  in_transit: (n) => `${n} e in viaggio! Tutto procede bene.`,
-  border_crossing: (n) => `Controllo del passaporto EU per ${n}. Procedura di routine.`,
-  arrival_hub: (n) => `${n} e arrivato all'hub di destinazione e si sta riposando.`,
-  out_for_delivery: (n) => `${n} e nell'ultima tappa del viaggio verso la famiglia!`,
-  delivered: (n) => `${n} e stato riunito con la famiglia! Buon viaggio completato.`,
-  on_hold: (n) => `${n} sta riposando al sicuro. Abbiamo messo in pausa il viaggio per il suo comfort.`,
-  delayed: (n) => `C'e un piccolo ritardo per ${n}. Non preoccuparti, e al sicuro e accudito.`,
-};
-
 interface Props {
   shipment: PublicShipment;
   code: string;
+  lang: Locale;
+  dict: Dictionary;
 }
 
-export function TrackingResult({ shipment: initial, code }: Props) {
+export function TrackingResult({ shipment: initial, code, lang, dict }: Props) {
   const [events, setEvents] = useState<PublicShipmentEvent[]>(initial.events);
   const [currentStatus, setCurrentStatus] = useState(initial.status);
 
@@ -101,7 +91,7 @@ export function TrackingResult({ shipment: initial, code }: Props) {
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {initial.pet_name}
               </h2>
-              <StatusBadge status={currentStatus} />
+              <StatusBadge status={currentStatus} label={dict.status[currentStatus]} />
             </div>
             {initial.pet_breed && (
               <p className="text-sm text-ink/50 mt-0.5">{initial.pet_breed}</p>
@@ -114,7 +104,7 @@ export function TrackingResult({ shipment: initial, code }: Props) {
             </p>
             {initial.estimated_delivery && (
               <p className="text-xs text-ink/40 mt-1">
-                Consegna stimata: {new Date(initial.estimated_delivery).toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" })}
+                {dict.tracking.estimatedDelivery}: {new Date(initial.estimated_delivery).toLocaleDateString(lang === "de" ? "de-DE" : lang === "es" ? "es-ES" : lang === "en" ? "en-GB" : "it-IT", { day: "numeric", month: "long", year: "numeric" })}
               </p>
             )}
           </div>
@@ -123,7 +113,7 @@ export function TrackingResult({ shipment: initial, code }: Props) {
         {/* Reassuring message */}
         <div className="mt-5 p-4 rounded-xl bg-pine/5 border border-pine/10">
           <p className="text-sm text-pine leading-relaxed">
-            {statusMessages[currentStatus](initial.pet_name)}
+            {dict.statusMessages[currentStatus].replace("{petName}", initial.pet_name)}
           </p>
         </div>
       </div>
@@ -132,11 +122,11 @@ export function TrackingResult({ shipment: initial, code }: Props) {
       <div className="p-6 md:p-8">
         <div className="flex items-center gap-2 mb-6">
           <h3 className="font-display text-lg font-semibold text-ink">
-            Cronologia del Viaggio
+            {lang === "it" ? "Cronologia del Viaggio" : lang === "de" ? "Reiseverlauf" : lang === "es" ? "Cronologia del Viaje" : "Journey Timeline"}
           </h3>
           <span className="flex items-center gap-1.5 text-xs text-pine bg-pine/5 px-2.5 py-1 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-pine animate-pulse" />
-            Aggiornamenti in tempo reale
+            {dict.tracking.liveUpdates}
           </span>
         </div>
 
@@ -172,7 +162,7 @@ export function TrackingResult({ shipment: initial, code }: Props) {
                 {/* Content */}
                 <div className="flex-1 pt-0.5">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <StatusBadge status={event.status} />
+                    <StatusBadge status={event.status} label={dict.status[event.status]} />
                     {event.location && (
                       <span className="text-xs text-ink/40">{event.location}</span>
                     )}
@@ -183,7 +173,7 @@ export function TrackingResult({ shipment: initial, code }: Props) {
                     </p>
                   )}
                   <p className="text-xs text-ink/30 mt-1">
-                    {new Date(event.happened_at).toLocaleDateString("it-IT", {
+                    {new Date(event.happened_at).toLocaleDateString(lang === "de" ? "de-DE" : lang === "es" ? "es-ES" : lang === "en" ? "en-GB" : "it-IT", {
                       day: "numeric",
                       month: "short",
                       year: "numeric",

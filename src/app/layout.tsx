@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | PetVoyage",
   },
   description:
-    "Trasporto premium per animali domestici attraverso l'Europa. Traccia il viaggio del tuo pet in tempo reale. Controllo veterinario, passaporto EU, con amore ad ogni passo.",
+    "Trasporto premium per animali domestici attraverso l'Europa. Traccia il viaggio del tuo pet in tempo reale.",
 };
 
 export default function RootLayout({

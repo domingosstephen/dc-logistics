@@ -6,6 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { submitQuote } from "@/app/actions/quote";
+import type { Dictionary } from "@/app/[lang]/dictionaries";
+
+interface QuoteFormProps {
+  dict: Dictionary;
+}
 
 const countries = [
   "Italia", "Germania", "Francia", "Spagna", "Austria", "Svizzera",
@@ -14,7 +19,7 @@ const countries = [
   "Grecia", "Bulgaria",
 ];
 
-export function QuoteForm() {
+export function QuoteForm({ dict }: QuoteFormProps) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -57,10 +62,10 @@ export function QuoteForm() {
           </svg>
         </div>
         <h2 className="font-display text-xl font-semibold text-ink mb-2">
-          Richiesta Inviata!
+          {dict.quote.success.split("!")[0]}!
         </h2>
         <p className="text-ink/60 text-sm">
-          Ti ricontatteremo entro 24 ore con un preventivo personalizzato.
+          {dict.quote.success}
         </p>
       </div>
     );
@@ -72,20 +77,20 @@ export function QuoteForm() {
         {/* Pet info */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="pet_species">Specie *</Label>
+            <Label htmlFor="pet_species">{dict.quote.petSpecies} *</Label>
             <select
               id="pet_species"
               name="pet_species"
               required
               className="mt-1.5 h-10 w-full rounded-xl border border-pine/20 bg-mist px-3 text-sm text-ink focus:border-pine focus:ring-pine"
             >
-              <option value="dog">Cane</option>
-              <option value="cat">Gatto</option>
-              <option value="other">Altro</option>
+              <option value="dog">{dict.quote.dog}</option>
+              <option value="cat">{dict.quote.cat}</option>
+              <option value="other">{dict.quote.other}</option>
             </select>
           </div>
           <div>
-            <Label htmlFor="pet_breed">Razza</Label>
+            <Label htmlFor="pet_breed">{dict.quote.petBreed}</Label>
             <Input
               id="pet_breed"
               name="pet_breed"
@@ -98,7 +103,7 @@ export function QuoteForm() {
         {/* Origin */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="origin_city">Citta di partenza *</Label>
+            <Label htmlFor="origin_city">{dict.quote.originCity} *</Label>
             <Input
               id="origin_city"
               name="origin_city"
@@ -108,7 +113,7 @@ export function QuoteForm() {
             />
           </div>
           <div>
-            <Label htmlFor="origin_country">Paese di partenza *</Label>
+            <Label htmlFor="origin_country">{dict.quote.originCountry} *</Label>
             <select
               id="origin_country"
               name="origin_country"
@@ -126,7 +131,7 @@ export function QuoteForm() {
         {/* Destination */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="destination_city">Citta di destinazione *</Label>
+            <Label htmlFor="destination_city">{dict.quote.destinationCity} *</Label>
             <Input
               id="destination_city"
               name="destination_city"
@@ -136,7 +141,7 @@ export function QuoteForm() {
             />
           </div>
           <div>
-            <Label htmlFor="destination_country">Paese di destinazione *</Label>
+            <Label htmlFor="destination_country">{dict.quote.destinationCountry} *</Label>
             <select
               id="destination_country"
               name="destination_country"
@@ -153,7 +158,7 @@ export function QuoteForm() {
 
         {/* Date */}
         <div>
-          <Label htmlFor="preferred_date">Data preferita</Label>
+          <Label htmlFor="preferred_date">{dict.quote.preferredDate}</Label>
           <Input
             id="preferred_date"
             name="preferred_date"
@@ -165,7 +170,7 @@ export function QuoteForm() {
         {/* Customer */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="customer_name">Il tuo nome *</Label>
+            <Label htmlFor="customer_name">{dict.quote.customerName} *</Label>
             <Input
               id="customer_name"
               name="customer_name"
@@ -175,7 +180,7 @@ export function QuoteForm() {
             />
           </div>
           <div>
-            <Label htmlFor="customer_email">La tua email *</Label>
+            <Label htmlFor="customer_email">{dict.quote.customerEmail} *</Label>
             <Input
               id="customer_email"
               name="customer_email"
@@ -189,7 +194,7 @@ export function QuoteForm() {
 
         {/* Message */}
         <div>
-          <Label htmlFor="message">Messaggio (opzionale)</Label>
+          <Label htmlFor="message">{dict.quote.message}</Label>
           <Textarea
             id="message"
             name="message"
@@ -208,7 +213,7 @@ export function QuoteForm() {
           disabled={loading}
           className="w-full h-12 rounded-xl bg-pine text-paper hover:bg-pine-deep font-medium text-base"
         >
-          {loading ? "Invio in corso..." : "Invia Richiesta"}
+          {loading ? "..." : dict.quote.submit}
         </Button>
       </form>
     </div>
