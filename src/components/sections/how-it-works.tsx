@@ -61,30 +61,37 @@ export function HowItWorksSection() {
         title="Come Funziona"
         subtitle="Quattro semplici passaggi per un viaggio sereno"
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {steps.map((step, i) => (
-          <motion.div
-            key={step.number}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="relative bg-mist rounded-2xl p-8 group hover:shadow-[var(--shadow-soft)] transition-shadow duration-500"
-          >
-            <div className="w-14 h-14 rounded-xl bg-pine/10 flex items-center justify-center text-pine mb-5 group-hover:bg-pine group-hover:text-paper transition-colors duration-300">
-              {step.icon}
-            </div>
-            <span className="font-display text-sm text-honey font-semibold">
-              {step.number}
-            </span>
-            <h3 className="font-display text-xl font-semibold text-ink mt-1 mb-3">
-              {step.title}
-            </h3>
-            <p className="text-sm text-ink/60 leading-relaxed">
-              {step.description}
-            </p>
-          </motion.div>
-        ))}
+
+      {/* Desktop: horizontal with connecting line */}
+      <div className="relative">
+        {/* Connecting line (desktop only) */}
+        <div className="hidden lg:block absolute top-[4.25rem] left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-pine/5 via-pine/15 to-pine/5" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.number}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: i * 0.12 }}
+              className="relative bg-mist rounded-2xl p-8 group hover:shadow-[var(--shadow-soft)] transition-all duration-500 hover:-translate-y-1"
+            >
+              <div className="w-14 h-14 rounded-xl bg-pine/10 flex items-center justify-center text-pine mb-5 group-hover:bg-pine group-hover:text-paper transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-3deg]">
+                {step.icon}
+              </div>
+              <span className="font-display text-sm text-honey font-semibold">
+                {step.number}
+              </span>
+              <h3 className="font-display text-xl font-semibold text-ink mt-1 mb-3">
+                {step.title}
+              </h3>
+              <p className="text-sm text-ink/60 leading-relaxed">
+                {step.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </Section>
   );

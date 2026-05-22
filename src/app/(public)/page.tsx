@@ -6,6 +6,7 @@ import { CoveragePreview } from "@/components/sections/coverage-preview";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { FaqPreview } from "@/components/sections/faq-preview";
 import { CtaBand } from "@/components/sections/cta-band";
+import { PawDivider } from "@/components/motion/paw-divider";
 
 export default function HomePage() {
   return (
@@ -13,8 +14,10 @@ export default function HomePage() {
       <HeroSection />
       <TrustBar />
       <HowItWorksSection />
+      <PawDivider />
       <CoveragePreview />
       <CareSection />
+      <PawDivider variant="light" />
       <TestimonialsSection />
       <FaqPreview />
       <CtaBand />

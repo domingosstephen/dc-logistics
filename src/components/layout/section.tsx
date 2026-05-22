@@ -1,4 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils";
+import { ScrollReveal } from "@/components/motion/scroll-reveal";
 
 interface SectionProps {
   children: React.ReactNode;
@@ -24,13 +27,17 @@ export function SectionHeader({
   className?: string;
 }) {
   return (
-    <div className={cn("text-center mb-16", className)}>
-      <h2 className="font-display text-3xl md:text-5xl font-semibold text-ink tracking-tight">
-        {title}
-      </h2>
-      {subtitle && (
-        <p className="mt-4 text-lg text-ink/60 max-w-2xl mx-auto">{subtitle}</p>
-      )}
-    </div>
+    <ScrollReveal>
+      <div className={cn("text-center mb-16", className)}>
+        <h2 className="font-display text-3xl md:text-5xl font-semibold text-ink tracking-tight">
+          {title}
+        </h2>
+        {subtitle && (
+          <p className="mt-4 text-lg text-ink/60 max-w-2xl mx-auto">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    </ScrollReveal>
   );
 }

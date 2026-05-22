@@ -9,18 +9,21 @@ const testimonials = [
     location: "Milano, IT",
     pet: "Luna (Golden Retriever)",
     text: "Servizio impeccabile. Luna e arrivata a Berlino serena e felice. Gli aggiornamenti in tempo reale mi hanno dato una tranquillita incredibile.",
+    initials: "MR",
   },
   {
     name: "Thomas Mueller",
     location: "Monaco, DE",
     pet: "Max (Pastore Tedesco)",
     text: "Professionalita e amore per gli animali. Max ha viaggiato da Roma in totale comfort. Lo consiglio a tutti.",
+    initials: "TM",
   },
   {
     name: "Sophie Dubois",
     location: "Lione, FR",
     pet: "Milo (Bulldog Francese)",
     text: "Il team e stato fantastico. Ogni dettaglio curato, dal veterinario ai documenti. Milo era tranquillissimo.",
+    initials: "SD",
   },
 ];
 
@@ -38,8 +41,8 @@ export function TestimonialsSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="bg-mist rounded-2xl p-8"
+            transition={{ duration: 0.5, delay: i * 0.12 }}
+            className="bg-mist rounded-2xl p-8 transition-all duration-500 hover:shadow-[var(--shadow-soft)] hover:-translate-y-1"
           >
             {/* Stars */}
             <div className="flex gap-1 mb-4">
@@ -59,11 +62,18 @@ export function TestimonialsSection() {
               &ldquo;{t.text}&rdquo;
             </p>
 
-            <div>
-              <p className="font-medium text-ink text-sm">{t.name}</p>
-              <p className="text-xs text-ink/50">
-                {t.location} &middot; {t.pet}
-              </p>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-pine/10 flex items-center justify-center">
+                <span className="text-xs font-semibold text-pine">
+                  {t.initials}
+                </span>
+              </div>
+              <div>
+                <p className="font-medium text-ink text-sm">{t.name}</p>
+                <p className="text-xs text-ink/50">
+                  {t.location} &middot; {t.pet}
+                </p>
+              </div>
             </div>
           </motion.div>
         ))}

@@ -66,9 +66,9 @@ export function CareSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="flex gap-5 p-6 rounded-2xl bg-paper/5 hover:bg-paper/10 transition-colors"
+            className="group flex gap-5 p-6 rounded-2xl bg-paper/5 hover:bg-paper/10 transition-all duration-300 hover:-translate-y-0.5"
           >
-            <div className="w-12 h-12 rounded-xl bg-honey/20 flex items-center justify-center text-honey shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-honey/20 flex items-center justify-center text-honey shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[-5deg]">
               {point.icon}
             </div>
             <div>
