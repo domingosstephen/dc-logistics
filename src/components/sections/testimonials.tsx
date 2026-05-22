@@ -55,10 +55,10 @@ export function TestimonialsSection({ dict }: Props) {
     : "it";
 
   const titles: Record<string, { title: string; subtitle: string }> = {
-    it: { title: "Cosa Dicono di Noi", subtitle: "Le storie di chi ha affidato il proprio pet a InfoAnimaleCarico" },
-    en: { title: "What They Say", subtitle: "Stories from families who trusted InfoAnimaleCarico with their pets" },
-    de: { title: "Was sie sagen", subtitle: "Geschichten von Familien, die InfoAnimaleCarico vertraut haben" },
-    es: { title: "Lo que dicen", subtitle: "Historias de familias que confiaron en InfoAnimaleCarico" },
+    it: { title: "Cosa Dicono di Noi", subtitle: "Le storie di chi ha affidato il proprio pet a WayTrasporto" },
+    en: { title: "What They Say", subtitle: "Stories from families who trusted WayTrasporto with their pets" },
+    de: { title: "Was sie sagen", subtitle: "Geschichten von Familien, die WayTrasporto vertraut haben" },
+    es: { title: "Lo que dicen", subtitle: "Historias de familias que confiaron en WayTrasporto" },
   };
   const t = titles[lang] || titles.it;
 

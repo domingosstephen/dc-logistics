@@ -106,7 +106,7 @@ export default function NewShipmentPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/admin" className="font-display text-xl font-semibold">
-              InfoAnimaleCarico
+              WayTrasporto
             </Link>
             <span className="text-xs bg-honey/20 text-honey px-2 py-0.5 rounded-full">Admin</span>
           </div>

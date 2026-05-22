@@ -16,8 +16,8 @@ const hankenGrotesk = Hanken_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: "InfoAnimaleCarico | Zampe Sicure Attraverso l'Europa",
-    template: "%s | InfoAnimaleCarico",
+    default: "WayTrasporto | Zampe Sicure Attraverso l'Europa",
+    template: "%s | WayTrasporto",
   },
   description:
     "Trasporto premium per animali domestici attraverso l'Europa. Traccia il viaggio del tuo pet in tempo reale.",

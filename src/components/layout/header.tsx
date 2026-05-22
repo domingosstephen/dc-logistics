@@ -66,7 +66,7 @@ export function Header({ lang, dict }: HeaderProps) {
           {/* Logo */}
           <Link href={`/${lang}`} className="flex items-center gap-2 group">
             <span className="font-display text-2xl font-semibold text-pine transition-colors group-hover:text-pine-deep">
-              InfoAnimaleCarico
+              WayTrasporto
             </span>
           </Link>
 

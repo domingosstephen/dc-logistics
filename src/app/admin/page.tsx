@@ -64,7 +64,7 @@ export default function AdminDashboard() {
       <header className="bg-pine-deep text-paper">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="font-display text-xl font-semibold">InfoAnimaleCarico</span>
+            <span className="font-display text-xl font-semibold">WayTrasporto</span>
             <span className="text-xs bg-honey/20 text-honey px-2 py-0.5 rounded-full">Admin</span>
           </div>
           <div className="flex items-center gap-3">
