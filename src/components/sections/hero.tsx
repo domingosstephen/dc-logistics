@@ -72,7 +72,16 @@ export function HeroSection({ lang, dict }: Props) {
       ref={sectionRef}
       className="relative min-h-[90vh] flex items-center overflow-hidden bg-pine-deep grain"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-pine-deep via-pine to-pine-deep/90" />
+      {/* Hero background image */}
+      <div className="absolute inset-0">
+        <img
+          src="/hero-dogs.jpg"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-pine-deep/95 via-pine-deep/80 to-pine-deep/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-pine-deep/60 via-transparent to-pine-deep/30" />
+      </div>
       <div ref={orb1Ref} className="absolute top-20 right-[10%] w-[500px] h-[500px] rounded-full bg-honey/5 blur-3xl" />
       <div ref={orb2Ref} className="absolute bottom-10 left-[5%] w-[300px] h-[300px] rounded-full bg-sky/5 blur-3xl" />
 
