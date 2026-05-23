@@ -35,6 +35,7 @@ export default function ShipmentDetailPage({
   // Photo upload
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const supabase = createBrowserClient();
 
@@ -75,6 +76,19 @@ export default function ShipmentDetailPage({
     setNewNote("");
     setPosting(false);
     fetchData();
+  };
+
+  const handleDelete = async () => {
+    if (!shipment) return;
+    if (!window.confirm(`Delete shipment for ${shipment.pet_name} (${shipment.tracking_code})? This cannot be undone.`)) return;
+    setDeleting(true);
+
+    if (shipment.pet_photo_path) {
+      await supabase.storage.from("pet-photos").remove([shipment.pet_photo_path]);
+    }
+
+    await supabase.from("shipments").delete().eq("id", shipment.id);
+    router.push("/admin");
   };
 
   const handlePhotoUpload = async () => {
@@ -246,6 +260,21 @@ export default function ShipmentDetailPage({
           {/* Add event sidebar */}
           <div>
             <div className="bg-paper rounded-xl p-6 sticky top-24">
+              {shipment.status === "delivered" && (
+                <div className="mb-6 pb-6 border-b border-pine/10">
+                  <Button
+                    onClick={handleDelete}
+                    disabled={deleting}
+                    className="w-full bg-red-600 text-white hover:bg-red-700 rounded-lg"
+                  >
+                    {deleting ? "Deleting..." : "Delete Shipment"}
+                  </Button>
+                  <p className="text-xs text-ink/40 mt-2 text-center">
+                    Only available for delivered shipments
+                  </p>
+                </div>
+              )}
+
               <h2 className="font-display text-lg font-semibold text-ink mb-4">
                 Add Update
               </h2>
