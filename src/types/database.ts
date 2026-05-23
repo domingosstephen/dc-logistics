@@ -23,6 +23,9 @@ export interface Shipment {
   destination_city: string;
   destination_country: string;
   estimated_delivery: string | null;
+  departure_date: string | null;
+  departure_time: string | null;
+  arrival_time: string | null;
   customer_name: string | null;
   customer_email: string | null;
   sender_name: string | null;

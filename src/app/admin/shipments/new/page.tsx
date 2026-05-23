@@ -61,6 +61,9 @@ export default function NewShipmentPage() {
         destination_city: form.get("destination_city") as string,
         destination_country: form.get("destination_country") as string,
         estimated_delivery: (form.get("estimated_delivery") as string) || null,
+        departure_date: (form.get("departure_date") as string) || null,
+        departure_time: (form.get("departure_time") as string) || null,
+        arrival_time: (form.get("arrival_time") as string) || null,
         sender_name: (form.get("sender_name") as string) || null,
         sender_email: (form.get("sender_email") as string) || null,
         sender_phone: (form.get("sender_phone") as string) || null,
@@ -201,8 +204,20 @@ export default function NewShipmentPage() {
                   </select>
                 </div>
                 <div>
+                  <Label htmlFor="departure_date">Departure Date</Label>
+                  <Input id="departure_date" name="departure_date" type="date" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+                <div>
                   <Label htmlFor="estimated_delivery">Estimated Delivery</Label>
                   <Input id="estimated_delivery" name="estimated_delivery" type="date" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+                <div>
+                  <Label htmlFor="departure_time">Departure Time</Label>
+                  <Input id="departure_time" name="departure_time" type="time" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+                <div>
+                  <Label htmlFor="arrival_time">Arrival Time</Label>
+                  <Input id="arrival_time" name="arrival_time" type="time" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
               </div>
             </fieldset>

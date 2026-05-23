@@ -148,8 +148,12 @@ export default function ShipmentDetailPage({
                   <p>{shipment.origin_city}, {shipment.origin_country} → {shipment.destination_city}, {shipment.destination_country}</p>
                 </div>
                 <div>
+                  <p className="text-ink/40">Departure</p>
+                  <p>{shipment.departure_date ? new Date(shipment.departure_date).toLocaleDateString("en-GB") : "—"}{shipment.departure_time ? ` at ${shipment.departure_time}` : ""}</p>
+                </div>
+                <div>
                   <p className="text-ink/40">Estimated Delivery</p>
-                  <p>{shipment.estimated_delivery ? new Date(shipment.estimated_delivery).toLocaleDateString("en-GB") : "—"}</p>
+                  <p>{shipment.estimated_delivery ? new Date(shipment.estimated_delivery).toLocaleDateString("en-GB") : "—"}{shipment.arrival_time ? ` at ${shipment.arrival_time}` : ""}</p>
                 </div>
                 <div>
                   <p className="text-ink/40">Sender</p>
