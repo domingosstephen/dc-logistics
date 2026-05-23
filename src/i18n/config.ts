@@ -11,22 +11,12 @@ export const localeNames: Record<Locale, string> = {
 
 // Country code to tracking prefix mapping
 export const countryPrefixes: Record<string, string> = {
-  IT: "IT",
-  DE: "DE",
-  FR: "FR",
-  ES: "ES",
-  AT: "AT",
-  CH: "CH",
-  NL: "NL",
-  BE: "BE",
-  PT: "PT",
-  HR: "HR",
-  SI: "SI",
-  GR: "GR",
-  PL: "PL",
-  CZ: "CZ",
-  HU: "HU",
-  RO: "RO",
-  BG: "BG",
-  GB: "GB",
+  // Europe
+  IT: "IT", DE: "DE", FR: "FR", ES: "ES", AT: "AT", CH: "CH",
+  NL: "NL", BE: "BE", PT: "PT", HR: "HR", SI: "SI", GR: "GR",
+  PL: "PL", CZ: "CZ", HU: "HU", RO: "RO", BG: "BG", GB: "GB",
+  // Americas
+  US: "US", CA: "CA", MX: "MX", CR: "CR", PA: "PA", DO: "DO",
+  BR: "BR", AR: "AR", CO: "CO", CL: "CL", PE: "PE", EC: "EC",
+  UY: "UY", VE: "VE", PY: "PY", BO: "BO",
 };

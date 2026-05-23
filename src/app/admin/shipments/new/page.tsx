@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 const countries = [
+  // Europe
   { label: "Italy", code: "IT" },
   { label: "Germany", code: "DE" },
   { label: "France", code: "FR" },
@@ -28,6 +29,25 @@ const countries = [
   { label: "Romania", code: "RO" },
   { label: "Greece", code: "GR" },
   { label: "Bulgaria", code: "BG" },
+  // North America
+  { label: "United States", code: "US" },
+  { label: "Canada", code: "CA" },
+  { label: "Mexico", code: "MX" },
+  // Central America & Caribbean
+  { label: "Costa Rica", code: "CR" },
+  { label: "Panama", code: "PA" },
+  { label: "Dominican Republic", code: "DO" },
+  // South America
+  { label: "Brazil", code: "BR" },
+  { label: "Argentina", code: "AR" },
+  { label: "Colombia", code: "CO" },
+  { label: "Chile", code: "CL" },
+  { label: "Peru", code: "PE" },
+  { label: "Ecuador", code: "EC" },
+  { label: "Uruguay", code: "UY" },
+  { label: "Venezuela", code: "VE" },
+  { label: "Paraguay", code: "PY" },
+  { label: "Bolivia", code: "BO" },
 ];
 
 export default function NewShipmentPage() {

@@ -10,18 +10,31 @@ interface Props {
 }
 
 const corridors = [
-  { from: "Italia", to: "Germania", cities: "Milano, Roma, Napoli -> Berlino, Monaco, Amburgo" },
-  { from: "Italia", to: "Francia", cities: "Milano, Torino -> Lione, Parigi, Marsiglia" },
-  { from: "Italia", to: "Austria", cities: "Verona, Bolzano -> Vienna, Salisburgo" },
-  { from: "Italia", to: "Svizzera", cities: "Milano, Como -> Zurigo, Ginevra, Berna" },
-  { from: "Germania", to: "Paesi Bassi", cities: "Colonia, Dusseldorf -> Amsterdam, Rotterdam" },
-  { from: "Germania", to: "Polonia", cities: "Berlino, Dresda -> Varsavia, Cracovia" },
-  { from: "Francia", to: "Spagna", cities: "Tolosa, Bordeaux -> Barcellona, Madrid" },
-  { from: "Francia", to: "Belgio", cities: "Lille, Parigi -> Bruxelles, Anversa" },
-  { from: "Italia", to: "Croazia", cities: "Trieste, Venezia -> Zagabria, Spalato" },
-  { from: "Italia", to: "Slovenia", cities: "Trieste, Udine -> Lubiana" },
-  { from: "Austria", to: "Ungheria", cities: "Vienna -> Budapest" },
-  { from: "Germania", to: "Regno Unito", cities: "Amburgo, Francoforte -> Londra, Manchester" },
+  // Europe
+  { from: "Italy", to: "Germany", cities: "Milan, Rome, Naples -> Berlin, Munich, Hamburg" },
+  { from: "Italy", to: "France", cities: "Milan, Turin -> Lyon, Paris, Marseille" },
+  { from: "Italy", to: "Austria", cities: "Verona, Bolzano -> Vienna, Salzburg" },
+  { from: "Italy", to: "Switzerland", cities: "Milan, Como -> Zurich, Geneva, Bern" },
+  { from: "Germany", to: "Netherlands", cities: "Cologne, Dusseldorf -> Amsterdam, Rotterdam" },
+  { from: "Germany", to: "Poland", cities: "Berlin, Dresden -> Warsaw, Krakow" },
+  { from: "France", to: "Spain", cities: "Toulouse, Bordeaux -> Barcelona, Madrid" },
+  { from: "Germany", to: "UK", cities: "Hamburg, Frankfurt -> London, Manchester" },
+  // Transatlantic
+  { from: "Italy", to: "USA", cities: "Rome, Milan -> New York, Miami, Los Angeles" },
+  { from: "Italy", to: "Brazil", cities: "Rome, Milan -> Sao Paulo, Rio de Janeiro" },
+  { from: "Germany", to: "USA", cities: "Frankfurt, Munich -> New York, Chicago" },
+  { from: "Spain", to: "Mexico", cities: "Madrid, Barcelona -> Mexico City, Cancun" },
+  { from: "Spain", to: "Argentina", cities: "Madrid -> Buenos Aires" },
+  { from: "France", to: "Canada", cities: "Paris -> Montreal, Toronto" },
+  { from: "UK", to: "USA", cities: "London -> New York, Miami" },
+  // Americas
+  { from: "USA", to: "Canada", cities: "New York, Miami -> Toronto, Montreal, Vancouver" },
+  { from: "USA", to: "Mexico", cities: "Los Angeles, Houston -> Mexico City, Guadalajara" },
+  { from: "USA", to: "Brazil", cities: "Miami, New York -> Sao Paulo, Rio de Janeiro" },
+  { from: "USA", to: "Colombia", cities: "Miami -> Bogota, Medellin" },
+  { from: "Brazil", to: "Argentina", cities: "Sao Paulo -> Buenos Aires" },
+  { from: "Colombia", to: "Ecuador", cities: "Bogota -> Quito, Guayaquil" },
+  { from: "Peru", to: "Chile", cities: "Lima -> Santiago" },
 ];
 
 export default async function CoveragePage({ params }: Props) {
