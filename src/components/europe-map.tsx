@@ -64,7 +64,6 @@ export function EuropeMap() {
   const dotsRef = useRef<SVGGElement>(null);
   const labelsRef = useRef<SVGGElement>(null);
   const glowsRef = useRef<SVGGElement>(null);
-  const travelerRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -96,88 +95,66 @@ export function EuropeMap() {
       gsap.set(labels, { opacity: 0 });
       gsap.set(glows, { opacity: 0, scale: 0, transformOrigin: "center center" });
 
-      // Main timeline
+      // Main timeline — plays once when map enters view (not scrub-linked)
       const tl = gsap.timeline({
+        paused: true,
         scrollTrigger: {
           trigger: svgRef.current,
-          start: "top 75%",
-          end: "bottom 30%",
-          scrub: 0.8,
+          start: "top 80%",
+          once: true,
+          onEnter: () => tl.play(),
         },
       });
 
-      // Phase 1: Draw routes (0 -> 0.5 of the scroll)
+      // Phase 1: Draw routes
       tl.to(
         routePaths,
         {
           strokeDashoffset: 0,
-          duration: 0.5,
-          stagger: 0.03,
+          duration: 1.8,
+          stagger: 0.08,
           ease: "power2.inOut",
         },
         0
       );
 
-      // Phase 2: Pop in dots (0.2 -> 0.6)
+      // Phase 2: Pop in dots
       tl.to(
         dots,
         {
           scale: 1,
-          duration: 0.3,
-          stagger: 0.02,
+          duration: 0.5,
+          stagger: 0.06,
           ease: "back.out(2)",
         },
-        0.15
+        0.4
       );
 
-      // Phase 3: Fade in glows (0.3 -> 0.7)
+      // Phase 3: Fade in glows
       tl.to(
         glows,
         {
           opacity: 1,
           scale: 1,
-          duration: 0.3,
-          stagger: 0.02,
+          duration: 0.5,
+          stagger: 0.06,
           ease: "power2.out",
         },
-        0.25
+        0.6
       );
 
-      // Phase 4: Fade in labels (0.4 -> 0.8)
+      // Phase 4: Fade in labels
       tl.to(
         labels,
         {
           opacity: 1,
-          duration: 0.2,
-          stagger: 0.02,
+          duration: 0.4,
+          stagger: 0.05,
         },
-        0.35
+        1.0
       );
 
-      // Animated traveler dot along the IT->DE route
-      if (travelerRef.current) {
-        const mainRoute = routesRef.current?.querySelector(
-          '[data-route="IT-DE"]'
-        ) as SVGPathElement | null;
-        if (mainRoute) {
-          tl.to(
-            travelerRef.current,
-            {
-              motionPath: {
-                path: mainRoute,
-                align: mainRoute,
-                alignOrigin: [0.5, 0.5],
-              },
-              duration: 0.5,
-              ease: "power1.inOut",
-              opacity: 1,
-            },
-            0.1
-          );
-        }
-      }
-
-      // Pulsing glow animation on primary country dots (non-scrub, loops)
+      // Pulsing glow animation on primary country dots (loops after timeline)
       const primaryGlows = Array.from(glows).filter((_, i) =>
         countries[i]?.primary
       );
@@ -274,20 +251,6 @@ export function EuropeMap() {
           ))}
         </g>
 
-        {/* Animated traveler dot */}
-        <circle
-          ref={travelerRef}
-          r={4}
-          fill="#E0A04B"
-          style={{ opacity: 0 }}
-        >
-          <animate
-            attributeName="r"
-            values="3;5;3"
-            dur="1.5s"
-            repeatCount="indefinite"
-          />
-        </circle>
       </svg>
     </div>
   );
