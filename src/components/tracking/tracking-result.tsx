@@ -29,35 +29,23 @@ export function TrackingResult({ shipment: initial, code, lang, dict }: Props) {
   const [events, setEvents] = useState<PublicShipmentEvent[]>(initial.events);
   const [currentStatus, setCurrentStatus] = useState(initial.status);
 
-  // Realtime subscription
+  // Poll for updates (realtime requires authenticated RLS, so we poll the security-definer RPC)
   useEffect(() => {
     const supabase = createBrowserClient();
 
-    const channel = supabase
-      .channel(`tracking-${code}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "shipment_events",
-        },
-        (payload) => {
-          const newEvent = payload.new as {
-            status: ShipmentStatus;
-            location: string | null;
-            note: string | null;
-            happened_at: string;
-          };
-          setEvents((prev) => [...prev, newEvent]);
-          setCurrentStatus(newEvent.status);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
+    const poll = async () => {
+      const { data } = await supabase.rpc("get_shipment_by_code", {
+        p_code: code,
+      });
+      if (data) {
+        const updated = data as unknown as PublicShipment;
+        setEvents(updated.events);
+        setCurrentStatus(updated.status);
+      }
     };
+
+    const interval = setInterval(poll, 30000);
+    return () => clearInterval(interval);
   }, [code]);
 
   const currentStepIndex = STATUS_ORDER.indexOf(currentStatus);

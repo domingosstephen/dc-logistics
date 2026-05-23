@@ -7,6 +7,8 @@ import { TrackingResult } from "@/components/tracking/tracking-result";
 import { TrackingSearch } from "@/components/tracking/tracking-search";
 import type { PublicShipment } from "@/types/database";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ lang: string; code: string }>;
 }
