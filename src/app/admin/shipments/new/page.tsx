@@ -61,8 +61,14 @@ export default function NewShipmentPage() {
         destination_city: form.get("destination_city") as string,
         destination_country: form.get("destination_country") as string,
         estimated_delivery: (form.get("estimated_delivery") as string) || null,
-        customer_name: (form.get("customer_name") as string) || null,
-        customer_email: (form.get("customer_email") as string) || null,
+        sender_name: (form.get("sender_name") as string) || null,
+        sender_email: (form.get("sender_email") as string) || null,
+        sender_phone: (form.get("sender_phone") as string) || null,
+        receiver_name: (form.get("receiver_name") as string) || null,
+        receiver_email: (form.get("receiver_email") as string) || null,
+        receiver_phone: (form.get("receiver_phone") as string) || null,
+        customer_name: (form.get("sender_name") as string) || null,
+        customer_email: (form.get("sender_email") as string) || null,
       })
       .select()
       .single();
@@ -199,17 +205,40 @@ export default function NewShipmentPage() {
               </div>
             </fieldset>
 
-            {/* Customer */}
+            {/* Sender */}
             <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Customer</legend>
+              <legend className="text-sm font-medium text-ink/50 mb-3">Sender (shipping the pet)</legend>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="customer_name">Customer Name</Label>
-                  <Input id="customer_name" name="customer_name" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                  <Label htmlFor="sender_name">Name</Label>
+                  <Input id="sender_name" name="sender_name" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
                 <div>
-                  <Label htmlFor="customer_email">Customer Email</Label>
-                  <Input id="customer_email" name="customer_email" type="email" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                  <Label htmlFor="sender_email">Email</Label>
+                  <Input id="sender_email" name="sender_email" type="email" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+                <div>
+                  <Label htmlFor="sender_phone">Phone</Label>
+                  <Input id="sender_phone" name="sender_phone" type="tel" placeholder="+39 ..." className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+              </div>
+            </fieldset>
+
+            {/* Receiver */}
+            <fieldset>
+              <legend className="text-sm font-medium text-ink/50 mb-3">Receiver (receiving the pet)</legend>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="receiver_name">Name</Label>
+                  <Input id="receiver_name" name="receiver_name" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+                <div>
+                  <Label htmlFor="receiver_email">Email</Label>
+                  <Input id="receiver_email" name="receiver_email" type="email" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+                <div>
+                  <Label htmlFor="receiver_phone">Phone</Label>
+                  <Input id="receiver_phone" name="receiver_phone" type="tel" placeholder="+49 ..." className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
               </div>
             </fieldset>

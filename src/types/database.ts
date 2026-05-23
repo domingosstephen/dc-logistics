@@ -25,6 +25,12 @@ export interface Shipment {
   estimated_delivery: string | null;
   customer_name: string | null;
   customer_email: string | null;
+  sender_name: string | null;
+  sender_email: string | null;
+  sender_phone: string | null;
+  receiver_name: string | null;
+  receiver_email: string | null;
+  receiver_phone: string | null;
   created_at: string;
   updated_at: string;
 }

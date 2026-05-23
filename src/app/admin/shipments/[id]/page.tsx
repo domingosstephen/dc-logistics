@@ -152,12 +152,16 @@ export default function ShipmentDetailPage({
                   <p>{shipment.estimated_delivery ? new Date(shipment.estimated_delivery).toLocaleDateString("en-GB") : "—"}</p>
                 </div>
                 <div>
-                  <p className="text-ink/40">Customer</p>
-                  <p>{shipment.customer_name || "—"}</p>
+                  <p className="text-ink/40">Sender</p>
+                  <p>{shipment.sender_name || "—"}</p>
+                  {shipment.sender_phone && <p className="text-xs text-ink/40 mt-0.5">{shipment.sender_phone}</p>}
+                  {shipment.sender_email && <p className="text-xs text-ink/40">{shipment.sender_email}</p>}
                 </div>
                 <div>
-                  <p className="text-ink/40">Email</p>
-                  <p>{shipment.customer_email || "—"}</p>
+                  <p className="text-ink/40">Receiver</p>
+                  <p>{shipment.receiver_name || "—"}</p>
+                  {shipment.receiver_phone && <p className="text-xs text-ink/40 mt-0.5">{shipment.receiver_phone}</p>}
+                  {shipment.receiver_email && <p className="text-xs text-ink/40">{shipment.receiver_email}</p>}
                 </div>
               </div>
 

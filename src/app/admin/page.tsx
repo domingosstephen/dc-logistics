@@ -132,7 +132,7 @@ export default function AdminDashboard() {
                     <th className="px-4 py-3 font-medium text-ink/50">Pet</th>
                     <th className="px-4 py-3 font-medium text-ink/50">Route</th>
                     <th className="px-4 py-3 font-medium text-ink/50">Status</th>
-                    <th className="px-4 py-3 font-medium text-ink/50">Customer</th>
+                    <th className="px-4 py-3 font-medium text-ink/50">Sender</th>
                     <th className="px-4 py-3 font-medium text-ink/50">ETA</th>
                     <th className="px-4 py-3"></th>
                   </tr>
@@ -157,7 +157,7 @@ export default function AdminDashboard() {
                         <StatusBadge status={s.status} />
                       </td>
                       <td className="px-4 py-3 text-ink/60">
-                        {s.customer_name || "—"}
+                        {s.sender_name || s.customer_name || "—"}
                       </td>
                       <td className="px-4 py-3 text-ink/60 text-xs">
                         {s.estimated_delivery
