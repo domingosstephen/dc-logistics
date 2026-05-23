@@ -95,6 +95,14 @@ export function TrackingResult({ shipment: initial, code, lang, dict }: Props) {
                 {dict.tracking.estimatedDelivery}: {new Date(initial.estimated_delivery).toLocaleDateString(lang === "de" ? "de-DE" : lang === "es" ? "es-ES" : lang === "en" ? "en-GB" : "it-IT", { day: "numeric", month: "long", year: "numeric" })}
               </p>
             )}
+            {initial.receiver_name && (
+              <p className="text-sm text-ink/60 mt-2 flex items-center gap-2">
+                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Z" />
+                </svg>
+                {initial.receiver_name}{initial.receiver_address ? ` — ${initial.receiver_address}` : ""}
+              </p>
+            )}
           </div>
         </div>
 
