@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { LenisProvider } from "@/components/providers/lenis-provider";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getDictionary, hasLocale } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 
@@ -26,6 +27,7 @@ export default async function LangLayout({
       <Header lang={lang as Locale} dict={dict} />
       <main className="flex-1 pt-16">{children}</main>
       <Footer lang={lang as Locale} dict={dict} />
+      <WhatsAppButton />
     </LenisProvider>
   );
 }
