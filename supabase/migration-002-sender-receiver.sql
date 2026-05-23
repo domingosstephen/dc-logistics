@@ -6,7 +6,9 @@ ALTER TABLE public.shipments
   ADD COLUMN sender_name text,
   ADD COLUMN sender_email text,
   ADD COLUMN sender_phone text,
+  ADD COLUMN sender_address text,
   -- Receiver (person receiving the pet)
   ADD COLUMN receiver_name text,
   ADD COLUMN receiver_email text,
-  ADD COLUMN receiver_phone text;
+  ADD COLUMN receiver_phone text,
+  ADD COLUMN receiver_address text;

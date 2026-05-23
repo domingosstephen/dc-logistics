@@ -156,12 +156,14 @@ export default function ShipmentDetailPage({
                   <p>{shipment.sender_name || "—"}</p>
                   {shipment.sender_phone && <p className="text-xs text-ink/40 mt-0.5">{shipment.sender_phone}</p>}
                   {shipment.sender_email && <p className="text-xs text-ink/40">{shipment.sender_email}</p>}
+                  {shipment.sender_address && <p className="text-xs text-ink/40">{shipment.sender_address}</p>}
                 </div>
                 <div>
                   <p className="text-ink/40">Receiver</p>
                   <p>{shipment.receiver_name || "—"}</p>
                   {shipment.receiver_phone && <p className="text-xs text-ink/40 mt-0.5">{shipment.receiver_phone}</p>}
                   {shipment.receiver_email && <p className="text-xs text-ink/40">{shipment.receiver_email}</p>}
+                  {shipment.receiver_address && <p className="text-xs text-ink/40">{shipment.receiver_address}</p>}
                 </div>
               </div>
 

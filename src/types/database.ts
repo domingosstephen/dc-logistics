@@ -28,9 +28,11 @@ export interface Shipment {
   sender_name: string | null;
   sender_email: string | null;
   sender_phone: string | null;
+  sender_address: string | null;
   receiver_name: string | null;
   receiver_email: string | null;
   receiver_phone: string | null;
+  receiver_address: string | null;
   created_at: string;
   updated_at: string;
 }

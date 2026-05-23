@@ -64,9 +64,11 @@ export default function NewShipmentPage() {
         sender_name: (form.get("sender_name") as string) || null,
         sender_email: (form.get("sender_email") as string) || null,
         sender_phone: (form.get("sender_phone") as string) || null,
+        sender_address: (form.get("sender_address") as string) || null,
         receiver_name: (form.get("receiver_name") as string) || null,
         receiver_email: (form.get("receiver_email") as string) || null,
         receiver_phone: (form.get("receiver_phone") as string) || null,
+        receiver_address: (form.get("receiver_address") as string) || null,
         customer_name: (form.get("sender_name") as string) || null,
         customer_email: (form.get("sender_email") as string) || null,
       })
@@ -221,6 +223,10 @@ export default function NewShipmentPage() {
                   <Label htmlFor="sender_phone">Phone</Label>
                   <Input id="sender_phone" name="sender_phone" type="tel" placeholder="+39 ..." className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
+                <div className="sm:col-span-2">
+                  <Label htmlFor="sender_address">Address</Label>
+                  <Input id="sender_address" name="sender_address" placeholder="Street, city, postcode" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
               </div>
             </fieldset>
 
@@ -239,6 +245,10 @@ export default function NewShipmentPage() {
                 <div>
                   <Label htmlFor="receiver_phone">Phone</Label>
                   <Input id="receiver_phone" name="receiver_phone" type="tel" placeholder="+49 ..." className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
+                </div>
+                <div className="sm:col-span-2">
+                  <Label htmlFor="receiver_address">Address</Label>
+                  <Input id="receiver_address" name="receiver_address" placeholder="Street, city, postcode" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
                 </div>
               </div>
             </fieldset>
