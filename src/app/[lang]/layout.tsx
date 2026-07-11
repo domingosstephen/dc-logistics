@@ -7,7 +7,7 @@ import { getDictionary, hasLocale } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 
 export async function generateStaticParams() {
-  return [{ lang: "it" }, { lang: "en" }, { lang: "de" }, { lang: "es" }];
+  return [{ lang: "it" }, { lang: "en" }, { lang: "de" }, { lang: "es" }, { lang: "tr" }];
 }
 
 export default async function LangLayout({

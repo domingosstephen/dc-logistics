@@ -72,6 +72,19 @@ function getFaqGroups(lang: Locale) {
       { q: "Como rastreo a mi mascota?", a: "Recibiras un codigo unico para seguir el viaje en tiempo real." },
     ]},
   ];
+  if (lang === "tr") return [
+    { category: "Belgeler ve Gereksinimler", faqs: [
+      { q: "Hangi belgeler gerekli?", a: "Mikro çip, güncel aşılar (kuduz dahil), sağlık sertifikası ve AB evcil hayvan pasaportu. Tüm belgeleri biz hallederiz." },
+      { q: "Evcil hayvanımın AB pasaportu olması şart mı?", a: "Evet, AB ülkeleri arasında seyahat için gereklidir. Hizmetimizin bir parçası olarak edinmenize yardım ederiz." },
+    ]},
+    { category: "Yolculuk", faqs: [
+      { q: "Evcil hayvanım nasıl yolculuk eder?", a: "Özel bakıcı eşliğinde, havalandırmalı ve konforlu bir kafeste. Her 4 saatte bir dinlenme molası verilir, ısı kontrolü sürekli sağlanır." },
+      { q: "Yolculuk ne kadar sürer?", a: "Güzergaha göre değişmekle birlikte, Avrupa içinde genellikle 1-3 gün sürmektedir." },
+    ]},
+    { category: "Takip", faqs: [
+      { q: "Evcil hayvanımı nasıl takip ederim?", a: "Size benzersiz bir kod verilir (ör. IT-7H4K-2Q). Gerçek zamanlı güncellemeler için bu kodu takip sayfasına girin." },
+    ]},
+  ];
   return [
     { category: "Documenti & Requisiti", faqs: [
       { q: "Quali documenti servono?", a: "Microchip, vaccinazioni aggiornate, certificato sanitario e passaporto EU per animali." },

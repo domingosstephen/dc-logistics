@@ -44,7 +44,7 @@ export default async function TrackingCodePage({ params }: Props) {
             {dict.tracking.title}
           </h1>
           <p className="mt-4 text-lg text-paper/60 max-w-xl mx-auto">
-            {lang === "it" ? "Codice" : lang === "de" ? "Code" : lang === "es" ? "Codigo" : "Code"}:{" "}
+            {lang === "it" ? "Codice" : lang === "de" ? "Code" : lang === "es" ? "Codigo" : lang === "tr" ? "Kod" : "Code"}:{" "}
             <span className="font-mono text-honey">{decodedCode}</span>
           </p>
         </div>
@@ -60,7 +60,7 @@ export default async function TrackingCodePage({ params }: Props) {
               </svg>
             </div>
             <h2 className="font-display text-xl font-semibold text-ink mb-2">
-              {lang === "it" ? "Codice non trovato" : lang === "de" ? "Code nicht gefunden" : lang === "es" ? "Codigo no encontrado" : "Code not found"}
+              {lang === "it" ? "Codice non trovato" : lang === "de" ? "Code nicht gefunden" : lang === "es" ? "Codigo no encontrado" : lang === "tr" ? "Kod bulunamadı" : "Code not found"}
             </h2>
             <p className="text-ink/60 text-sm mb-8">{dict.tracking.notFound}</p>
             <TrackingSearch lang={lang as Locale} dict={dict} />

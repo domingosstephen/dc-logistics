@@ -23,6 +23,7 @@ export default async function TrackPage({ params }: Props) {
             {lang === "it" ? "Inserisci il codice di tracciamento per seguire il viaggio in tempo reale" :
              lang === "de" ? "Geben Sie den Tracking-Code ein, um die Reise in Echtzeit zu verfolgen" :
              lang === "es" ? "Ingresa el codigo de rastreo para seguir el viaje en tiempo real" :
+             lang === "tr" ? "Yolculuğu gerçek zamanlı takip etmek için takip kodunuzu girin" :
              "Enter your tracking code to follow the journey in real-time"}
           </p>
         </div>

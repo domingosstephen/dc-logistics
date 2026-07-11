@@ -18,6 +18,7 @@ const testimonials = [
       en: "Impeccable service. Luna arrived in Berlin calm and happy. The real-time updates gave me incredible peace of mind.",
       de: "Tadelloser Service. Luna kam ruhig und glucklich in Berlin an. Die Echtzeit-Updates gaben mir unglaubliche Ruhe.",
       es: "Servicio impecable. Luna llego a Berlin tranquila y feliz. Las actualizaciones en tiempo real me dieron una tranquilidad increible.",
+      tr: "Kusursuz hizmet. Luna Berlin'e sakin ve mutlu geldi. Gerçek zamanlı güncellemeler bana inanılmaz bir huzur verdi.",
     },
     initials: "MR",
   },
@@ -30,6 +31,7 @@ const testimonials = [
       en: "Professionalism and love for animals. Max traveled from Rome in total comfort. I recommend it to everyone.",
       de: "Professionalitat und Tierliebe. Max reiste von Rom in totalem Komfort. Ich empfehle es jedem.",
       es: "Profesionalidad y amor por los animales. Max viajo desde Roma con total comodidad. Lo recomiendo a todos.",
+      tr: "Profesyonellik ve hayvanlara sevgi. Max Roma'dan tam konforla yolculuk etti. Herkese tavsiye ederim.",
     },
     initials: "TM",
   },
@@ -42,6 +44,7 @@ const testimonials = [
       en: "The team was fantastic. Every detail taken care of, from vet to documents. Milo was perfectly calm.",
       de: "Das Team war fantastisch. Jedes Detail wurde beachtet, vom Tierarzt bis zu den Dokumenten. Milo war vollig ruhig.",
       es: "El equipo fue fantastico. Cada detalle cuidado, del veterinario a los documentos. Milo estaba tranquilisimo.",
+      tr: "Ekip muhteşemdi. Veterinerden belgelere kadar her ayrıntı özenle ele alındı. Milo tamamen sakin ve huzurluydu.",
     },
     initials: "SD",
   },
@@ -52,6 +55,7 @@ export function TestimonialsSection({ dict }: Props) {
   const lang = dict.nav.home === "Home" && dict.nav.howItWorks === "How It Works" ? "en"
     : dict.nav.home === "Startseite" ? "de"
     : dict.nav.home === "Inicio" ? "es"
+    : dict.nav.home === "Ana Sayfa" ? "tr"
     : "it";
 
   const titles: Record<string, { title: string; subtitle: string }> = {
@@ -59,6 +63,7 @@ export function TestimonialsSection({ dict }: Props) {
     en: { title: "What They Say", subtitle: "Stories from families who trusted WayTrasporto with their pets" },
     de: { title: "Was sie sagen", subtitle: "Geschichten von Familien, die WayTrasporto vertraut haben" },
     es: { title: "Lo que dicen", subtitle: "Historias de familias que confiaron en WayTrasporto" },
+    tr: { title: "Onlar Ne Diyor", subtitle: "Evcil hayvanlarını WayTrasporto'ya emanet eden ailelerin hikayeleri" },
   };
   const t = titles[lang] || titles.it;
 

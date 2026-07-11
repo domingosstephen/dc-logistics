@@ -42,8 +42,8 @@ export default async function CoveragePage({ params }: Props) {
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang as Locale);
 
-  const pageTitle = lang === "it" ? "Copertura & Rotte" : lang === "de" ? "Abdeckung & Routen" : lang === "es" ? "Cobertura & Rutas" : "Coverage & Routes";
-  const corridorsTitle = lang === "it" ? "Corridoi di Trasporto" : lang === "de" ? "Transportkorridore" : lang === "es" ? "Corredores de Transporte" : "Transport Corridors";
+  const pageTitle = lang === "it" ? "Copertura & Rotte" : lang === "de" ? "Abdeckung & Routen" : lang === "es" ? "Cobertura & Rutas" : lang === "tr" ? "Kapsama Alanı & Güzergahlar" : "Coverage & Routes";
+  const corridorsTitle = lang === "it" ? "Corridoi di Trasporto" : lang === "de" ? "Transportkorridore" : lang === "es" ? "Corredores de Transporte" : lang === "tr" ? "Taşımacılık Güzergahları" : "Transport Corridors";
 
   return (
     <>

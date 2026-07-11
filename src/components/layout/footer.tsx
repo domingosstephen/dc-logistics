@@ -24,7 +24,7 @@ export function Footer({ lang, dict }: FooterProps) {
           {/* Links */}
           <div>
             <h4 className="font-medium text-paper mb-4">
-              {lang === "it" ? "Navigazione" : lang === "de" ? "Navigation" : lang === "es" ? "Navegacion" : "Navigation"}
+              {lang === "it" ? "Navigazione" : lang === "de" ? "Navigation" : lang === "es" ? "Navegacion" : lang === "tr" ? "Gezinti" : "Navigation"}
             </h4>
             <ul className="space-y-2.5">
               {[
@@ -49,7 +49,7 @@ export function Footer({ lang, dict }: FooterProps) {
           {/* Legal */}
           <div>
             <h4 className="font-medium text-paper mb-4">
-              {lang === "it" ? "Contatti" : lang === "de" ? "Kontakt" : lang === "es" ? "Contacto" : "Contact"}
+              {lang === "it" ? "Contatti" : lang === "de" ? "Kontakt" : lang === "es" ? "Contacto" : lang === "tr" ? "İletişim" : "Contact"}
             </h4>
             <ul className="space-y-2.5">
               <li>
@@ -94,6 +94,8 @@ export function Footer({ lang, dict }: FooterProps) {
               ? "Alle Rechte vorbehalten."
               : lang === "es"
               ? "Todos los derechos reservados."
+              : lang === "tr"
+              ? "Tüm hakları saklıdır."
               : "All rights reserved."}
           </p>
         </div>

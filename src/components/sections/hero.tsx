@@ -93,7 +93,7 @@ export function HeroSection({ lang, dict }: Props) {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-honey font-medium text-sm tracking-widest uppercase mb-6"
           >
-            {lang === "it" ? "Trasporto Premium per Animali" : lang === "de" ? "Premium-Tiertransport" : lang === "es" ? "Transporte Premium de Mascotas" : "Premium Pet Transport"}
+            {lang === "it" ? "Trasporto Premium per Animali" : lang === "de" ? "Premium-Tiertransport" : lang === "es" ? "Transporte Premium de Mascotas" : lang === "tr" ? "Premium Evcil Hayvan Taşımacılığı" : "Premium Pet Transport"}
           </motion.p>
 
           <motion.h1
@@ -107,7 +107,7 @@ export function HeroSection({ lang, dict }: Props) {
                 {dict.hero.title.split(/attraverso|Across|durch|por/)[0]}
                 <br />
                 <span className="text-honey">
-                  {lang === "it" ? "attraverso l'Europa" : lang === "de" ? "durch Europa" : lang === "es" ? "por Europa" : "Across Europe"}
+                  {lang === "it" ? "attraverso l'Europa" : lang === "de" ? "durch Europa" : lang === "es" ? "por Europa" : lang === "tr" ? "Avrupa Genelinde" : "Across Europe"}
                 </span>
               </>
             ) : (
