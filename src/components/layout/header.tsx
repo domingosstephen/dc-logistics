@@ -12,6 +12,7 @@ const localeLabels: Record<string, string> = {
   en: "EN",
   de: "DE",
   es: "ES",
+  tr: "TR",
 };
 
 const localeFlags: Record<string, string> = {
@@ -19,6 +20,7 @@ const localeFlags: Record<string, string> = {
   en: "English",
   de: "Deutsch",
   es: "Espanol",
+  tr: "Türkçe",
 };
 
 interface HeaderProps {
