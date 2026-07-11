@@ -15,6 +15,7 @@ const content: Record<Locale, { title: string; subtitle: string }> = {
   en: { title: "Ready for your pet's journey?", subtitle: "Request a free quote and discover how we can take care of your pet." },
   de: { title: "Bereit fur die Reise Ihres Tieres?", subtitle: "Fordern Sie ein kostenloses Angebot an und entdecken Sie, wie wir Ihr Tier betreuen." },
   es: { title: "Listo para el viaje de tu mascota?", subtitle: "Solicita un presupuesto gratuito y descubre como podemos cuidar de tu mascota." },
+  tr: { title: "Evcil hayvanınızın yolculuğuna hazır mısınız?", subtitle: "Ücretsiz teklif isteyin ve evcil hayvanınıza nasıl bakabileceğimizi keşfedin." },
 };
 
 export function CtaBand({ lang, dict }: Props) {

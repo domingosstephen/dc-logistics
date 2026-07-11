@@ -17,6 +17,7 @@ export function CoveragePreview({ lang }: Props) {
     en: { title: "Our Routes", subtitle: "We cover the main pet transport routes across Europe", cta: "Discover all our routes" },
     de: { title: "Unsere Routen", subtitle: "Wir decken die wichtigsten Tiertransportrouten in Europa ab", cta: "Alle Routen entdecken" },
     es: { title: "Nuestras Rutas", subtitle: "Cubrimos las principales rutas de transporte de mascotas en Europa", cta: "Descubre todas nuestras rutas" },
+    tr: { title: "Güzergahlarımız", subtitle: "Avrupa genelinde başlıca evcil hayvan taşımacılığı güzergahlarını kapsıyoruz", cta: "Tüm güzergahları keşfedin" },
   };
   const t = labels[lang];
 

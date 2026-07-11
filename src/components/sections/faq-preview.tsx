@@ -40,6 +40,12 @@ const faqsByLang: Record<Locale, { q: string; a: string }[]> = {
     { q: "Mi mascota viaja sola?", a: "Nunca. Un operador experto y dedicado acompana a tu mascota durante todo el viaje." },
     { q: "Cuanto tiempo dura el viaje?", a: "Depende de la ruta. Los viajes dentro de Europa duran generalmente de 1 a 3 dias." },
   ],
+  tr: [
+    { q: "Evcil hayvanımın taşınması için hangi belgeler gerekli?", a: "Mikro çip, güncel aşılar (kuduz dahil), sağlık sertifikası ve AB evcil hayvan pasaportu gereklidir. Tüm belgeleme sürecini biz hallederiz." },
+    { q: "Evcil hayvanımın yolculuğunu nasıl takip edebilirim?", a: "Benzersiz bir takip kodu alacaksınız. Gerçek zamanlı güncellemeler için 'Evcil Hayvanınızı Takip Edin' sayfasına girin." },
+    { q: "Evcil hayvanım yalnız mı yolculuk eder?", a: "Asla. Deneyimli ve özel bir bakıcı, evcil hayvanınıza yolculuk boyunca eşlik eder." },
+    { q: "Yolculuk ne kadar sürer?", a: "Güzergaha bağlıdır. Avrupa içi yolculuklar genellikle 1 ila 3 gün sürer." },
+  ],
 };
 
 const ctaLabels: Record<Locale, string> = {
@@ -47,6 +53,7 @@ const ctaLabels: Record<Locale, string> = {
   en: "See all FAQs",
   de: "Alle FAQ ansehen",
   es: "Ver todas las FAQ",
+  tr: "Tüm SSS'leri gör",
 };
 
 export function FaqPreview({ lang, dict }: Props) {
