@@ -29,6 +29,8 @@ const countries = [
   { label: "Romania", code: "RO" },
   { label: "Greece", code: "GR" },
   { label: "Bulgaria", code: "BG" },
+  { label: "Turkey", code: "TR" },
+  { label: "Cyprus", code: "CY" },
   // North America
   { label: "United States", code: "US" },
   { label: "Canada", code: "CA" },
