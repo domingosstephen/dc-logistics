@@ -16,6 +16,7 @@ export const countryPrefixes: Record<string, string> = {
   IT: "IT", DE: "DE", FR: "FR", ES: "ES", AT: "AT", CH: "CH",
   NL: "NL", BE: "BE", PT: "PT", HR: "HR", SI: "SI", GR: "GR",
   PL: "PL", CZ: "CZ", HU: "HU", RO: "RO", BG: "BG", GB: "GB",
+  TR: "TR", CY: "CY",
   // Americas
   US: "US", CA: "CA", MX: "MX", CR: "CR", PA: "PA", DO: "DO",
   BR: "BR", AR: "AR", CO: "CO", CL: "CL", PE: "PE", EC: "EC",
