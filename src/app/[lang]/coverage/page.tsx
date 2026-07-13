@@ -19,6 +19,11 @@ const corridors = [
   { from: "Germany", to: "Poland", cities: "Berlin, Dresden -> Warsaw, Krakow" },
   { from: "France", to: "Spain", cities: "Toulouse, Bordeaux -> Barcelona, Madrid" },
   { from: "Germany", to: "UK", cities: "Hamburg, Frankfurt -> London, Manchester" },
+  { from: "Italy", to: "Turkey", cities: "Rome, Milan -> Istanbul, Ankara, Izmir" },
+  { from: "Germany", to: "Turkey", cities: "Berlin, Frankfurt -> Istanbul, Ankara" },
+  { from: "Italy", to: "Cyprus", cities: "Rome, Milan -> Nicosia, Limassol, Larnaca" },
+  { from: "Greece", to: "Cyprus", cities: "Athens, Thessaloniki -> Nicosia, Limassol" },
+  { from: "UK", to: "Cyprus", cities: "London -> Nicosia, Limassol, Paphos" },
   // Transatlantic
   { from: "Italy", to: "USA", cities: "Rome, Milan -> New York, Miami, Los Angeles" },
   { from: "Italy", to: "Brazil", cities: "Rome, Milan -> Sao Paulo, Rio de Janeiro" },
