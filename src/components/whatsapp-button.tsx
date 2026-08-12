@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 export function WhatsAppButton() {
   return (
     <motion.a
-      href="https://wa.me/31684047232"
+      href="https://wa.me/393508410749"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

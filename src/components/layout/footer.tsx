@@ -54,7 +54,7 @@ export function Footer({ lang, dict }: FooterProps) {
             <ul className="space-y-2.5">
               <li>
                 <a
-                  href="https://wa.me/31684047232"
+                  href="https://wa.me/393508410749"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-paper/60 hover:text-honey transition-colors flex items-center gap-2"
