@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
-
-const locales = ["it", "en", "de", "es", "tr"];
-const defaultLocale = "it";
+import { locales, defaultLocale } from "@/i18n/config";
 
 function getPreferredLocale(request: NextRequest): string {
   const acceptLang = request.headers.get("accept-language") || "";
@@ -21,7 +19,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/admin") ||
-    pathname.includes(".") // static files like favicon.ico
+    pathname.includes(".")
   ) {
     // Admin auth check
     if (

@@ -13,20 +13,15 @@ export default async function QuotePage({ params }: Props) {
   const dict = await getDictionary(lang as Locale);
 
   return (
-    <>
-      <section className="bg-pine-deep text-paper py-24 md:py-32">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-display text-4xl md:text-6xl font-semibold tracking-tight">
-            {dict.quote.title}
-          </h1>
-          <p className="mt-4 text-lg text-paper/60 max-w-xl mx-auto">
-            {dict.quote.subtitle}
-          </p>
-        </div>
-      </section>
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 -mt-8 mb-20">
-        <QuoteForm dict={dict} />
+    <main className="mx-auto max-w-[1200px] px-5 md:px-8 py-18 md:py-24">
+      <div className="max-w-2xl">
+        <h1 className="font-display text-4xl font-semibold text-deep mb-3">
+          {dict.quote.h1}
+        </h1>
+        <p className="text-steel mb-10">{dict.quote.intro}</p>
+        <QuoteForm lang={lang as Locale} dict={dict} />
+        <p className="mt-6 text-xs text-steel">{dict.quote.note}</p>
       </div>
-    </>
+    </main>
   );
 }

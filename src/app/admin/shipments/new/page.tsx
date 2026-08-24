@@ -4,60 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createBrowserClient } from "@/lib/supabase/client";
-import { generateTrackingCode } from "@/lib/tracking-code";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
-const countries = [
-  // Europe
-  { label: "Italy", code: "IT" },
-  { label: "Germany", code: "DE" },
-  { label: "France", code: "FR" },
-  { label: "Spain", code: "ES" },
-  { label: "Austria", code: "AT" },
-  { label: "Switzerland", code: "CH" },
-  { label: "Netherlands", code: "NL" },
-  { label: "Belgium", code: "BE" },
-  { label: "Poland", code: "PL" },
-  { label: "Czech Republic", code: "CZ" },
-  { label: "Croatia", code: "HR" },
-  { label: "Slovenia", code: "SI" },
-  { label: "Hungary", code: "HU" },
-  { label: "United Kingdom", code: "GB" },
-  { label: "Portugal", code: "PT" },
-  { label: "Romania", code: "RO" },
-  { label: "Greece", code: "GR" },
-  { label: "Bulgaria", code: "BG" },
-  { label: "Turkey", code: "TR" },
-  { label: "Cyprus", code: "CY" },
-  // North America
-  { label: "United States", code: "US" },
-  { label: "Canada", code: "CA" },
-  { label: "Mexico", code: "MX" },
-  // Central America & Caribbean
-  { label: "Costa Rica", code: "CR" },
-  { label: "Panama", code: "PA" },
-  { label: "Dominican Republic", code: "DO" },
-  // South America
-  { label: "Brazil", code: "BR" },
-  { label: "Argentina", code: "AR" },
-  { label: "Colombia", code: "CO" },
-  { label: "Chile", code: "CL" },
-  { label: "Peru", code: "PE" },
-  { label: "Ecuador", code: "EC" },
-  { label: "Uruguay", code: "UY" },
-  { label: "Venezuela", code: "VE" },
-  { label: "Paraguay", code: "PY" },
-  { label: "Bolivia", code: "BO" },
-];
+import { Textarea } from "@/components/ui/textarea";
 
 export default function NewShipmentPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [originCountry, setOriginCountry] = useState("IT");
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,66 +22,51 @@ export default function NewShipmentPage() {
     const supabase = createBrowserClient();
     const form = new FormData(e.currentTarget);
 
-    const trackingCode = generateTrackingCode(originCountry);
+    // Generate tracking code via the DB function
+    const { data: codeData, error: codeError } = await supabase.rpc("next_tracking_code");
+    if (codeError || !codeData) {
+      setError("Erro ao gerar número de rastreio. Tente novamente.");
+      setLoading(false);
+      return;
+    }
+    const trackingCode = codeData as string;
 
-    // Insert shipment
     const { data: shipment, error: insertError } = await supabase
       .from("shipments")
       .insert({
         tracking_code: trackingCode,
         status: "registered",
-        pet_name: form.get("pet_name") as string,
-        pet_species: form.get("pet_species") as string,
-        pet_breed: (form.get("pet_breed") as string) || null,
         origin_city: form.get("origin_city") as string,
-        origin_country: originCountry,
+        origin_country: form.get("origin_country") as string,
         destination_city: form.get("destination_city") as string,
         destination_country: form.get("destination_country") as string,
-        estimated_delivery: (form.get("estimated_delivery") as string) || null,
-        departure_date: (form.get("departure_date") as string) || null,
-        departure_time: (form.get("departure_time") as string) || null,
-        arrival_time: (form.get("arrival_time") as string) || null,
-        sender_name: (form.get("sender_name") as string) || null,
-        sender_email: (form.get("sender_email") as string) || null,
-        sender_phone: (form.get("sender_phone") as string) || null,
-        sender_address: (form.get("sender_address") as string) || null,
-        receiver_name: (form.get("receiver_name") as string) || null,
-        receiver_email: (form.get("receiver_email") as string) || null,
-        receiver_phone: (form.get("receiver_phone") as string) || null,
-        receiver_address: (form.get("receiver_address") as string) || null,
-        customer_name: (form.get("sender_name") as string) || null,
-        customer_email: (form.get("sender_email") as string) || null,
+        description: form.get("description") as string,
+        pieces: parseInt((form.get("pieces") as string) || "1"),
+        weight_kg: form.get("weight_kg") ? parseFloat(form.get("weight_kg") as string) : null,
+        dimensions: (form.get("dimensions") as string) || null,
+        declared_value: form.get("declared_value") ? parseFloat(form.get("declared_value") as string) : null,
+        currency: (form.get("currency") as string) || "BRL",
+        recipient_name: (form.get("recipient_name") as string) || null,
+        recipient_phone: (form.get("recipient_phone") as string) || null,
+        recipient_address: (form.get("recipient_address") as string) || null,
+        client_name: (form.get("client_name") as string) || null,
+        client_email: (form.get("client_email") as string) || null,
+        carrier_ref: (form.get("carrier_ref") as string) || null,
       })
       .select()
       .single();
 
     if (insertError || !shipment) {
-      setError("Error creating shipment. Please try again.");
+      setError("Erro ao registrar envio. Tente novamente.");
       setLoading(false);
       return;
     }
 
-    // Upload photo if provided
-    if (photoFile) {
-      const ext = photoFile.name.split(".").pop();
-      const path = `${shipment.id}/photo.${ext}`;
-      const { error: uploadError } = await supabase.storage
-        .from("pet-photos")
-        .upload(path, photoFile, { upsert: true });
-
-      if (!uploadError) {
-        await supabase
-          .from("shipments")
-          .update({ pet_photo_path: path })
-          .eq("id", shipment.id);
-      }
-    }
-
-    // Create initial event
+    // Create initial registered event
     await supabase.from("shipment_events").insert({
       shipment_id: shipment.id,
       status: "registered",
-      note: `${form.get("pet_name")} has been registered. Code: ${trackingCode}`,
+      location: `${form.get("origin_city")}, ${form.get("origin_country")}`,
       happened_at: new Date().toISOString(),
     });
 
@@ -134,173 +74,124 @@ export default function NewShipmentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-mist">
-      <header className="bg-pine-deep text-paper">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/admin" className="font-display text-xl font-semibold">
-              WayTrasporto
-            </Link>
-            <span className="text-xs bg-honey/20 text-honey px-2 py-0.5 rounded-full">Admin</span>
-          </div>
+    <div className="min-h-screen bg-background">
+      <header className="bg-deep text-white border-b border-white/10">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-8 py-3 flex items-center gap-6">
+          <Link href="/admin" className="font-display text-lg font-semibold">DC Logistics Brasil</Link>
+          <span className="text-[11px] font-mono text-white/40 uppercase tracking-widest">Admin</span>
         </div>
       </header>
 
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/admin" className="text-sm text-pine hover:text-pine-deep mb-4 inline-block">
-          ← Back to list
+      <div className="mx-auto max-w-[800px] px-5 md:px-8 py-8">
+        <Link href="/admin" className="text-sm text-marine hover:underline mb-6 inline-block">
+          ← Envios
         </Link>
 
-        <div className="bg-paper rounded-xl p-8">
-          <h1 className="font-display text-2xl font-semibold text-ink mb-6">
-            New Shipment
-          </h1>
+        <h1 className="font-display text-3xl font-semibold text-deep mb-8">Novo envio</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Pet info */}
-            <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Pet Information</legend>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="pet_name">Pet Name *</Label>
-                  <Input id="pet_name" name="pet_name" required className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="pet_species">Species *</Label>
-                  <select id="pet_species" name="pet_species" required className="mt-1.5 h-10 w-full rounded-lg border border-pine/20 bg-mist px-3 text-sm">
-                    <option value="dog">Dog</option>
-                    <option value="cat">Cat</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <Label htmlFor="pet_breed">Breed</Label>
-                  <Input id="pet_breed" name="pet_breed" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="pet_photo">Photo</Label>
-                  <Input
-                    id="pet_photo"
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
-                    className="mt-1.5 rounded-lg border-pine/20 bg-mist"
-                  />
-                </div>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Cliente */}
+          <fieldset className="bg-surface rounded-lg border border-border p-6 space-y-4">
+            <legend className="font-mono text-[11px] tracking-widest text-steel uppercase px-1">Cliente</legend>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="client_name" className="text-sm text-ink mb-1.5 block">Nome</Label>
+                <Input id="client_name" name="client_name" className="h-10" />
               </div>
-            </fieldset>
-
-            {/* Route */}
-            <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Route</legend>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="origin_city">Origin City *</Label>
-                  <Input id="origin_city" name="origin_city" required className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="origin_country">Origin Country *</Label>
-                  <select
-                    id="origin_country"
-                    name="origin_country"
-                    required
-                    value={originCountry}
-                    onChange={(e) => setOriginCountry(e.target.value)}
-                    className="mt-1.5 h-10 w-full rounded-lg border border-pine/20 bg-mist px-3 text-sm"
-                  >
-                    {countries.map((c) => (
-                      <option key={c.code} value={c.code}>{c.label}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <Label htmlFor="destination_city">Destination City *</Label>
-                  <Input id="destination_city" name="destination_city" required className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="destination_country">Destination Country *</Label>
-                  <select id="destination_country" name="destination_country" required className="mt-1.5 h-10 w-full rounded-lg border border-pine/20 bg-mist px-3 text-sm">
-                    {countries.map((c) => (
-                      <option key={c.code} value={c.code}>{c.label}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <Label htmlFor="departure_date">Departure Date</Label>
-                  <Input id="departure_date" name="departure_date" type="date" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="estimated_delivery">Estimated Delivery</Label>
-                  <Input id="estimated_delivery" name="estimated_delivery" type="date" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="departure_time">Departure Time</Label>
-                  <Input id="departure_time" name="departure_time" type="time" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="arrival_time">Arrival Time</Label>
-                  <Input id="arrival_time" name="arrival_time" type="time" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
+              <div>
+                <Label htmlFor="client_email" className="text-sm text-ink mb-1.5 block">E-mail</Label>
+                <Input id="client_email" name="client_email" type="email" className="h-10" />
               </div>
-            </fieldset>
+            </div>
+          </fieldset>
 
-            {/* Sender */}
-            <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Sender (shipping the pet)</legend>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="sender_name">Name</Label>
-                  <Input id="sender_name" name="sender_name" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="sender_email">Email</Label>
-                  <Input id="sender_email" name="sender_email" type="email" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="sender_phone">Phone</Label>
-                  <Input id="sender_phone" name="sender_phone" type="tel" placeholder="+39 ..." className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div className="sm:col-span-2">
-                  <Label htmlFor="sender_address">Address</Label>
-                  <Input id="sender_address" name="sender_address" placeholder="Street, city, postcode" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
+          {/* Origem e destino */}
+          <fieldset className="bg-surface rounded-lg border border-border p-6 space-y-4">
+            <legend className="font-mono text-[11px] tracking-widest text-steel uppercase px-1">Origem e destino</legend>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="origin_city" className="text-sm text-ink mb-1.5 block">Cidade de origem *</Label>
+                <Input id="origin_city" name="origin_city" required className="h-10" />
               </div>
-            </fieldset>
-
-            {/* Receiver */}
-            <fieldset>
-              <legend className="text-sm font-medium text-ink/50 mb-3">Receiver (receiving the pet)</legend>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="receiver_name">Name</Label>
-                  <Input id="receiver_name" name="receiver_name" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="receiver_email">Email</Label>
-                  <Input id="receiver_email" name="receiver_email" type="email" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div>
-                  <Label htmlFor="receiver_phone">Phone</Label>
-                  <Input id="receiver_phone" name="receiver_phone" type="tel" placeholder="+49 ..." className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
-                <div className="sm:col-span-2">
-                  <Label htmlFor="receiver_address">Address</Label>
-                  <Input id="receiver_address" name="receiver_address" placeholder="Street, city, postcode" className="mt-1.5 rounded-lg border-pine/20 bg-mist" />
-                </div>
+              <div>
+                <Label htmlFor="origin_country" className="text-sm text-ink mb-1.5 block">País de origem *</Label>
+                <Input id="origin_country" name="origin_country" required defaultValue="BR" className="h-10" />
               </div>
-            </fieldset>
+              <div>
+                <Label htmlFor="destination_city" className="text-sm text-ink mb-1.5 block">Cidade de destino *</Label>
+                <Input id="destination_city" name="destination_city" required className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="destination_country" className="text-sm text-ink mb-1.5 block">País de destino *</Label>
+                <Input id="destination_country" name="destination_country" required className="h-10" />
+              </div>
+            </div>
+          </fieldset>
 
-            {error && <p className="text-sm text-[#C0563E]">{error}</p>}
+          {/* Destinatário */}
+          <fieldset className="bg-surface rounded-lg border border-border p-6 space-y-4">
+            <legend className="font-mono text-[11px] tracking-widest text-steel uppercase px-1">Destinatário</legend>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="recipient_name" className="text-sm text-ink mb-1.5 block">Nome</Label>
+                <Input id="recipient_name" name="recipient_name" className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="recipient_phone" className="text-sm text-ink mb-1.5 block">Telefone</Label>
+                <Input id="recipient_phone" name="recipient_phone" type="tel" className="h-10" />
+              </div>
+              <div className="sm:col-span-2">
+                <Label htmlFor="recipient_address" className="text-sm text-ink mb-1.5 block">Endereço</Label>
+                <Input id="recipient_address" name="recipient_address" className="h-10" />
+              </div>
+            </div>
+          </fieldset>
 
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full h-10 rounded-xl bg-pine text-paper hover:bg-pine-deep"
-            >
-              {loading ? "Creating..." : "Create Shipment"}
-            </Button>
-          </form>
-        </div>
+          {/* Mercadoria */}
+          <fieldset className="bg-surface rounded-lg border border-border p-6 space-y-4">
+            <legend className="font-mono text-[11px] tracking-widest text-steel uppercase px-1">Mercadoria</legend>
+            <div>
+              <Label htmlFor="description" className="text-sm text-ink mb-1.5 block">Descrição *</Label>
+              <Textarea id="description" name="description" required rows={2} className="resize-none" />
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div>
+                <Label htmlFor="pieces" className="text-sm text-ink mb-1.5 block">Volumes *</Label>
+                <Input id="pieces" name="pieces" type="number" min="1" defaultValue="1" required className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="weight_kg" className="text-sm text-ink mb-1.5 block">Peso (kg)</Label>
+                <Input id="weight_kg" name="weight_kg" type="number" min="0" step="0.01" className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="dimensions" className="text-sm text-ink mb-1.5 block">Dimensões</Label>
+                <Input id="dimensions" name="dimensions" placeholder="C×L×A cm" className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="currency" className="text-sm text-ink mb-1.5 block">Moeda</Label>
+                <Input id="currency" name="currency" defaultValue="BRL" className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="declared_value" className="text-sm text-ink mb-1.5 block">Valor declarado</Label>
+                <Input id="declared_value" name="declared_value" type="number" min="0" step="0.01" className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="carrier_ref" className="text-sm text-ink mb-1.5 block">Ref. transportadora</Label>
+                <Input id="carrier_ref" name="carrier_ref" className="h-10" />
+              </div>
+            </div>
+          </fieldset>
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full h-11 bg-marine text-white hover:bg-marine/90"
+          >
+            {loading ? "Registrando…" : "Registrar envio"}
+          </Button>
+        </form>
       </div>
     </div>
   );

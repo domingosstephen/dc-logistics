@@ -20,13 +20,10 @@ export default function AdminLoginPage() {
     setError("");
 
     const supabase = createBrowserClient();
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      setError("Invalid credentials. Please try again.");
+      setError("Credenciais inválidas. Tente novamente.");
       setLoading(false);
       return;
     }
@@ -36,35 +33,37 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-pine-deep p-4">
+    <div className="min-h-screen flex items-center justify-center bg-deep p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="font-display text-3xl font-semibold text-paper">
-            WayTrasporto
+          <h1 className="font-display text-2xl font-semibold text-white">
+            DC Logistics Brasil
           </h1>
-          <p className="text-paper/50 text-sm mt-2">Admin Panel</p>
+          <p className="text-white/40 text-xs font-mono tracking-widest uppercase mt-2">
+            Admin
+          </p>
         </div>
 
-        <div className="bg-paper rounded-2xl shadow-[var(--shadow-soft)] p-8">
-          <h2 className="font-display text-xl font-semibold text-ink mb-6">
-            Sign In
+        <div className="bg-surface rounded-lg border border-white/10 p-8">
+          <h2 className="font-display text-xl font-semibold text-deep mb-6">
+            Entrar
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm text-ink mb-1.5 block">E-mail</Label>
               <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="admin@waytrasporto.com"
-                className="mt-1.5 rounded-xl border-pine/20 bg-mist"
+                placeholder="admin@dclogisticsbrasil.com"
+                className="h-10"
               />
             </div>
             <div>
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm text-ink mb-1.5 block">Senha</Label>
               <Input
                 id="password"
                 type="password"
@@ -72,18 +71,18 @@ export default function AdminLoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
-                className="mt-1.5 rounded-xl border-pine/20 bg-mist"
+                className="h-10"
               />
             </div>
 
-            {error && <p className="text-sm text-[#C0563E]">{error}</p>}
+            {error && <p className="text-sm text-destructive">{error}</p>}
 
             <Button
               type="submit"
               disabled={loading}
-              className="w-full h-10 rounded-xl bg-pine text-paper hover:bg-pine-deep"
+              className="w-full h-10 bg-marine text-white hover:bg-marine/90"
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Entrando…" : "Entrar"}
             </Button>
           </form>
         </div>

@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { LenisProvider } from "@/components/providers/lenis-provider";
-import { WhatsAppButton } from "@/components/whatsapp-button";
-import { getDictionary, hasLocale } from "./dictionaries";
+import { ServiceAlertBanner } from "@/components/layout/service-alert-banner";
+import { getDictionary, hasLocale, locales } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 
 export async function generateStaticParams() {
-  return [{ lang: "it" }, { lang: "en" }, { lang: "de" }, { lang: "es" }, { lang: "tr" }];
+  return locales.map((lang) => ({ lang }));
 }
 
 export default async function LangLayout({
@@ -23,11 +22,11 @@ export default async function LangLayout({
   const dict = await getDictionary(lang as Locale);
 
   return (
-    <LenisProvider>
+    <>
+      <ServiceAlertBanner />
       <Header lang={lang as Locale} dict={dict} />
-      <main className="flex-1 pt-16">{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer lang={lang as Locale} dict={dict} />
-      <WhatsAppButton />
-    </LenisProvider>
+    </>
   );
 }

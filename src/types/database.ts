@@ -1,45 +1,67 @@
-export type ShipmentStatus =
+// Rail states — 8 main stages
+export type RailStatus =
   | "registered"
-  | "documentation"
-  | "awaiting_departure"
+  | "received"
+  | "processing"
+  | "export_clearance"
   | "in_transit"
-  | "border_crossing"
-  | "arrival_hub"
+  | "import_clearance"
   | "out_for_delivery"
-  | "delivered"
-  | "on_hold"
-  | "delayed";
+  | "delivered";
 
+// Off-rail exception states
+export type ExceptionStatus = "on_hold" | "returned" | "cancelled";
+
+export type ShipmentStatus = RailStatus | ExceptionStatus;
+
+// Rail stage order (for the manifest rail component)
+export const RAIL_STAGES: RailStatus[] = [
+  "registered",
+  "received",
+  "processing",
+  "export_clearance",
+  "in_transit",
+  "import_clearance",
+  "out_for_delivery",
+  "delivered",
+];
+
+export const EXCEPTION_STATUSES: ExceptionStatus[] = [
+  "on_hold",
+  "returned",
+  "cancelled",
+];
+
+export function isExceptionStatus(s: ShipmentStatus): s is ExceptionStatus {
+  return EXCEPTION_STATUSES.includes(s as ExceptionStatus);
+}
+
+// Full shipment row (admin / client auth view)
 export interface Shipment {
   id: string;
   tracking_code: string;
   status: ShipmentStatus;
-  pet_name: string;
-  pet_species: string;
-  pet_breed: string | null;
-  pet_photo_path: string | null;
   origin_city: string;
   origin_country: string;
   destination_city: string;
   destination_country: string;
-  estimated_delivery: string | null;
-  departure_date: string | null;
-  departure_time: string | null;
-  arrival_time: string | null;
-  customer_name: string | null;
-  customer_email: string | null;
-  sender_name: string | null;
-  sender_email: string | null;
-  sender_phone: string | null;
-  sender_address: string | null;
-  receiver_name: string | null;
-  receiver_email: string | null;
-  receiver_phone: string | null;
-  receiver_address: string | null;
+  description: string;
+  pieces: number;
+  weight_kg: number | null;
+  dimensions: string | null;
+  declared_value: number | null;
+  currency: string;
+  recipient_name: string | null;
+  recipient_phone: string | null;
+  recipient_address: string | null;
+  client_name: string | null;
+  client_email: string | null;
+  carrier_ref: string | null;
   created_at: string;
   updated_at: string;
 }
 
+// Event row (staff view includes audit columns)
 export interface ShipmentEvent {
   id: string;
   shipment_id: string;
@@ -48,29 +70,28 @@ export interface ShipmentEvent {
   note: string | null;
   happened_at: string;
   created_at: string;
+  updated_at: string | null;
+  updated_by: string | null;
 }
 
-export interface Profile {
-  id: string;
-  role: "admin" | "staff";
-}
-
+// Public-facing shipment — NEVER include sensitive fields
 export interface PublicShipment {
+  found: true;
   tracking_code: string;
   status: ShipmentStatus;
-  pet_name: string;
-  pet_species: string;
-  pet_breed: string | null;
-  pet_photo_path: string | null;
   origin_city: string;
   origin_country: string;
   destination_city: string;
   destination_country: string;
-  estimated_delivery: string | null;
-  receiver_name: string | null;
-  receiver_address: string | null;
+  pieces: number;
   events: PublicShipmentEvent[];
 }
+
+export interface PublicShipmentNotFound {
+  found: false;
+}
+
+export type PublicShipmentResult = PublicShipment | PublicShipmentNotFound;
 
 export interface PublicShipmentEvent {
   status: ShipmentStatus;
@@ -79,22 +100,52 @@ export interface PublicShipmentEvent {
   happened_at: string;
 }
 
+export interface Profile {
+  id: string;
+  role: "staff" | "admin";
+}
+
 export interface QuoteRequest {
   id: string;
-  pet_species: string;
-  pet_breed: string | null;
+  company: string | null;
+  contact_name: string;
+  contact_email: string;
+  contact_phone: string | null;
   origin_city: string;
-  origin_country: string;
-  destination_city: string;
   destination_country: string;
-  preferred_date: string | null;
-  customer_name: string;
-  customer_email: string;
-  message: string | null;
+  destination_city: string;
+  description: string;
+  pieces: number | null;
+  weight_kg: number | null;
+  dimensions: string | null;
+  declared_value: number | null;
+  currency: string;
+  notes: string | null;
   created_at: string;
 }
 
-// Supabase generated types placeholder
+export interface Follower {
+  id: string;
+  shipment_id: string;
+  email: string;
+  token: string;
+  confirmed_at: string | null;
+  unsubscribed_at: string | null;
+  created_at: string;
+}
+
+export interface ServiceAlert {
+  id: string;
+  message_pt: string;
+  message_en: string;
+  starts_at: string;
+  expires_at: string;
+  active: boolean;
+  created_by: string | null;
+  created_at: string;
+}
+
+// Supabase generated-types placeholder
 export interface Database {
   public: {
     Tables: {
@@ -105,7 +156,7 @@ export interface Database {
       };
       shipment_events: {
         Row: ShipmentEvent;
-        Insert: Omit<ShipmentEvent, "id" | "created_at">;
+        Insert: Omit<ShipmentEvent, "id" | "created_at" | "updated_at" | "updated_by">;
         Update: Partial<Omit<ShipmentEvent, "id" | "created_at">>;
       };
       profiles: {
@@ -116,13 +167,35 @@ export interface Database {
       quote_requests: {
         Row: QuoteRequest;
         Insert: Omit<QuoteRequest, "id" | "created_at">;
-        Update: Partial<Omit<QuoteRequest, "id" | "created_at">>;
+        Update: never;
+      };
+      followers: {
+        Row: Follower;
+        Insert: Omit<Follower, "id" | "token" | "confirmed_at" | "unsubscribed_at" | "created_at">;
+        Update: Pick<Follower, "confirmed_at" | "unsubscribed_at">;
+      };
+      service_alerts: {
+        Row: ServiceAlert;
+        Insert: Omit<ServiceAlert, "id" | "created_at">;
+        Update: Partial<Omit<ServiceAlert, "id" | "created_at">>;
       };
     };
     Functions: {
       get_shipment_by_code: {
         Args: { p_code: string };
-        Returns: PublicShipment | null;
+        Returns: PublicShipmentResult;
+      };
+      next_tracking_code: {
+        Args: Record<never, never>;
+        Returns: string;
+      };
+      confirm_follower: {
+        Args: { p_token: string };
+        Returns: boolean;
+      };
+      unsubscribe_follower: {
+        Args: { p_token: string };
+        Returns: boolean;
       };
     };
     Enums: {

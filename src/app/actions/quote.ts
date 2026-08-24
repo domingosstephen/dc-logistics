@@ -1,38 +1,46 @@
 "use server";
 
-import { createServiceClient } from "@/lib/supabase/server";
+import { createServerClient } from "@/lib/supabase/server";
 
 interface QuoteFormData {
-  pet_species: string;
-  pet_breed: string;
+  company?: string;
+  contact_name: string;
+  contact_email: string;
+  contact_phone?: string;
   origin_city: string;
-  origin_country: string;
-  destination_city: string;
-  destination_country: string;
-  preferred_date: string;
-  customer_name: string;
-  customer_email: string;
-  message: string;
+  dest_country: string;
+  dest_city: string;
+  description: string;
+  pieces?: string;
+  weight_kg?: string;
+  dimensions?: string;
+  declared_value?: string;
+  currency?: string;
+  notes?: string;
 }
 
 export async function submitQuote(data: QuoteFormData) {
-  const supabase = createServiceClient();
+  const supabase = createServerClient();
 
   const { error } = await supabase.from("quote_requests").insert({
-    pet_species: data.pet_species,
-    pet_breed: data.pet_breed || null,
+    company: data.company || null,
+    contact_name: data.contact_name,
+    contact_email: data.contact_email,
+    contact_phone: data.contact_phone || null,
     origin_city: data.origin_city,
-    origin_country: data.origin_country,
-    destination_city: data.destination_city,
-    destination_country: data.destination_country,
-    preferred_date: data.preferred_date || null,
-    customer_name: data.customer_name,
-    customer_email: data.customer_email,
-    message: data.message || null,
+    destination_country: data.dest_country,
+    destination_city: data.dest_city,
+    description: data.description,
+    pieces: data.pieces ? parseInt(data.pieces) : null,
+    weight_kg: data.weight_kg ? parseFloat(data.weight_kg) : null,
+    dimensions: data.dimensions || null,
+    declared_value: data.declared_value ? parseFloat(data.declared_value) : null,
+    currency: data.currency || "BRL",
+    notes: data.notes || null,
   });
 
   if (error) {
-    return { success: false, error: "Si e verificato un errore. Riprova." };
+    return { success: false };
   }
 
   return { success: true };

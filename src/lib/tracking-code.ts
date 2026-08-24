@@ -1,17 +1,25 @@
-import { countryPrefixes } from "@/i18n/config";
+/**
+ * Tracking code format: DCBR-YYMM-NNNNNN
+ *
+ * The sequential number is generated server-side via the
+ * next_tracking_code() Postgres function (see migration-005).
+ * This module provides the client-side normalisation helper only.
+ */
 
-const CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no I/O/0/1
-
-function randomChars(n: number): string {
-  let result = "";
-  for (let i = 0; i < n; i++) {
-    result += CHARS[Math.floor(Math.random() * CHARS.length)];
-  }
-  return result;
+/**
+ * Normalise a user-supplied tracking code before lookup.
+ * Strips spaces and hyphens, uppercases. Matches RPC behaviour.
+ */
+export function normaliseTrackingCode(raw: string): string {
+  return raw.replace(/[\s\-]/g, "").toUpperCase();
 }
 
-export function generateTrackingCode(originCountry: string): string {
-  const prefix =
-    countryPrefixes[originCountry.toUpperCase()] || originCountry.toUpperCase().slice(0, 2);
-  return `${prefix}-${randomChars(4)}-${randomChars(2)}`;
+/**
+ * Validate that a string looks like a DCBR tracking code.
+ * Accepts with or without separators.
+ */
+export function isValidTrackingFormat(code: string): boolean {
+  const normalised = normaliseTrackingCode(code);
+  // DCBR + 4-digit YYMM + 6-digit sequential = 14 chars
+  return /^DCBR\d{4}\d{6}$/.test(normalised);
 }

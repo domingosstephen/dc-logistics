@@ -2,220 +2,117 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { submitQuote } from "@/app/actions/quote";
-import type { Dictionary } from "@/app/[lang]/dictionaries";
+import type { Locale, Dictionary } from "@/app/[lang]/dictionaries";
 
-interface QuoteFormProps {
+interface Props {
+  lang: Locale;
   dict: Dictionary;
 }
 
-const countries = [
-  "Italia", "Germania", "Francia", "Spagna", "Austria", "Svizzera",
-  "Paesi Bassi", "Belgio", "Polonia", "Rep. Ceca", "Croazia",
-  "Slovenia", "Ungheria", "Regno Unito", "Portogallo", "Romania",
-  "Grecia", "Bulgaria",
-];
-
-export function QuoteForm({ dict }: QuoteFormProps) {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+export function QuoteForm({ lang: _lang, dict }: Props) {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    const form = new FormData(e.currentTarget);
-    const data = {
-      pet_species: form.get("pet_species") as string,
-      pet_breed: form.get("pet_breed") as string,
-      origin_city: form.get("origin_city") as string,
-      origin_country: form.get("origin_country") as string,
-      destination_city: form.get("destination_city") as string,
-      destination_country: form.get("destination_country") as string,
-      preferred_date: form.get("preferred_date") as string,
-      customer_name: form.get("customer_name") as string,
-      customer_email: form.get("customer_email") as string,
-      message: form.get("message") as string,
-    };
-
-    const result = await submitQuote(data);
-    setLoading(false);
-
-    if (result.success) {
-      setSuccess(true);
-    } else {
-      setError(result.error || "Errore sconosciuto");
+    setStatus("sending");
+    try {
+      const fd = new FormData(e.currentTarget);
+      const res = await fetch("/api/quote", {
+        method: "POST",
+        body: JSON.stringify(Object.fromEntries(fd)),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!res.ok) throw new Error("failed");
+      setStatus("success");
+    } catch {
+      setStatus("error");
     }
   };
 
-  if (success) {
+  if (status === "success") {
     return (
-      <div className="bg-paper rounded-2xl shadow-[var(--shadow-soft)] p-8 md:p-10 text-center">
-        <div className="w-16 h-16 rounded-full bg-pine/10 flex items-center justify-center mx-auto mb-5">
-          <svg className="w-8 h-8 text-pine" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h2 className="font-display text-xl font-semibold text-ink mb-2">
-          {dict.quote.success.split("!")[0]}!
-        </h2>
-        <p className="text-ink/60 text-sm">
-          {dict.quote.success}
-        </p>
+      <div className="bg-surface rounded-lg border border-border p-6">
+        <p className="text-ink">{dict.quote.success.replace("{email}", email)}</p>
       </div>
     );
   }
 
+  const q = dict.quote;
+
   return (
-    <div className="bg-paper rounded-2xl shadow-[var(--shadow-soft)] p-8 md:p-10">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Pet info */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="pet_species">{dict.quote.petSpecies} *</Label>
-            <select
-              id="pet_species"
-              name="pet_species"
-              required
-              className="mt-1.5 h-10 w-full rounded-xl border border-pine/20 bg-mist px-3 text-sm text-ink focus:border-pine focus:ring-pine"
-            >
-              <option value="dog">{dict.quote.dog}</option>
-              <option value="cat">{dict.quote.cat}</option>
-              <option value="other">{dict.quote.other}</option>
-            </select>
-          </div>
-          <div>
-            <Label htmlFor="pet_breed">{dict.quote.petBreed}</Label>
-            <Input
-              id="pet_breed"
-              name="pet_breed"
-              placeholder="Es. Golden Retriever"
-              className="mt-1.5 rounded-xl border-pine/20 bg-mist"
-            />
-          </div>
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="sm:col-span-2">
+          <Label htmlFor="company" className="text-sm text-ink mb-1.5 block">{q.company}</Label>
+          <Input id="company" name="company" className="h-10" />
         </div>
-
-        {/* Origin */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="origin_city">{dict.quote.originCity} *</Label>
-            <Input
-              id="origin_city"
-              name="origin_city"
-              required
-              placeholder="Es. Milano"
-              className="mt-1.5 rounded-xl border-pine/20 bg-mist"
-            />
-          </div>
-          <div>
-            <Label htmlFor="origin_country">{dict.quote.originCountry} *</Label>
-            <select
-              id="origin_country"
-              name="origin_country"
-              required
-              className="mt-1.5 h-10 w-full rounded-xl border border-pine/20 bg-mist px-3 text-sm text-ink focus:border-pine focus:ring-pine"
-            >
-              <option value="">Seleziona...</option>
-              {countries.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Destination */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="destination_city">{dict.quote.destinationCity} *</Label>
-            <Input
-              id="destination_city"
-              name="destination_city"
-              required
-              placeholder="Es. Berlino"
-              className="mt-1.5 rounded-xl border-pine/20 bg-mist"
-            />
-          </div>
-          <div>
-            <Label htmlFor="destination_country">{dict.quote.destinationCountry} *</Label>
-            <select
-              id="destination_country"
-              name="destination_country"
-              required
-              className="mt-1.5 h-10 w-full rounded-xl border border-pine/20 bg-mist px-3 text-sm text-ink focus:border-pine focus:ring-pine"
-            >
-              <option value="">Seleziona...</option>
-              {countries.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Date */}
         <div>
-          <Label htmlFor="preferred_date">{dict.quote.preferredDate}</Label>
-          <Input
-            id="preferred_date"
-            name="preferred_date"
-            type="date"
-            className="mt-1.5 rounded-xl border-pine/20 bg-mist"
-          />
+          <Label htmlFor="contact_name" className="text-sm text-ink mb-1.5 block">{q.contactName} *</Label>
+          <Input id="contact_name" name="contact_name" required className="h-10" />
         </div>
-
-        {/* Customer */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="customer_name">{dict.quote.customerName} *</Label>
-            <Input
-              id="customer_name"
-              name="customer_name"
-              required
-              placeholder="Nome e cognome"
-              className="mt-1.5 rounded-xl border-pine/20 bg-mist"
-            />
-          </div>
-          <div>
-            <Label htmlFor="customer_email">{dict.quote.customerEmail} *</Label>
-            <Input
-              id="customer_email"
-              name="customer_email"
-              type="email"
-              required
-              placeholder="email@esempio.it"
-              className="mt-1.5 rounded-xl border-pine/20 bg-mist"
-            />
-          </div>
-        </div>
-
-        {/* Message */}
         <div>
-          <Label htmlFor="message">{dict.quote.message}</Label>
-          <Textarea
-            id="message"
-            name="message"
-            rows={4}
-            placeholder="Raccontaci di piu sul tuo pet e sul viaggio..."
-            className="mt-1.5 rounded-xl border-pine/20 bg-mist resize-none"
-          />
+          <Label htmlFor="contact_email" className="text-sm text-ink mb-1.5 block">{q.email} *</Label>
+          <Input id="contact_email" name="contact_email" type="email" required className="h-10"
+            onChange={(e) => setEmail(e.target.value)} />
         </div>
+        <div>
+          <Label htmlFor="contact_phone" className="text-sm text-ink mb-1.5 block">{q.phone}</Label>
+          <Input id="contact_phone" name="contact_phone" type="tel" className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="origin_city" className="text-sm text-ink mb-1.5 block">{q.originCity} *</Label>
+          <Input id="origin_city" name="origin_city" required className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="dest_country" className="text-sm text-ink mb-1.5 block">{q.destCountry} *</Label>
+          <Input id="dest_country" name="dest_country" required className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="dest_city" className="text-sm text-ink mb-1.5 block">{q.destCity} *</Label>
+          <Input id="dest_city" name="dest_city" required className="h-10" />
+        </div>
+        <div className="sm:col-span-2">
+          <Label htmlFor="description" className="text-sm text-ink mb-1.5 block">{q.description} *</Label>
+          <Input id="description" name="description" required className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="pieces" className="text-sm text-ink mb-1.5 block">{q.pieces}</Label>
+          <Input id="pieces" name="pieces" type="number" min="1" className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="weight_kg" className="text-sm text-ink mb-1.5 block">{q.weight}</Label>
+          <Input id="weight_kg" name="weight_kg" type="number" min="0" step="0.01" className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="dimensions" className="text-sm text-ink mb-1.5 block">{q.dimensions}</Label>
+          <Input id="dimensions" name="dimensions" className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="declared_value" className="text-sm text-ink mb-1.5 block">{q.declaredValue}</Label>
+          <Input id="declared_value" name="declared_value" type="number" min="0" step="0.01" className="h-10" />
+        </div>
+        <div>
+          <Label htmlFor="currency" className="text-sm text-ink mb-1.5 block">{q.currency}</Label>
+          <Input id="currency" name="currency" defaultValue="BRL" className="h-10" />
+        </div>
+        <div className="sm:col-span-2">
+          <Label htmlFor="notes" className="text-sm text-ink mb-1.5 block">{q.notes}</Label>
+          <Textarea id="notes" name="notes" rows={4} className="resize-none" />
+        </div>
+      </div>
 
-        {error && (
-          <p className="text-sm text-[#C0563E]">{error}</p>
-        )}
+      {status === "error" && (
+        <p className="text-sm text-destructive">{q.error}</p>
+      )}
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="w-full h-12 rounded-xl bg-pine text-paper hover:bg-pine-deep font-medium text-base"
-        >
-          {loading ? "..." : dict.quote.submit}
-        </Button>
-      </form>
-    </div>
+      <Button type="submit" disabled={status === "sending"}
+        className="bg-marine text-white hover:bg-marine/90 h-10 px-6">
+        {status === "sending" ? dict.micro.saving : q.submit}
+      </Button>
+    </form>
   );
 }

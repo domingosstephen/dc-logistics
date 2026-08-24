@@ -1,125 +1,44 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { cn } from "@/lib/utils";
 
 interface ScrollRevealProps {
   children: React.ReactNode;
   className?: string;
-  direction?: "up" | "left" | "right" | "none";
-  delay?: number;
-  duration?: number;
-  stagger?: number;
-  once?: boolean;
 }
 
-export function ScrollReveal({
-  children,
-  className,
-  direction = "up",
-  delay = 0,
-  duration = 0.8,
-  once = true,
-}: ScrollRevealProps) {
+/**
+ * Simple fade-in on section entry using IntersectionObserver.
+ * No GSAP, no parallax — just opacity.
+ * Respects prefers-reduced-motion.
+ */
+export function ScrollReveal({ children, className }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion || !ref.current) return;
-
-    const fromVars: gsap.TweenVars = {
-      opacity: 0,
-      ...(direction === "up" && { y: 40 }),
-      ...(direction === "left" && { x: -40 }),
-      ...(direction === "right" && { x: 40 }),
-    };
-
-    const toVars: gsap.TweenVars = {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      duration,
-      delay,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ref.current,
-        start: "top 85%",
-        once,
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.style.opacity = "1";
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.transition = "opacity 0.5s ease";
+          el.style.opacity = "1";
+          observer.disconnect();
+        }
       },
-    };
-
-    gsap.fromTo(ref.current, fromVars, toVars);
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === ref.current) t.kill();
-      });
-    };
-  }, [direction, delay, duration, once]);
-
-  return (
-    <div ref={ref} className={className} style={{ opacity: 0 }}>
-      {children}
-    </div>
-  );
-}
-
-interface StaggerRevealProps {
-  children: React.ReactNode;
-  className?: string;
-  childSelector?: string;
-  stagger?: number;
-  duration?: number;
-}
-
-export function StaggerReveal({
-  children,
-  className,
-  childSelector = ":scope > *",
-  stagger = 0.1,
-  duration = 0.6,
-}: StaggerRevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion || !ref.current) return;
-
-    const items = ref.current.querySelectorAll(childSelector);
-
-    gsap.fromTo(
-      items,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration,
-        stagger,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top 85%",
-          once: true,
-        },
-      }
+      { threshold: 0.1 }
     );
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === ref.current) t.kill();
-      });
-    };
-  }, [childSelector, stagger, duration]);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} style={{ opacity: 0 }} className={cn(className)}>
       {children}
     </div>
   );

@@ -4,18 +4,35 @@ import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createBrowserClient } from "@/lib/supabase/client";
-import { StatusBadge } from "@/components/ui/status-badge";
+import { ManifestRail } from "@/components/tracking/manifest-rail";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import type { Shipment, ShipmentEvent, ShipmentStatus } from "@/types/database";
+import {
+  RAIL_STAGES,
+  EXCEPTION_STATUSES,
+  type Shipment,
+  type ShipmentEvent,
+  type ShipmentStatus,
+  type RailStatus,
+} from "@/types/database";
 
-const allStatuses: ShipmentStatus[] = [
-  "registered", "documentation", "awaiting_departure", "in_transit",
-  "border_crossing", "arrival_hub", "out_for_delivery", "delivered",
-  "on_hold", "delayed",
-];
+const ALL_STATUSES: ShipmentStatus[] = [...RAIL_STAGES, ...EXCEPTION_STATUSES];
+
+const STATUS_LABELS: Record<ShipmentStatus, string> = {
+  registered: "Registrado",
+  received: "Recebido no armazém",
+  processing: "Em processamento",
+  export_clearance: "Desembaraço de exportação",
+  in_transit: "Em trânsito internacional",
+  import_clearance: "Desembaraço no destino",
+  out_for_delivery: "Saiu para entrega",
+  delivered: "Entregue",
+  on_hold: "Retido",
+  returned: "Devolvido",
+  cancelled: "Cancelado",
+};
 
 export default function ShipmentDetailPage({
   params,
@@ -28,16 +45,15 @@ export default function ShipmentDetailPage({
   const [events, setEvents] = useState<ShipmentEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // New event form
+  // Add-event form state
   const [newStatus, setNewStatus] = useState<ShipmentStatus>("in_transit");
   const [newLocation, setNewLocation] = useState("");
+  const [newDatetime, setNewDatetime] = useState(() =>
+    new Date().toISOString().slice(0, 16)
+  );
   const [newNote, setNewNote] = useState("");
   const [posting, setPosting] = useState(false);
-
-  // Photo upload
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
-  const [deleting, setDeleting] = useState(false);
+  const [addSuccess, setAddSuccess] = useState(false);
 
   const supabase = createBrowserClient();
 
@@ -45,30 +61,38 @@ export default function ShipmentDetailPage({
     fetchData();
   }, [id]);
 
-  const fetchData = async () => {
+  async function fetchData() {
     const [{ data: s }, { data: e }] = await Promise.all([
       supabase.from("shipments").select("*").eq("id", id).single(),
-      supabase.from("shipment_events").select("*").eq("shipment_id", id).order("happened_at", { ascending: true }),
+      supabase
+        .from("shipment_events")
+        .select("*")
+        .eq("shipment_id", id)
+        .order("happened_at", { ascending: true }),
     ]);
-    setShipment(s);
-    setEvents(e || []);
+    setShipment(s as Shipment | null);
+    setEvents((e ?? []) as ShipmentEvent[]);
     setLoading(false);
-  };
+  }
 
-  const handleAddEvent = async (e: React.FormEvent) => {
+  async function handleAddEvent(e: React.FormEvent) {
     e.preventDefault();
     setPosting(true);
+    setAddSuccess(false);
 
-    // Insert event
+    const happened_at = newDatetime
+      ? new Date(newDatetime).toISOString()
+      : new Date().toISOString();
+
     await supabase.from("shipment_events").insert({
       shipment_id: id,
       status: newStatus,
       location: newLocation || null,
       note: newNote || null,
-      happened_at: new Date().toISOString(),
+      happened_at,
     });
 
-    // Update shipment status
+    // Update shipment's current status to the new event's status
     await supabase
       .from("shipments")
       .update({ status: newStatus, updated_at: new Date().toISOString() })
@@ -76,252 +100,275 @@ export default function ShipmentDetailPage({
 
     setNewLocation("");
     setNewNote("");
+    setNewDatetime(new Date().toISOString().slice(0, 16));
     setPosting(false);
+    setAddSuccess(true);
     fetchData();
-  };
+  }
 
-  const handleDelete = async () => {
+  async function handleDeleteEvent(eventId: string) {
+    if (!window.confirm("Apagar este registro? O cliente pode já ter visto esta etapa.")) return;
+    await supabase.from("shipment_events").delete().eq("id", eventId);
+    fetchData();
+  }
+
+  async function handleDeleteShipment() {
     if (!shipment) return;
-    if (!window.confirm(`Delete shipment for ${shipment.pet_name} (${shipment.tracking_code})? This cannot be undone.`)) return;
-    setDeleting(true);
-
-    if (shipment.pet_photo_path) {
-      await supabase.storage.from("pet-photos").remove([shipment.pet_photo_path]);
-    }
-
+    if (!window.confirm(`Apagar envio ${shipment.tracking_code}? Esta ação não pode ser desfeita.`)) return;
     await supabase.from("shipments").delete().eq("id", shipment.id);
     router.push("/admin");
-  };
-
-  const handlePhotoUpload = async () => {
-    if (!photoFile || !shipment) return;
-    setUploading(true);
-    const ext = photoFile.name.split(".").pop();
-    const path = `${shipment.id}/photo.${ext}`;
-
-    await supabase.storage.from("pet-photos").upload(path, photoFile, { upsert: true });
-    await supabase.from("shipments").update({ pet_photo_path: path }).eq("id", shipment.id);
-
-    setPhotoFile(null);
-    setUploading(false);
-    fetchData();
-  };
+  }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-mist flex items-center justify-center">
-        <p className="text-ink/40">Loading...</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-steel">Carregando…</p>
       </div>
     );
   }
 
   if (!shipment) {
     return (
-      <div className="min-h-screen bg-mist flex items-center justify-center">
-        <p className="text-ink/40">Shipment not found</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-steel">Envio não encontrado.</p>
       </div>
     );
   }
 
+  const railLabels = Object.fromEntries(
+    RAIL_STAGES.map((s) => [s, STATUS_LABELS[s]])
+  ) as Record<RailStatus, string>;
+
+  const railTimestamps: Partial<Record<RailStatus, string>> = {};
+  for (const ev of events) {
+    if (RAIL_STAGES.includes(ev.status as RailStatus)) {
+      railTimestamps[ev.status as RailStatus] = new Date(ev.happened_at).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+      });
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-mist">
-      <header className="bg-pine-deep text-paper">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/admin" className="font-display text-xl font-semibold">WayTrasporto</Link>
-            <span className="text-xs bg-honey/20 text-honey px-2 py-0.5 rounded-full">Admin</span>
-          </div>
+    <div className="min-h-screen bg-background">
+      {/* Admin nav */}
+      <header className="bg-deep text-white border-b border-white/10">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-8 py-3 flex items-center gap-6">
+          <Link href="/admin" className="font-display text-lg font-semibold">
+            DC Logistics Brasil
+          </Link>
+          <span className="text-[11px] font-mono text-white/40 uppercase tracking-widest">Admin</span>
+          <nav className="flex items-center gap-4 text-sm ml-4">
+            <Link href="/admin" className="text-white/60 hover:text-white transition-colors">Envios</Link>
+          </nav>
         </div>
       </header>
 
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/admin" className="text-sm text-pine hover:text-pine-deep mb-4 inline-block">
-          ← Back to list
+      <div className="mx-auto max-w-[1440px] px-5 md:px-8 py-8">
+        <Link href="/admin" className="text-sm text-marine hover:underline mb-6 inline-block">
+          ← Envios
         </Link>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Shipment info */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-paper rounded-xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <h1 className="font-display text-2xl font-semibold text-ink">
-                  {shipment.pet_name}
-                </h1>
-                <StatusBadge status={shipment.status} />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
+          {/* Left — shipment detail */}
+          <div className="space-y-6">
+            {/* Manifest rail */}
+            <div className="bg-surface rounded-lg border border-border p-6">
+              <div className="flex flex-wrap items-baseline gap-4 mb-6">
+                <h1 className="font-mono text-lg text-deep">{shipment.tracking_code}</h1>
+                <span className="text-sm text-steel">
+                  {shipment.origin_city}, {shipment.origin_country} →{" "}
+                  {shipment.destination_city}, {shipment.destination_country}
+                </span>
               </div>
-
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-ink/40">Code</p>
-                  <p className="font-mono text-pine font-medium">{shipment.tracking_code}</p>
-                </div>
-                <div>
-                  <p className="text-ink/40">Species / Breed</p>
-                  <p>{shipment.pet_species} {shipment.pet_breed && `- ${shipment.pet_breed}`}</p>
-                </div>
-                <div>
-                  <p className="text-ink/40">Route</p>
-                  <p>{shipment.origin_city}, {shipment.origin_country} → {shipment.destination_city}, {shipment.destination_country}</p>
-                </div>
-                <div>
-                  <p className="text-ink/40">Departure</p>
-                  <p>{shipment.departure_date ? new Date(shipment.departure_date).toLocaleDateString("en-GB") : "—"}{shipment.departure_time ? ` at ${shipment.departure_time}` : ""}</p>
-                </div>
-                <div>
-                  <p className="text-ink/40">Estimated Delivery</p>
-                  <p>{shipment.estimated_delivery ? new Date(shipment.estimated_delivery).toLocaleDateString("en-GB") : "—"}{shipment.arrival_time ? ` at ${shipment.arrival_time}` : ""}</p>
-                </div>
-                <div>
-                  <p className="text-ink/40">Sender</p>
-                  <p>{shipment.sender_name || "—"}</p>
-                  {shipment.sender_phone && <p className="text-xs text-ink/40 mt-0.5">{shipment.sender_phone}</p>}
-                  {shipment.sender_email && <p className="text-xs text-ink/40">{shipment.sender_email}</p>}
-                  {shipment.sender_address && <p className="text-xs text-ink/40">{shipment.sender_address}</p>}
-                </div>
-                <div>
-                  <p className="text-ink/40">Receiver</p>
-                  <p>{shipment.receiver_name || "—"}</p>
-                  {shipment.receiver_phone && <p className="text-xs text-ink/40 mt-0.5">{shipment.receiver_phone}</p>}
-                  {shipment.receiver_email && <p className="text-xs text-ink/40">{shipment.receiver_email}</p>}
-                  {shipment.receiver_address && <p className="text-xs text-ink/40">{shipment.receiver_address}</p>}
-                </div>
-              </div>
-
-              {/* Photo */}
-              <div className="mt-6 pt-4 border-t border-pine/5">
-                <p className="text-sm text-ink/40 mb-2">Pet Photo</p>
-                <div className="flex items-end gap-4">
-                  {shipment.pet_photo_path ? (
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/pet-photos/${shipment.pet_photo_path}`}
-                      alt={shipment.pet_name}
-                      className="w-24 h-24 rounded-xl object-cover"
-                    />
-                  ) : (
-                    <div className="w-24 h-24 rounded-xl bg-mist flex items-center justify-center text-ink/20 text-xs">
-                      No photo
-                    </div>
-                  )}
-                  <div className="flex-1">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
-                      className="rounded-lg border-pine/20 bg-mist text-xs"
-                    />
-                    {photoFile && (
-                      <Button
-                        onClick={handlePhotoUpload}
-                        disabled={uploading}
-                        size="sm"
-                        className="mt-2 bg-pine text-paper hover:bg-pine-deep rounded-lg text-xs"
-                      >
-                        {uploading ? "Uploading..." : "Upload Photo"}
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <ManifestRail
+                status={shipment.status}
+                labels={railLabels}
+                timestamps={railTimestamps}
+                variant="full"
+              />
             </div>
 
-            {/* Event timeline */}
-            <div className="bg-paper rounded-xl p-6">
-              <h2 className="font-display text-lg font-semibold text-ink mb-4">
-                Event Timeline
-              </h2>
-
-              <div className="space-y-4">
-                {events.map((event) => (
-                  <div key={event.id} className="flex gap-3 text-sm">
-                    <div className="w-3 h-3 rounded-full bg-pine mt-1 shrink-0" />
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <StatusBadge status={event.status} />
-                        {event.location && (
-                          <span className="text-xs text-ink/40">{event.location}</span>
-                        )}
-                        <span className="text-xs text-ink/30">
-                          {new Date(event.happened_at).toLocaleDateString("en-GB", {
-                            day: "numeric",
-                            month: "short",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
-                      </div>
-                      {event.note && (
-                        <p className="text-ink/60 mt-1">{event.note}</p>
-                      )}
-                    </div>
+            {/* Shipment facts */}
+            <div className="bg-surface rounded-lg border border-border p-6">
+              <h2 className="font-semibold text-ink mb-4">Dados do envio</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4 text-sm">
+                {[
+                  ["Descrição", shipment.description],
+                  ["Volumes", String(shipment.pieces)],
+                  ["Peso (kg)", shipment.weight_kg?.toString() ?? "—"],
+                  ["Dimensões", shipment.dimensions ?? "—"],
+                  ["Valor declarado", shipment.declared_value ? `${shipment.currency} ${shipment.declared_value}` : "—"],
+                  ["Ref. transportadora", shipment.carrier_ref ?? "—"],
+                  ["Cliente", shipment.client_name ?? "—"],
+                  ["E-mail cliente", shipment.client_email ?? "—"],
+                ].map(([label, value]) => (
+                  <div key={label}>
+                    <p className="text-[11px] font-mono tracking-widest text-steel uppercase mb-0.5">{label}</p>
+                    <p className="text-ink">{value}</p>
                   </div>
                 ))}
               </div>
             </div>
+
+            {/* Recipient — shown to staff only */}
+            <div className="bg-surface rounded-lg border border-border p-6">
+              <h2 className="font-semibold text-ink mb-4">Destinatário</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+                {[
+                  ["Nome", shipment.recipient_name ?? "—"],
+                  ["Telefone", shipment.recipient_phone ?? "—"],
+                  ["Endereço", shipment.recipient_address ?? "—"],
+                ].map(([label, value]) => (
+                  <div key={label}>
+                    <p className="text-[11px] font-mono tracking-widest text-steel uppercase mb-0.5">{label}</p>
+                    <p className="text-ink">{value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Event history with edit/delete */}
+            <div className="bg-surface rounded-lg border border-border overflow-hidden">
+              <div className="px-6 py-4 border-b border-border flex items-center justify-between">
+                <h2 className="font-semibold text-ink">Histórico</h2>
+                <p className="text-xs text-steel">
+                  Editar ou apagar um registro muda o que o cliente já viu. Toda alteração fica registrada com autor e data.
+                </p>
+              </div>
+              {events.length === 0 ? (
+                <p className="px-6 py-8 text-sm text-steel">Nenhuma atualização ainda.</p>
+              ) : (
+                <div className="divide-y divide-border">
+                  {[...events].reverse().map((ev) => (
+                    <div key={ev.id} className="px-6 py-4 flex items-start gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="text-sm font-medium text-ink">{STATUS_LABELS[ev.status]}</span>
+                          {ev.location && <span className="text-sm text-steel">{ev.location}</span>}
+                          <time className="font-mono text-xs text-steel">
+                            {new Date(ev.happened_at).toLocaleString("pt-BR", {
+                              day: "2-digit", month: "2-digit", year: "2-digit",
+                              hour: "2-digit", minute: "2-digit",
+                            })}
+                          </time>
+                          {ev.updated_at && (
+                            <span className="text-[10px] font-mono text-steel/60">
+                              editado {new Date(ev.updated_at).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit" })}
+                            </span>
+                          )}
+                        </div>
+                        {ev.note && <p className="text-sm text-steel mt-1">{ev.note}</p>}
+                      </div>
+                      <button
+                        onClick={() => handleDeleteEvent(ev.id)}
+                        className="text-xs text-steel hover:text-destructive transition-colors shrink-0 mt-0.5"
+                        aria-label="Apagar registro"
+                      >
+                        Apagar
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Links */}
+            <div className="flex gap-4 text-sm">
+              <a href={`/admin/shipments/${id}/slip`} target="_blank" className="text-marine hover:underline">
+                Etiqueta interna →
+              </a>
+              <button
+                onClick={handleDeleteShipment}
+                className="text-destructive hover:underline ml-auto"
+              >
+                Apagar envio
+              </button>
+            </div>
           </div>
 
-          {/* Add event sidebar */}
+          {/* Right — Add update (the primary daily action) */}
           <div>
-            <div className="bg-paper rounded-xl p-6 sticky top-24">
-              {shipment.status === "delivered" && (
-                <div className="mb-6 pb-6 border-b border-pine/10">
-                  <Button
-                    onClick={handleDelete}
-                    disabled={deleting}
-                    className="w-full bg-red-600 text-white hover:bg-red-700 rounded-lg"
-                  >
-                    {deleting ? "Deleting..." : "Delete Shipment"}
-                  </Button>
-                  <p className="text-xs text-ink/40 mt-2 text-center">
-                    Only available for delivered shipments
-                  </p>
+            <div className="bg-surface rounded-lg border border-border p-6 sticky top-6">
+              <h2 className="font-display text-xl font-semibold text-deep mb-6">
+                Adicionar atualização
+              </h2>
+
+              {addSuccess && (
+                <div className="mb-4 rounded-md bg-muted px-4 py-3 text-sm text-ink">
+                  Atualização adicionada. O cliente foi notificado.
                 </div>
               )}
 
-              <h2 className="font-display text-lg font-semibold text-ink mb-4">
-                Add Update
-              </h2>
-
               <form onSubmit={handleAddEvent} className="space-y-4">
                 <div>
-                  <Label htmlFor="event_status">Status</Label>
+                  <Label htmlFor="event_status" className="text-sm text-ink mb-1.5 block">
+                    Etapa *
+                  </Label>
                   <select
                     id="event_status"
                     value={newStatus}
                     onChange={(e) => setNewStatus(e.target.value as ShipmentStatus)}
-                    className="mt-1.5 h-10 w-full rounded-lg border border-pine/20 bg-mist px-3 text-sm"
+                    className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                    required
                   >
-                    {allStatuses.map((s) => (
-                      <option key={s} value={s}>{s.replace(/_/g, " ")}</option>
+                    {ALL_STATUSES.map((s) => (
+                      <option key={s} value={s}>
+                        {STATUS_LABELS[s]}
+                      </option>
                     ))}
                   </select>
                 </div>
+
                 <div>
-                  <Label htmlFor="event_location">Location</Label>
+                  <Label htmlFor="event_location" className="text-sm text-ink mb-1.5 block">
+                    Local
+                  </Label>
                   <Input
                     id="event_location"
                     value={newLocation}
                     onChange={(e) => setNewLocation(e.target.value)}
-                    placeholder="e.g. Milan, IT"
-                    className="mt-1.5 rounded-lg border-pine/20 bg-mist"
+                    placeholder="ex: GRU, SP"
+                    className="h-10"
                   />
                 </div>
+
                 <div>
-                  <Label htmlFor="event_note">Note (public-facing)</Label>
+                  <Label htmlFor="event_datetime" className="text-sm text-ink mb-1.5 block">
+                    Data e hora *
+                  </Label>
+                  <Input
+                    id="event_datetime"
+                    type="datetime-local"
+                    value={newDatetime}
+                    onChange={(e) => setNewDatetime(e.target.value)}
+                    className="h-10"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="event_note" className="text-sm text-ink mb-1.5 block">
+                    Observação (opcional)
+                  </Label>
                   <Textarea
                     id="event_note"
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
-                    placeholder="Note visible to the customer..."
                     rows={3}
-                    className="mt-1.5 rounded-lg border-pine/20 bg-mist resize-none"
+                    className="resize-none"
                   />
+                  <p className="mt-1 text-xs text-steel">
+                    Fica visível para o cliente. Não escreva nada aqui que o cliente não deva ler.
+                  </p>
                 </div>
+
                 <Button
                   type="submit"
                   disabled={posting}
-                  className="w-full bg-pine text-paper hover:bg-pine-deep rounded-lg"
+                  className="w-full bg-marine text-white hover:bg-marine/90 h-10"
                 >
-                  {posting ? "Publishing..." : "Publish Update"}
+                  {posting ? "Salvando…" : "Adicionar atualização"}
                 </Button>
               </form>
             </div>
