@@ -36,10 +36,10 @@ export function Footer({ lang, dict }: FooterProps) {
             <address className="not-italic text-sm text-white/50 leading-relaxed space-y-1">
               <p>
                 <a
-                  href="mailto:contato@dclogisticsbrasil.com.br"
+                  href="mailto:info@dclogisticsbrasil.com.br"
                   className="hover:text-white transition-colors"
                 >
-                  contato@dclogisticsbrasil.com.br
+                  info@dclogisticsbrasil.com.br
                 </a>
               </p>
               <p>

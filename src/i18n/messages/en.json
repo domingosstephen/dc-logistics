@@ -124,7 +124,7 @@
     "notes": "Notes",
     "submit": "Send request",
     "success": "We\u2019ve received your request. We\u2019ll reply to {email} within 2 business days.",
-    "error": "We couldn\u2019t send that. Try again or email contato@dclogisticsbrasil.com.br.",
+    "error": "We couldn\u2019t send that. Try again or email info@dclogisticsbrasil.com.br.",
     "note": "A quote is not a booking. Prohibited and restricted items are listed under Prohibited items."
   },
   "about": {
@@ -139,7 +139,7 @@
     "formMessage": "Message",
     "submit": "Send message",
     "success": "Message sent. We\u2019ll reply to {email} within 2 business days.",
-    "error": "We couldn\u2019t send that. Email us directly at contato@dclogisticsbrasil.com.br.",
+    "error": "We couldn\u2019t send that. Email us directly at info@dclogisticsbrasil.com.br.",
     "trackingNote": "To check a shipment, use tracking \u2014 it\u2019s faster than waiting for a reply."
   },
   "faq": {
@@ -149,7 +149,7 @@
     "q2": "How often is the status updated?",
     "a2": "At every stage change. Updates are made manually by the team, so they appear when the stage actually happens \u2014 not at fixed times.",
     "q3": "The status hasn\u2019t changed in days. What should I do?",
-    "a3": "Clearance stages can stall for a few days \u2014 this is normal. If the shipment is on hold, a notice with the reason appears in the last record. If there is no notice and you want to confirm, email contato@dclogisticsbrasil.com.br with the tracking number.",
+    "a3": "Clearance stages can stall for a few days \u2014 this is normal. If the shipment is on hold, a notice with the reason appears in the last record. If there is no notice and you want to confirm, email info@dclogisticsbrasil.com.br with the tracking number.",
     "q4": "Can my customer abroad check the status?",
     "a4": "Yes. The tracking page is public and only requires the number. Recipient details and declared values are not shown on it.",
     "q5": "How do I create an account?",
@@ -168,7 +168,7 @@
     "signInButton": "Sign in",
     "forgotLink": "Forgot your password?",
     "signInError": "Incorrect email or password.",
-    "signInNote": "Accounts are created by our team. Email contato@dclogisticsbrasil.com.br if you don\u2019t have access yet.",
+    "signInNote": "Accounts are created by our team. Email info@dclogisticsbrasil.com.br if you don\u2019t have access yet.",
     "forgotH1": "Reset your password",
     "forgotBody": "Enter your email and we\u2019ll send a link to set a new password.",
     "forgotButton": "Send link",
@@ -293,7 +293,7 @@
     "invalidTracking": "The format is DCBR-0000-000000.",
     "error403": "You don\u2019t have access to this page.",
     "error404": "Page not found. Go to the homepage or track a shipment.",
-    "error500": "Something failed on our side. Try again in a few minutes or email contato@dclogisticsbrasil.com.br.",
+    "error500": "Something failed on our side. Try again in a few minutes or email info@dclogisticsbrasil.com.br.",
     "sessionExpired": "Your session has expired. Sign in again."
   }
 }

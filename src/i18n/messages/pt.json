@@ -124,7 +124,7 @@
     "notes": "Observações",
     "submit": "Enviar solicitação",
     "success": "Recebemos sua solicitação. Retornamos para {email} em até 2 dias úteis.",
-    "error": "Não foi possível enviar. Tente de novo ou escreva para contato@dclogisticsbrasil.com.br.",
+    "error": "Não foi possível enviar. Tente de novo ou escreva para info@dclogisticsbrasil.com.br.",
     "note": "Cotação não é reserva de espaço. Itens proibidos e restritos estão listados em Itens proibidos."
   },
   "about": {
@@ -139,7 +139,7 @@
     "formMessage": "Mensagem",
     "submit": "Enviar mensagem",
     "success": "Mensagem enviada. Respondemos para {email} em até 2 dias úteis.",
-    "error": "Não foi possível enviar. Escreva diretamente para contato@dclogisticsbrasil.com.br.",
+    "error": "Não foi possível enviar. Escreva diretamente para info@dclogisticsbrasil.com.br.",
     "trackingNote": "Para consultar um envio, use o rastreamento — é mais rápido que esperar resposta."
   },
   "faq": {
@@ -149,7 +149,7 @@
     "q2": "Com que frequência o status é atualizado?",
     "a2": "A cada mudança de etapa. As atualizações são feitas manualmente pela equipe, então elas aparecem quando a etapa realmente acontece — não em horários fixos.",
     "q3": "O status não muda há dias. O que fazer?",
-    "a3": "Etapas de desembaraço podem ficar paradas por alguns dias — isso é normal. Se o envio estiver retido, aparece um aviso com o motivo no último registro. Se não houver aviso e você quiser confirmar, escreva para contato@dclogisticsbrasil.com.br com o número de rastreio.",
+    "a3": "Etapas de desembaraço podem ficar paradas por alguns dias — isso é normal. Se o envio estiver retido, aparece um aviso com o motivo no último registro. Se não houver aviso e você quiser confirmar, escreva para info@dclogisticsbrasil.com.br com o número de rastreio.",
     "q4": "Meu cliente no exterior pode acompanhar?",
     "a4": "Sim. A página de rastreamento é pública e só pede o número. Detalhes do destinatário e valores não aparecem nela.",
     "q5": "Como crio uma conta?",
@@ -168,7 +168,7 @@
     "signInButton": "Entrar",
     "forgotLink": "Esqueci minha senha",
     "signInError": "E-mail ou senha incorretos.",
-    "signInNote": "As contas são criadas pela nossa equipe. Escreva para contato@dclogisticsbrasil.com.br se você ainda não tem acesso.",
+    "signInNote": "As contas são criadas pela nossa equipe. Escreva para info@dclogisticsbrasil.com.br se você ainda não tem acesso.",
     "forgotH1": "Redefinir senha",
     "forgotBody": "Informe seu e-mail e enviamos um link para criar uma nova senha.",
     "forgotButton": "Enviar link",
@@ -293,7 +293,7 @@
     "invalidTracking": "O número tem o formato DCBR-0000-000000.",
     "error403": "Você não tem acesso a esta página.",
     "error404": "Página não encontrada. Volte para a página inicial ou rastreie um envio.",
-    "error500": "Algo falhou do nosso lado. Tente de novo em alguns minutos ou escreva para contato@dclogisticsbrasil.com.br.",
+    "error500": "Algo falhou do nosso lado. Tente de novo em alguns minutos ou escreva para info@dclogisticsbrasil.com.br.",
     "sessionExpired": "Sua sessão expirou. Entre novamente."
   }
 }

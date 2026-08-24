@@ -21,10 +21,10 @@ export default async function ContactPage({ params }: Props) {
             <div>
               <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-1">E-mail</p>
               <a
-                href="mailto:contato@dclogisticsbrasil.com.br"
+                href="mailto:info@dclogisticsbrasil.com.br"
                 className="text-marine hover:underline"
               >
-                contato@dclogisticsbrasil.com.br
+                info@dclogisticsbrasil.com.br
               </a>
             </div>
             <div>
