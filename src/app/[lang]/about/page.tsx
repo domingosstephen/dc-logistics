@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { getDictionary, hasLocale } from "../dictionaries";
 import type { Locale } from "../dictionaries";
 
@@ -10,7 +11,6 @@ export default async function AboutPage({ params }: Props) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   await getDictionary(lang as Locale);
-
   const isPt = lang === "pt";
 
   return (
@@ -18,10 +18,10 @@ export default async function AboutPage({ params }: Props) {
       <h1 className="font-display text-4xl font-semibold text-deep mb-4">
         {isPt ? "Sobre a DC Logistics Brasil" : "About DC Logistics Brasil"}
       </h1>
-      <p className="text-steel text-lg mb-12 max-w-xl">
+      <p className="text-steel text-lg mb-16 max-w-xl leading-relaxed">
         {isPt
-          ? "Soluções de carga internacional com foco em transparência e rastreabilidade."
-          : "International freight solutions focused on transparency and traceability."}
+          ? "Soluções de carga internacional com rastreamento em tempo real e atendimento consultivo do início ao fim."
+          : "International freight solutions with real-time tracking and consultative support from start to finish."}
       </p>
 
       <div className="space-y-12">
@@ -31,19 +31,13 @@ export default async function AboutPage({ params }: Props) {
           </h2>
           <p className="text-ink leading-relaxed">
             {isPt
-              ? "A DC Logistics Brasil é uma empresa especializada em transporte internacional de cargas. Atuamos com importação e exportação entre o Brasil e os principais mercados globais, oferecendo rastreamento em tempo real e atendimento consultivo em cada etapa do processo."
-              : "DC Logistics Brasil is a company specialising in international freight transport. We handle imports and exports between Brazil and major global markets, offering real-time tracking and consultative support at every stage of the process."}
+              ? "A DC Logistics Brasil é uma empresa especializada em transporte internacional de cargas, sediada em São Paulo. Atuamos na importação e exportação entre o Brasil e os principais mercados da América do Norte, Europa, Ásia e América Latina, combinando modal aéreo e marítimo conforme a necessidade de cada operação."
+              : "DC Logistics Brasil is a company specialising in international freight transport, headquartered in São Paulo. We handle imports and exports between Brazil and the main markets in North America, Europe, Asia, and Latin America, combining air and sea freight according to each operation's requirements."}
           </p>
-        </section>
-
-        <section>
-          <h2 className="font-display text-2xl font-semibold text-deep mb-4">
-            {isPt ? "Nossa missão" : "Our mission"}
-          </h2>
-          <p className="text-ink leading-relaxed">
+          <p className="text-ink leading-relaxed mt-4">
             {isPt
-              ? "Tornar o comércio internacional acessível a empresas de todos os tamanhos, com processos claros, custos previsíveis e total visibilidade sobre a carga."
-              : "Make international trade accessible to businesses of all sizes, with clear processes, predictable costs, and full visibility over the cargo."}
+              ? "Cada envio recebe um número de rastreio exclusivo no formato DCBR, e todo o histórico de etapas — incluindo eventuais retenções e motivos — fica visível no portal de rastreamento. Nosso objetivo é eliminar o silêncio que costuma acompanhar o transporte internacional."
+              : "Every shipment receives a unique tracking number in the DCBR format, and the full stage history — including any holds and their reasons — is visible in the tracking portal. Our goal is to eliminate the silence that typically accompanies international freight."}
           </p>
         </section>
 
@@ -51,34 +45,45 @@ export default async function AboutPage({ params }: Props) {
           <h2 className="font-display text-2xl font-semibold text-deep mb-4">
             {isPt ? "O que nos diferencia" : "What sets us apart"}
           </h2>
-          <ul className="space-y-4">
+          <div className="border-t-2 border-t-deep">
             {(isPt
               ? [
-                  ["Rastreamento em tempo real", "Cada evento da sua carga é registrado e visível imediatamente no portal de rastreio."],
-                  ["Documentação simplificada", "Nossa equipe cuida de toda a burocracia alfandegária para que você foque no seu negócio."],
-                  ["Atendimento consultivo", "Não apenas transportamos — orientamos sobre a melhor rota, modalidade e documentação para cada operação."],
+                  ["Transparência em tempo real", "Status atualizado manualmente pela equipe a cada mudança de etapa. Quando algo trava, o motivo é registrado — não fica \"em processamento\" por semanas sem explicação."],
+                  ["Desembaraço sem surpresas", "Nossa equipe cuida da documentação alfandegária completa, da classificação fiscal (NCM) ao canal de parametrização. Você sabe o que esperar antes do embarque."],
+                  ["Acesso direto ao histórico", "Você e seu cliente consultam o rastreamento sem precisar entrar em contato. Toda a sequência de etapas, com data, hora e local, está disponível 24h."],
+                  ["Atendimento consultivo", "Não apenas transportamos. Orientamos sobre a melhor rota, modalidade e documentação para cada operação antes de qualquer compromisso."],
                 ]
               : [
-                  ["Real-time tracking", "Every event on your cargo is recorded and immediately visible on the tracking portal."],
-                  ["Simplified documentation", "Our team handles all customs paperwork so you can focus on your business."],
-                  ["Consultative service", "We don't just transport — we advise on the best route, mode, and documentation for each operation."],
+                  ["Real-time transparency", "Status updated manually by the team at every stage change. When something stalls, the reason is recorded — no weeks of 'processing' without an explanation."],
+                  ["No customs surprises", "Our team handles all customs documentation, from tariff classification to parametrisation channel. You know what to expect before dispatch."],
+                  ["Direct access to history", "You and your customer check the tracking without needing to contact anyone. The full stage sequence, with date, time, and location, is available 24 h."],
+                  ["Consultative support", "We don't just transport. We advise on the best route, mode, and documentation for each operation before any commitment."],
                 ]
-            ).map(([title, body]) => (
-              <li key={title} className="border-l-2 border-marine pl-4">
-                <p className="font-medium text-deep">{title}</p>
-                <p className="text-sm text-steel mt-1">{body}</p>
-              </li>
+            ).map(([title, body], i) => (
+              <div key={i} className="py-6 border-b border-border flex gap-8">
+                <span className="font-mono text-[11px] text-steel shrink-0 pt-0.5">0{i + 1}</span>
+                <div>
+                  <p className="font-medium text-deep mb-1">{title}</p>
+                  <p className="text-sm text-steel leading-relaxed">{body}</p>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
 
-        {/* Placeholder for client-supplied information */}
-        <section className="bg-surface rounded-lg border border-border p-6">
-          <p className="text-sm text-steel italic">
-            {isPt
-              ? "[Informações adicionais sobre a empresa, equipe, certificações e parceiros serão adicionadas pelo cliente.]"
-              : "[Additional information about the company, team, certifications, and partners will be added by the client.]"}
-          </p>
+        <section className="flex flex-col sm:flex-row gap-4 pt-2">
+          <Link
+            href={`/${lang}/quote`}
+            className="inline-flex h-10 items-center justify-center rounded-md bg-marine px-6 text-sm font-medium text-white hover:bg-marine/90 transition-colors"
+          >
+            {isPt ? "Solicitar cotação" : "Request a quote"}
+          </Link>
+          <Link
+            href={`/${lang}/contact`}
+            className="inline-flex h-10 items-center justify-center rounded-md border border-border px-6 text-sm font-medium text-steel hover:text-ink hover:border-steel transition-colors"
+          >
+            {isPt ? "Falar com a equipe" : "Talk to the team"}
+          </Link>
         </section>
       </div>
     </div>

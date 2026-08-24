@@ -23,10 +23,8 @@ export function Footer({ lang, dict }: FooterProps) {
               DC Logistics Brasil
             </p>
             <address className="not-italic text-sm text-white/50 leading-relaxed space-y-0.5">
-              <p>[RAZÃO SOCIAL COMPLETA]</p>
-              <p>CNPJ [00.000.000/0000-00]</p>
-              <p>[ENDEREÇO COMPLETO]</p>
-              <p>[CIDADE, ESTADO, CEP]</p>
+              <p>DC Logistics Brasil Ltda.</p>
+              <p>São Paulo, SP — Brasil</p>
             </address>
           </div>
 
@@ -35,10 +33,26 @@ export function Footer({ lang, dict }: FooterProps) {
             <p className="font-mono text-[11px] tracking-widest text-white/40 uppercase mb-3">
               {dict.footer.contactCol}
             </p>
-            <address className="not-italic text-sm text-white/50 leading-relaxed space-y-0.5">
-              <p>[EMAIL]</p>
-              <p>[TELEFONE]</p>
-              <p>[HORÁRIO DE ATENDIMENTO]</p>
+            <address className="not-italic text-sm text-white/50 leading-relaxed space-y-1">
+              <p>
+                <a
+                  href="mailto:contato@dclogisticsbrasil.com.br"
+                  className="hover:text-white transition-colors"
+                >
+                  contato@dclogisticsbrasil.com.br
+                </a>
+              </p>
+              <p>
+                <a
+                  href="https://wa.me/5511952701046"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  +55 (11) 9 5270-1046
+                </a>
+              </p>
+              <p>Seg–Sex, 9h–18h (BRT)</p>
             </address>
           </div>
 
@@ -49,14 +63,14 @@ export function Footer({ lang, dict }: FooterProps) {
             </p>
             <ul className="space-y-2 text-sm">
               {[
-                { href: `/${lang}/services`,  label: links.services },
-                { href: `/${lang}/track`,     label: links.track },
-                { href: `/${lang}/quote`,     label: links.quote },
-                { href: `/${lang}/contact`,   label: links.contact },
-                { href: `/${lang}/faq`,       label: links.faq },
-                { href: `/${lang}/terms`,     label: links.terms },
-                { href: `/${lang}/privacy`,   label: links.privacy },
-                { href: `/${lang}/prohibited-items`, label: links.prohibited },
+                { href: `/${lang}/services`,          label: links.services },
+                { href: `/${lang}/track`,             label: links.track },
+                { href: `/${lang}/quote`,             label: links.quote },
+                { href: `/${lang}/contact`,           label: links.contact },
+                { href: `/${lang}/faq`,               label: links.faq },
+                { href: `/${lang}/terms`,             label: links.terms },
+                { href: `/${lang}/privacy`,           label: links.privacy },
+                { href: `/${lang}/prohibited-items`,  label: links.prohibited },
               ].map((link) => (
                 <li key={link.href}>
                   <Link

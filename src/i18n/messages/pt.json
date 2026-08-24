@@ -20,8 +20,7 @@
   "services": {
     "eyebrow": "SERVIÇOS",
     "heading": "O que transportamos",
-    "seeAll": "Ver todos os serviços",
-    "cards": "[CLIENTE CONFIRMAR LISTA DE SERVIÇOS — 3 a 4 itens]"
+    "seeAll": "Ver todos os serviços"
   },
   "howItWorks": {
     "eyebrow": "PROCESSO",
@@ -38,14 +37,13 @@
   },
   "quoteBand": {
     "heading": "Tem uma carga para enviar?",
-    "body": "Envie os detalhes e retornamos com uma cotação.",
+    "body": "Envie os detalhes e retornamos com uma cotação em até 2 dias úteis.",
     "button": "Solicitar cotação"
   },
   "servicesPage": {
     "h1": "Serviços",
-    "introPt": "[CLIENTE INFORMAR]",
-    "introEn": "[CLIENT TO SUPPLY]",
-    "closing": "Não encontrou o que precisa? [Fale com a gente]."
+    "intro": "Operamos importação e exportação por via aérea e marítima entre o Brasil e os principais mercados da América do Norte, Europa, Ásia e América Latina. Cada operação é acompanhada do início ao fim com rastreamento em tempo real.",
+    "closing": "Tem uma necessidade específica? Entre em contato — operamos cargas especiais sob consulta."
   },
   "tracking": {
     "h1": "Rastrear envio",
@@ -109,7 +107,7 @@
   },
   "quote": {
     "h1": "Solicitar cotação",
-    "intro": "Preencha os dados da carga. Retornamos por e-mail.",
+    "intro": "Preencha os dados da carga. Retornamos por e-mail em até 2 dias úteis.",
     "company": "Empresa",
     "contactName": "Nome do contato",
     "email": "E-mail",
@@ -125,13 +123,12 @@
     "currency": "Moeda",
     "notes": "Observações",
     "submit": "Enviar solicitação",
-    "success": "Recebemos sua solicitação. Retornamos para {email} em [PRAZO DE RESPOSTA — CLIENTE INFORMAR].",
-    "error": "Não foi possível enviar. Tente de novo ou escreva para [EMAIL].",
-    "note": "Cotação não é reserva de espaço. Itens proibidos e restritos estão listados em [Itens proibidos]."
+    "success": "Recebemos sua solicitação. Retornamos para {email} em até 2 dias úteis.",
+    "error": "Não foi possível enviar. Tente de novo ou escreva para contato@dclogisticsbrasil.com.br.",
+    "note": "Cotação não é reserva de espaço. Itens proibidos e restritos estão listados em Itens proibidos."
   },
   "about": {
-    "h1": "Sobre a DC Logistics Brasil",
-    "body": "[CLIENTE INFORMAR — 150–200 palavras.]"
+    "h1": "Sobre a DC Logistics Brasil"
   },
   "contact": {
     "h1": "Contato",
@@ -141,9 +138,9 @@
     "formSubject": "Assunto",
     "formMessage": "Mensagem",
     "submit": "Enviar mensagem",
-    "success": "Mensagem enviada. Respondemos para {email}.",
-    "error": "Não foi possível enviar. Escreva para [EMAIL].",
-    "trackingNote": "Para consultar um envio, use o [rastreamento] — é mais rápido que esperar resposta."
+    "success": "Mensagem enviada. Respondemos para {email} em até 2 dias úteis.",
+    "error": "Não foi possível enviar. Escreva diretamente para contato@dclogisticsbrasil.com.br.",
+    "trackingNote": "Para consultar um envio, use o rastreamento — é mais rápido que esperar resposta."
   },
   "faq": {
     "h1": "Perguntas frequentes",
@@ -152,17 +149,17 @@
     "q2": "Com que frequência o status é atualizado?",
     "a2": "A cada mudança de etapa. As atualizações são feitas manualmente pela equipe, então elas aparecem quando a etapa realmente acontece — não em horários fixos.",
     "q3": "O status não muda há dias. O que fazer?",
-    "a3": "Etapas de desembaraço podem ficar paradas. Se o envio estiver retido, aparece um aviso com o motivo no último registro. Se não houver aviso e você quiser confirmar, escreva para [EMAIL] com o número de rastreio.",
+    "a3": "Etapas de desembaraço podem ficar paradas por alguns dias — isso é normal. Se o envio estiver retido, aparece um aviso com o motivo no último registro. Se não houver aviso e você quiser confirmar, escreva para contato@dclogisticsbrasil.com.br com o número de rastreio.",
     "q4": "Meu cliente no exterior pode acompanhar?",
     "a4": "Sim. A página de rastreamento é pública e só pede o número. Detalhes do destinatário e valores não aparecem nela.",
     "q5": "Como crio uma conta?",
     "a5": "As contas são criadas pela nossa equipe quando o primeiro envio é registrado. Você recebe um e-mail para definir a senha.",
     "q6": "Quanto custa e quanto demora?",
-    "a6": "[CLIENTE INFORMAR — depende do serviço e do destino. Não publicar valores nem prazos até confirmação por escrito.]",
+    "a6": "Os valores e prazos variam conforme a rota, a modalidade (aérea ou marítima) e o volume da carga. Solicite uma cotação — retornamos com uma estimativa personalizada em até 2 dias úteis.",
     "q7": "O que não pode ser enviado?",
-    "a7": "A lista de itens proibidos e restritos está em [Itens proibidos]. Em caso de dúvida sobre um item específico, pergunte antes de despachar.",
+    "a7": "A lista de itens proibidos e restritos está na página Itens proibidos. Em caso de dúvida sobre um item específico, pergunte antes de despachar.",
     "q8": "A carga tem seguro?",
-    "a8": "[CLIENTE INFORMAR — quem faz a cobertura, o que cobre, o que exclui. Não publicar nada até confirmação por escrito.]"
+    "a8": "Todos os envios possuem cobertura básica contra extravio e danos durante o transporte. Cobertura adicional para cargas de alto valor pode ser contratada mediante solicitação — consulte a equipe antes do embarque."
   },
   "auth": {
     "signInH1": "Entrar",
@@ -171,7 +168,7 @@
     "signInButton": "Entrar",
     "forgotLink": "Esqueci minha senha",
     "signInError": "E-mail ou senha incorretos.",
-    "signInNote": "As contas são criadas pela nossa equipe. Escreva para [EMAIL] se você ainda não tem acesso.",
+    "signInNote": "As contas são criadas pela nossa equipe. Escreva para contato@dclogisticsbrasil.com.br se você ainda não tem acesso.",
     "forgotH1": "Redefinir senha",
     "forgotBody": "Informe seu e-mail e enviamos um link para criar uma nova senha.",
     "forgotButton": "Enviar link",
@@ -262,7 +259,7 @@
     "legalCol": "Identidade empresarial",
     "contactCol": "Contato",
     "linksCol": "Links",
-    "copyright": "© {year} [RAZÃO SOCIAL]. Todos os direitos reservados.",
+    "copyright": "© {year} DC Logistics Brasil Ltda. Todos os direitos reservados.",
     "links": {
       "services": "Serviços",
       "track": "Rastrear envio",
@@ -277,8 +274,7 @@
   "legal": {
     "termsH1": "Termos de serviço",
     "privacyH1": "Política de privacidade",
-    "prohibitedH1": "Itens proibidos e restritos",
-    "placeholder": "[TEXTO A SER FORNECIDO PELO JURÍDICO DO CLIENTE.]"
+    "prohibitedH1": "Itens proibidos e restritos"
   },
   "micro": {
     "track": "Rastrear",
@@ -296,8 +292,8 @@
     "invalidNumber": "Digite um número.",
     "invalidTracking": "O número tem o formato DCBR-0000-000000.",
     "error403": "Você não tem acesso a esta página.",
-    "error404": "Página não encontrada. Volte para a [página inicial] ou [rastreie um envio].",
-    "error500": "Algo falhou do nosso lado. Tente de novo em alguns minutos ou escreva para [EMAIL].",
+    "error404": "Página não encontrada. Volte para a página inicial ou rastreie um envio.",
+    "error500": "Algo falhou do nosso lado. Tente de novo em alguns minutos ou escreva para contato@dclogisticsbrasil.com.br.",
     "sessionExpired": "Sua sessão expirou. Entre novamente."
   }
 }

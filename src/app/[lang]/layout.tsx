@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ServiceAlertBanner } from "@/components/layout/service-alert-banner";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getDictionary, hasLocale, locales } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 
@@ -27,6 +28,7 @@ export default async function LangLayout({
       <Header lang={lang as Locale} dict={dict} />
       <main className="flex-1">{children}</main>
       <Footer lang={lang as Locale} dict={dict} />
+      <WhatsAppButton />
     </>
   );
 }
