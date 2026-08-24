@@ -12,9 +12,11 @@ interface Props {
   dict: Dictionary;
   /** If true, shows the "paste up to 20" helper and parses multi-line input */
   multi?: boolean;
+  /** If true, renders with transparent bg for use on dark hero */
+  heroVariant?: boolean;
 }
 
-export function TrackingSearch({ lang, dict, multi = false }: Props) {
+export function TrackingSearch({ lang, dict, multi = false, heroVariant = false }: Props) {
   const [value, setValue] = useState("");
   const router = useRouter();
 
@@ -41,7 +43,7 @@ export function TrackingSearch({ lang, dict, multi = false }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface rounded-lg border border-border p-6 md:p-8 shadow-sm"
+      className={heroVariant ? "" : "bg-surface rounded-lg border border-border p-6 md:p-8 shadow-sm"}
     >
       <div className="flex flex-col sm:flex-row gap-3">
         {multi ? (

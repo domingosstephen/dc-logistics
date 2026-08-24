@@ -117,6 +117,19 @@
    3.5 / 2.5 / 1.75 / 1.25 / 1.0625 / 0.875 / 0.75
    ----------------------------------------------- */
 
+/* -----------------------------------------------
+   Interaction utilities
+   ----------------------------------------------- */
+@layer utilities {
+  .card-lift {
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px -4px rgba(16, 57, 91, 0.12);
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
