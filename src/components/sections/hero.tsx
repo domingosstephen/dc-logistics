@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { TrackingSearch } from "@/components/tracking/tracking-search";
 import { RouteMap } from "@/components/sections/route-map";
@@ -14,8 +15,21 @@ interface Props {
 export function HeroSection({ lang, dict }: Props) {
   return (
     <section className="relative bg-deep overflow-hidden">
+      {/* Background photo — mobile only */}
+      <Image
+        src="/hero-logistics.jpg"
+        alt=""
+        fill
+        className="object-cover object-center lg:hidden"
+        priority
+        aria-hidden="true"
+      />
+      {/* Dark overlay on photo so text stays legible — mobile only */}
+      <div className="absolute inset-0 bg-deep/70 lg:hidden pointer-events-none" />
+
+      {/* Dot grid — desktop */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 hidden lg:block pointer-events-none"
         style={{
           backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
