@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getDictionary, hasLocale } from "../dictionaries";
 import type { Locale } from "../dictionaries";
 
@@ -14,6 +15,19 @@ export default async function AboutPage({ params }: Props) {
   const isPt = lang === "pt";
 
   return (
+    <div>
+      {/* Hero banner */}
+      <div className="relative w-full h-64 md:h-80 overflow-hidden">
+        <Image
+          src="/hero-logistics.jpg"
+          alt="DC Logistics Brasil — international freight"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        <div className="absolute inset-0 bg-deep/50" />
+      </div>
+
     <div className="mx-auto max-w-[800px] px-5 md:px-8 py-18 md:py-24">
       <h1 className="font-display text-4xl font-semibold text-deep mb-4">
         {isPt ? "Sobre a DC Logistics Brasil" : "About DC Logistics Brasil"}
@@ -84,6 +98,27 @@ export default async function AboutPage({ params }: Props) {
           >
             {isPt ? "Falar com a equipe" : "Talk to the team"}
           </Link>
+        </section>
+
+        {/* Certification */}
+        <section className="pt-12 border-t border-border">
+          <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-6">
+            {isPt ? "Certificações" : "Certifications"}
+          </p>
+          <div className="flex items-center gap-6">
+            <Image
+              src="/about-company.jpg"
+              alt="ISO 9001:2015 — TÜV Nord Brazil Certification"
+              width={220}
+              height={165}
+              className="rounded-md border border-border"
+            />
+            <p className="text-sm text-steel leading-relaxed">
+              {isPt
+                ? "A DC Logistics Brasil é certificada pela norma ISO 9001:2015, auditada pelo TÜV Nord Brazil, demonstrando compromisso com a qualidade e melhoria contínua dos nossos processos."
+                : "DC Logistics Brasil holds ISO 9001:2015 certification, audited by TÜV Nord Brazil, demonstrating our commitment to quality and continuous process improvement."}
+            </p>
+          </div>
         </section>
       </div>
     </div>

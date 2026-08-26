@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { locales, localeNames } from "@/i18n/config";
@@ -34,12 +35,16 @@ export function Header({ lang, dict, isAuthenticated = false }: HeaderProps) {
     <header className="sticky top-0 z-40 bg-surface border-b border-border">
       <div className="mx-auto max-w-[1200px] px-5 md:px-8">
         <div className="flex h-14 items-center justify-between gap-6">
-          {/* Wordmark */}
-          <Link
-            href={`/${lang}`}
-            className="font-display text-xl font-semibold text-deep shrink-0 tracking-tight"
-          >
-            DC Logistics Brasil
+          {/* Logo */}
+          <Link href={`/${lang}`} className="shrink-0">
+            <Image
+              src="/logo.png"
+              alt="DC Logistics Brasil"
+              width={140}
+              height={60}
+              className="h-9 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}
