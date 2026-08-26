@@ -35,7 +35,7 @@ const HOME_SERVICES_PT = [
   {
     title: "Carga Aérea",
     body: "Exportação e importação com transit time de 3 a 10 dias úteis. Cargas consolidadas ou exclusivas.",
-    image: "/service-air.jpg",
+    image: "/cargo-loading.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -64,6 +64,7 @@ const HOME_SERVICES_PT = [
   {
     title: "Door-to-Door",
     body: "Coleta, transporte internacional e entrega no endereço final — com rastreamento em cada etapa.",
+    image: "/service-road.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -77,7 +78,7 @@ const HOME_SERVICES_EN = [
   {
     title: "Air Freight",
     body: "Import and export with 3–10 business day transit times. Consolidated or exclusive loads.",
-    image: "/service-air.jpg",
+    image: "/cargo-loading.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -106,6 +107,7 @@ const HOME_SERVICES_EN = [
   {
     title: "Door-to-Door",
     body: "Collection, international transport, and delivery to the final address — tracked at every stage.",
+    image: "/service-road.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />

@@ -17,7 +17,7 @@ export function HeroSection({ lang, dict }: Props) {
     <section className="relative bg-deep overflow-hidden">
       {/* Background photo — mobile only */}
       <Image
-        src="/hero-logistics.jpg"
+        src="/cargo-loading.jpg"
         alt=""
         fill
         className="object-cover object-center lg:hidden"

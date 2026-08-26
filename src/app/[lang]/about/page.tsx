@@ -107,16 +107,55 @@ export default async function AboutPage({ params }: Props) {
           </p>
           <div className="flex items-center gap-6">
             <Image
-              src="/about-company.jpg"
-              alt="ISO 9001:2015 — TÜV Nord Brazil Certification"
-              width={220}
-              height={165}
-              className="rounded-md border border-border"
+              src="/iso-cert.webp"
+              alt="ISO 9001 — TÜV Nord Brasil"
+              width={140}
+              height={140}
+              className="rounded-md shrink-0"
             />
             <p className="text-sm text-steel leading-relaxed">
               {isPt
-                ? "A DC Logistics Brasil é certificada pela norma ISO 9001:2015, auditada pelo TÜV Nord Brazil, demonstrando compromisso com a qualidade e melhoria contínua dos nossos processos."
-                : "DC Logistics Brasil holds ISO 9001:2015 certification, audited by TÜV Nord Brazil, demonstrating our commitment to quality and continuous process improvement."}
+                ? "A DC Logistics Brasil é certificada pela norma ISO 9001:2015, auditada pelo TÜV Nord Brasil, demonstrando compromisso com a qualidade e melhoria contínua dos nossos processos."
+                : "DC Logistics Brasil holds ISO 9001:2015 certification, audited by TÜV Nord Brasil, demonstrating our commitment to quality and continuous process improvement."}
+            </p>
+          </div>
+        </section>
+
+        {/* Awards */}
+        <section className="pt-12 border-t border-border">
+          <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-6">
+            {isPt ? "Prêmios" : "Awards"}
+          </p>
+          <div className="flex flex-wrap items-center gap-6">
+            <Image src="/award-2019.jpg" alt="Prêmio Infraero de Eficiência Logística 2019" width={110} height={110} className="rounded-md" />
+            <Image src="/award-2018.jpg" alt="Prêmio Infraero de Eficiência Logística 2018" width={110} height={110} className="rounded-md" />
+            <Image src="/award-3.jpg"    alt="Prêmio Infraero de Eficiência Logística 2017" width={110} height={110} className="rounded-md" />
+            <p className="text-sm text-steel leading-relaxed max-w-xs">
+              {isPt
+                ? "Vencedora do Prêmio Infraero de Eficiência Logística em 2017, 2018 e 2019 — reconhecimento pelo desempenho operacional no transporte aéreo internacional."
+                : "Winner of the Infraero Logistics Excellence Award in 2017, 2018, and 2019 — recognition for operational performance in international air freight."}
+            </p>
+          </div>
+        </section>
+
+        {/* Sustainability */}
+        <section className="pt-12 border-t border-border">
+          <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-6">
+            {isPt ? "Sustentabilidade" : "Sustainability"}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="relative h-60 rounded-xl overflow-hidden">
+              <Image
+                src="/sustainability-1.jpg"
+                alt="DC Planting — programa de responsabilidade socioambiental"
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+            <p className="text-sm text-steel leading-relaxed">
+              {isPt
+                ? "O programa DC Planting reúne colaboradores e parceiros no plantio de árvores nativas como parte do nosso compromisso com a responsabilidade socioambiental. Acreditamos que eficiência logística e respeito ao meio ambiente caminham juntos."
+                : "The DC Planting programme brings together employees and partners to plant native trees as part of our commitment to environmental and social responsibility. We believe operational efficiency and respect for the environment go hand in hand."}
             </p>
           </div>
         </section>

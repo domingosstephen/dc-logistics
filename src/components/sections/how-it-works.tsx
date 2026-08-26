@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ManifestRail } from "@/components/tracking/manifest-rail";
 import { AnimateIn, StaggerChildren, StaggerItem } from "@/components/motion/animate-in";
 import { RAIL_STAGES, type RailStatus } from "@/types/database";
@@ -46,7 +47,20 @@ export function HowItWorksSection({ dict, lang }: Props) {
           <h2 className="font-display text-3xl font-semibold text-deep mb-4">
             {dict.howItWorks.heading}
           </h2>
-          <p className="text-steel max-w-xl mb-16">{dict.howItWorks.body}</p>
+          <p className="text-steel max-w-xl mb-10">{dict.howItWorks.body}</p>
+        </AnimateIn>
+
+        {/* Warehouse photo */}
+        <AnimateIn delay={0.1}>
+          <div className="relative w-full h-56 rounded-xl overflow-hidden mb-12">
+            <Image
+              src="/warehouse.jpg"
+              alt="DC Logistics Brasil — warehouse operations"
+              fill
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-deep/30 to-transparent" />
+          </div>
         </AnimateIn>
 
         {/* Step grid */}
