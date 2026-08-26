@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { getDictionary, hasLocale } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 import { HeroSection } from "@/components/sections/hero";
@@ -34,6 +35,7 @@ const HOME_SERVICES_PT = [
   {
     title: "Carga Aérea",
     body: "Exportação e importação com transit time de 3 a 10 dias úteis. Cargas consolidadas ou exclusivas.",
+    image: "/service-air.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -43,6 +45,7 @@ const HOME_SERVICES_PT = [
   {
     title: "Carga Marítima",
     body: "FCL e LCL para os principais portos da Europa, Ásia e Américas. Melhor custo-benefício para grandes volumes.",
+    image: "/service-sea.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1.5M6.75 7.5h10.5M5.25 9l1.5 7.5h10.5L18.75 9M3 19.5h18M6 17.25a6 6 0 0012 0" />
@@ -74,6 +77,7 @@ const HOME_SERVICES_EN = [
   {
     title: "Air Freight",
     body: "Import and export with 3–10 business day transit times. Consolidated or exclusive loads.",
+    image: "/service-air.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -83,6 +87,7 @@ const HOME_SERVICES_EN = [
   {
     title: "Sea Freight",
     body: "FCL and LCL to major ports in Europe, Asia, and the Americas. Best value for large volumes.",
+    image: "/service-sea.jpg",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1.5M6.75 7.5h10.5M5.25 9l1.5 7.5h10.5L18.75 9M3 19.5h18M6 17.25a6 6 0 0012 0" />
@@ -125,10 +130,22 @@ function WhatWeDoSection({ dict, lang }: { dict: Awaited<ReturnType<typeof getDi
       <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {services.map((s) => (
           <StaggerItem key={s.title}>
-            <div className="group bg-surface rounded-xl border border-border p-6 hover:border-marine/40 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
-              <div className="text-marine mb-4">{s.icon}</div>
-              <h3 className="font-display text-lg font-semibold text-deep mb-2">{s.title}</h3>
-              <p className="text-sm text-steel leading-relaxed">{s.body}</p>
+            <div className="group bg-surface rounded-xl border border-border overflow-hidden hover:border-marine/40 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
+              {"image" in s && s.image && (
+                <div className="relative h-44 overflow-hidden">
+                  <Image
+                    src={s.image as string}
+                    alt={s.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <div className="p-6">
+                <div className="text-marine mb-4">{s.icon}</div>
+                <h3 className="font-display text-lg font-semibold text-deep mb-2">{s.title}</h3>
+                <p className="text-sm text-steel leading-relaxed">{s.body}</p>
+              </div>
             </div>
           </StaggerItem>
         ))}
@@ -163,26 +180,41 @@ function WhyUsSection({ dict, lang }: { dict: Awaited<ReturnType<typeof getDicti
   return (
     <section className="bg-mist border-y border-border">
       <div className="mx-auto max-w-[1200px] px-5 md:px-8 py-24 md:py-32">
-        <AnimateIn>
-          <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-4">
-            {dict.whyUs.eyebrow}
-          </p>
-          <h2 className="font-display text-3xl font-semibold text-deep mb-10">
-            {dict.whyUs.heading}
-          </h2>
-        </AnimateIn>
-        <div className="border-t-2 border-t-deep">
-          {items.map((item, i) => (
-            <AnimateIn key={i} delay={i * 0.12}>
-              <div className="py-6 border-b border-border flex gap-6 items-start group hover:bg-white/60 hover:px-4 hover:rounded-lg transition-all duration-300 -mx-0 hover:-mx-4">
-                <span className="font-mono text-[11px] text-steel/60 shrink-0 pt-1">0{i + 1}</span>
-                <div className="flex gap-4 items-start">
-                  {WHY_US_ICONS[i]}
-                  <p className="text-ink leading-relaxed">{item}</p>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div>
+            <AnimateIn>
+              <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-4">
+                {dict.whyUs.eyebrow}
+              </p>
+              <h2 className="font-display text-3xl font-semibold text-deep mb-10">
+                {dict.whyUs.heading}
+              </h2>
             </AnimateIn>
-          ))}
+            <div className="border-t-2 border-t-deep">
+              {items.map((item, i) => (
+                <AnimateIn key={i} delay={i * 0.12}>
+                  <div className="py-6 border-b border-border flex gap-6 items-start group hover:bg-white/60 hover:px-4 hover:rounded-lg transition-all duration-300 -mx-0 hover:-mx-4">
+                    <span className="font-mono text-[11px] text-steel/60 shrink-0 pt-1">0{i + 1}</span>
+                    <div className="flex gap-4 items-start">
+                      {WHY_US_ICONS[i]}
+                      <p className="text-ink leading-relaxed">{item}</p>
+                    </div>
+                  </div>
+                </AnimateIn>
+              ))}
+            </div>
+          </div>
+          <AnimateIn delay={0.2} className="hidden lg:block">
+            <div className="relative h-[440px] rounded-2xl overflow-hidden shadow-xl">
+              <Image
+                src="/service-sea.jpg"
+                alt="Container ship — DC Logistics Brasil"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-deep/40 to-transparent" />
+            </div>
+          </AnimateIn>
         </div>
       </div>
     </section>

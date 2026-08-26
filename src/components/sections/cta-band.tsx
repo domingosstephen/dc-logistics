@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Locale, Dictionary } from "@/app/[lang]/dictionaries";
 import { AnimateIn } from "@/components/motion/animate-in";
 
@@ -9,20 +10,21 @@ interface Props {
 
 export function CtaBand({ lang, dict }: Props) {
   return (
-    <section
-      className="relative overflow-hidden bg-deep"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 70% 50%, rgba(46,124,168,0.25) 0%, transparent 60%), radial-gradient(circle at 10% 80%, rgba(232,179,60,0.08) 0%, transparent 50%)",
-      }}
-    >
-      {/* Subtle dot grid */}
+    <section className="relative overflow-hidden bg-deep">
+      {/* Background photo */}
+      <Image
+        src="/hero-logistics.jpg"
+        alt=""
+        fill
+        className="object-cover object-center opacity-25"
+        aria-hidden="true"
+      />
+      {/* Overlay gradients */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
+            "radial-gradient(circle at 70% 50%, rgba(46,124,168,0.5) 0%, transparent 60%), radial-gradient(circle at 10% 80%, rgba(232,179,60,0.15) 0%, transparent 50%)",
         }}
       />
       <div className="relative mx-auto max-w-[1200px] px-5 md:px-8 py-20 md:py-28 flex flex-col md:flex-row md:items-center md:justify-between gap-10">
