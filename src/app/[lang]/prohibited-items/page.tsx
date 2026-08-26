@@ -105,8 +105,8 @@ export default async function ProhibitedItemsPage({ params }: Props) {
       <div className="mt-12 pt-8 border-t border-border">
         <p className="text-sm text-steel">
           {isPt
-            ? "Dúvidas sobre um item específico? Escreva para info@dclogisticsbrasil.com.br antes de despachar."
-            : "Questions about a specific item? Email info@dclogisticsbrasil.com.br before dispatching."}
+            ? "Dúvidas sobre um item específico? Escreva para info@dclogisticsbrasil.br.com antes de despachar."
+            : "Questions about a specific item? Email info@dclogisticsbrasil.br.com before dispatching."}
         </p>
       </div>
     </main>

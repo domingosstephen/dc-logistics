@@ -25,8 +25,8 @@ export default async function PrivacyPage({ params }: Props) {
           </h2>
           <p className="text-steel leading-relaxed">
             {isPt
-              ? "A DC Logistics Brasil Ltda., inscrita no CNPJ sob o n.º 74.182.593/0001-90, com sede na Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brasil, é a controladora dos dados pessoais coletados por meio deste site e dos serviços de transporte internacional que presta. Para questões relativas à privacidade, escreva para info@dclogisticsbrasil.com.br."
-              : "DC Logistics Brasil Ltda., registered under CNPJ 74.182.593/0001-90, headquartered at Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brazil, is the controller of personal data collected through this website and the international freight services it provides. For privacy-related questions, email info@dclogisticsbrasil.com.br."}
+              ? "A DC Logistics Brasil Ltda., inscrita no CNPJ sob o n.º 74.182.593/0001-90, com sede na Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brasil, é a controladora dos dados pessoais coletados por meio deste site e dos serviços de transporte internacional que presta. Para questões relativas à privacidade, escreva para info@dclogisticsbrasil.br.com."
+              : "DC Logistics Brasil Ltda., registered under CNPJ 74.182.593/0001-90, headquartered at Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brazil, is the controller of personal data collected through this website and the international freight services it provides. For privacy-related questions, email info@dclogisticsbrasil.br.com."}
           </p>
         </section>
 
@@ -80,8 +80,8 @@ export default async function PrivacyPage({ params }: Props) {
           </h2>
           <p className="text-steel leading-relaxed">
             {isPt
-              ? "Nos termos da Lei Geral de Proteção de Dados (Lei n.º 13.709/2018), você tem direito a: confirmar a existência de tratamento; acessar seus dados; corrigir dados incompletos ou desatualizados; solicitar a anonimização, bloqueio ou eliminação de dados desnecessários; revogar o consentimento; e opor-se ao tratamento. Para exercer esses direitos, escreva para info@dclogisticsbrasil.com.br."
-              : "Under the Brazilian General Data Protection Law (Lei n. 13.709/2018 — LGPD), you have the right to: confirm the existence of processing; access your data; correct incomplete or outdated data; request anonymisation, blocking, or deletion of unnecessary data; revoke consent; and object to processing. To exercise these rights, email info@dclogisticsbrasil.com.br."}
+              ? "Nos termos da Lei Geral de Proteção de Dados (Lei n.º 13.709/2018), você tem direito a: confirmar a existência de tratamento; acessar seus dados; corrigir dados incompletos ou desatualizados; solicitar a anonimização, bloqueio ou eliminação de dados desnecessários; revogar o consentimento; e opor-se ao tratamento. Para exercer esses direitos, escreva para info@dclogisticsbrasil.br.com."
+              : "Under the Brazilian General Data Protection Law (Lei n. 13.709/2018 — LGPD), you have the right to: confirm the existence of processing; access your data; correct incomplete or outdated data; request anonymisation, blocking, or deletion of unnecessary data; revoke consent; and object to processing. To exercise these rights, email info@dclogisticsbrasil.br.com."}
           </p>
         </section>
 
