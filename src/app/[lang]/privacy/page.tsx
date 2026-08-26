@@ -25,8 +25,8 @@ export default async function PrivacyPage({ params }: Props) {
           </h2>
           <p className="text-steel leading-relaxed">
             {isPt
-              ? "A DC Logistics Brasil Ltda., sediada em São Paulo, SP, Brasil, é a controladora dos dados pessoais coletados por meio deste site e dos serviços de transporte internacional que presta. Para questões relativas à privacidade, escreva para info@dclogisticsbrasil.com.br."
-              : "DC Logistics Brasil Ltda., headquartered in São Paulo, SP, Brazil, is the controller of personal data collected through this website and the international freight services it provides. For privacy-related questions, email info@dclogisticsbrasil.com.br."}
+              ? "A DC Logistics Brasil Ltda., inscrita no CNPJ sob o n.º 74.182.593/0001-90, com sede na Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brasil, é a controladora dos dados pessoais coletados por meio deste site e dos serviços de transporte internacional que presta. Para questões relativas à privacidade, escreva para info@dclogisticsbrasil.com.br."
+              : "DC Logistics Brasil Ltda., registered under CNPJ 74.182.593/0001-90, headquartered at Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brazil, is the controller of personal data collected through this website and the international freight services it provides. For privacy-related questions, email info@dclogisticsbrasil.com.br."}
           </p>
         </section>
 

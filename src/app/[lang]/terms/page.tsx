@@ -20,6 +20,14 @@ export default async function TermsPage({ params }: Props) {
       <div className="space-y-10">
 
         <section>
+          <p className="text-sm text-steel leading-relaxed bg-surface border border-border rounded-md px-4 py-3">
+            {isPt
+              ? "Estes termos regulam a relação entre o cliente e a DC Logistics Brasil Ltda., inscrita no CNPJ sob o n.º 74.182.593/0001-90, com sede na Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brasil."
+              : "These terms govern the relationship between the client and DC Logistics Brasil Ltda., registered under CNPJ 74.182.593/0001-90, headquartered at Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010, Brazil."}
+          </p>
+        </section>
+
+        <section>
           <h2 className="font-display text-xl font-semibold text-deep mb-3">
             {isPt ? "1. Contratação e cotação" : "1. Quoting and contracting"}
           </h2>

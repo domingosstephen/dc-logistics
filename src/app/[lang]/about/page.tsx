@@ -31,8 +31,8 @@ export default async function AboutPage({ params }: Props) {
           </h2>
           <p className="text-ink leading-relaxed">
             {isPt
-              ? "A DC Logistics Brasil é uma empresa especializada em transporte internacional de cargas, sediada em São Paulo. Atuamos na importação e exportação entre o Brasil e os principais mercados da América do Norte, Europa, Ásia e América Latina, combinando modal aéreo e marítimo conforme a necessidade de cada operação."
-              : "DC Logistics Brasil is a company specialising in international freight transport, headquartered in São Paulo. We handle imports and exports between Brazil and the main markets in North America, Europe, Asia, and Latin America, combining air and sea freight according to each operation's requirements."}
+              ? "A DC Logistics Brasil é uma empresa especializada em transporte internacional de cargas, sediada na Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010 (CNPJ 74.182.593/0001-90). Atuamos na importação e exportação entre o Brasil e os principais mercados da América do Norte, Europa, Ásia e América Latina, combinando modal aéreo e marítimo conforme a necessidade de cada operação."
+              : "DC Logistics Brasil is a company specialising in international freight transport, headquartered at Rua Cincinato Braga, 340, Sala 162, Bela Vista, São Paulo, SP, CEP 01333-010 (CNPJ 74.182.593/0001-90). We handle imports and exports between Brazil and the main markets in North America, Europe, Asia, and Latin America, combining air and sea freight according to each operation's requirements."}
           </p>
           <p className="text-ink leading-relaxed mt-4">
             {isPt
