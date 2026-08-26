@@ -8,7 +8,15 @@ interface Props {
   params: Promise<{ lang: string }>;
 }
 
-const SERVICES_PT = [
+interface Service {
+  title: string;
+  body: string;
+  highlight: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+const SERVICES_PT: Service[] = [
   {
     title: "Carga Aérea Internacional",
     body: "Exportação e importação por via aérea com transporte consolidado (LCL) ou exclusivo. Transit time de 3 a 10 dias úteis dependendo do destino. Indicado para cargas urgentes, de alto valor ou que exijam controle rígido de temperatura.",
@@ -27,33 +35,25 @@ const SERVICES_PT = [
     title: "Desembaraço Aduaneiro",
     body: "Assessoria completa nos processos de importação e exportação: classificação fiscal (NCM), licenciamento, canal de parametrização e liberação alfandegária. Trabalhamos com DI, DU-E, LI, RE e demais documentos exigidos pela Receita Federal.",
     highlight: "Importação e exportação",
-    image: undefined,
-    imageAlt: undefined,
   },
   {
     title: "Door-to-Door",
     body: "Coleta no endereço do remetente, transporte internacional e entrega no endereço final do destinatário. Cada etapa é registrada com data, hora e local no nosso portal de rastreamento. Você e seu cliente acompanham em tempo real.",
     highlight: "Rastreamento completo",
-    image: undefined,
-    imageAlt: undefined,
   },
   {
     title: "Courier Internacional",
     body: "Envio de volumes menores com rapidez e rastreamento. Ideal para amostras comerciais, documentos, peças de reposição e mercadorias com prazo curto de entrega. Atendemos mais de 50 destinos.",
     highlight: "Mais de 50 destinos",
-    image: undefined,
-    imageAlt: undefined,
   },
   {
     title: "Cargas Especiais",
     body: "Tratamos cargas que exigem cuidado diferenciado: perecíveis com temperatura controlada, carga perigosa (DG/IMDG), obras de arte, equipamentos sensíveis e oversized. Consulte a equipe para orientação antes do embarque.",
     highlight: "Sob consulta",
-    image: undefined,
-    imageAlt: undefined,
   },
 ];
 
-const SERVICES_EN = [
+const SERVICES_EN: Service[] = [
   {
     title: "International Air Freight",
     body: "Import and export by air on consolidated (LCL) or exclusive basis. Transit time of 3 to 10 business days depending on destination. Recommended for urgent, high-value, or temperature-sensitive cargo.",
@@ -72,29 +72,21 @@ const SERVICES_EN = [
     title: "Customs Clearance",
     body: "Full advisory for import and export procedures: tariff classification, licensing, parametrisation channel, and customs release. We handle all required documentation including import/export declarations and licences.",
     highlight: "Import and export",
-    image: undefined,
-    imageAlt: undefined,
   },
   {
     title: "Door-to-Door",
     body: "Collection from the sender's address, international transport, and delivery to the final recipient. Every stage is logged with date, time, and location in our tracking portal. You and your customer follow in real time.",
     highlight: "Full tracking",
-    image: undefined,
-    imageAlt: undefined,
   },
   {
     title: "International Courier",
     body: "Faster delivery for smaller volumes with end-to-end tracking. Ideal for commercial samples, documents, spare parts, and goods with a short delivery deadline. We reach more than 50 destinations.",
     highlight: "50+ destinations",
-    image: undefined,
-    imageAlt: undefined,
   },
   {
     title: "Special Cargo",
     body: "We handle cargo requiring extra care: temperature-controlled perishables, hazardous goods (DG/IMDG), works of art, sensitive equipment, and oversized shipments. Consult the team for guidance before dispatch.",
     highlight: "On request",
-    image: undefined,
-    imageAlt: undefined,
   },
 ];
 
