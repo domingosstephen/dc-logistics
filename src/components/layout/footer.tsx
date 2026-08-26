@@ -24,7 +24,10 @@ export function Footer({ lang, dict }: FooterProps) {
             </p>
             <address className="not-italic text-sm text-white/50 leading-relaxed space-y-0.5">
               <p>DC Logistics Brasil Ltda.</p>
-              <p>São Paulo, SP — Brasil</p>
+              <p>Rua Cincinato Braga, 340, Sala 162</p>
+              <p>Bela Vista — São Paulo, SP</p>
+              <p>CEP 01333-010</p>
+              <p className="mt-1">CNPJ 74.182.593/0001-90</p>
             </address>
           </div>
 

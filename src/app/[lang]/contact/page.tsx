@@ -48,7 +48,13 @@ export default async function ContactPage({ params }: Props) {
               <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-1">
                 {isPt ? "Localização" : "Location"}
               </p>
-              <p>São Paulo, SP — Brasil</p>
+              <p>Rua Cincinato Braga, 340, Sala 162</p>
+              <p>Bela Vista — São Paulo, SP — Brasil</p>
+              <p>CEP 01333-010</p>
+            </div>
+            <div>
+              <p className="font-mono text-[11px] tracking-widest text-steel uppercase mb-1">CNPJ</p>
+              <p>74.182.593/0001-90</p>
             </div>
           </address>
 
