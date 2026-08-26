@@ -122,5 +122,6 @@ export default async function AboutPage({ params }: Props) {
         </section>
       </div>
     </div>
+    </div>
   );
 }
