@@ -57,6 +57,8 @@ export interface Shipment {
   client_name: string | null;
   client_email: string | null;
   carrier_ref: string | null;
+  shipping_date: string | null;
+  estimated_delivery_date: string | null;
   created_at: string;
   updated_at: string;
 }

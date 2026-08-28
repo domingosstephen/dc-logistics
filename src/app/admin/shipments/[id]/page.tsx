@@ -45,6 +45,12 @@ export default function ShipmentDetailPage({
   const [events, setEvents] = useState<ShipmentEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Date edit state
+  const [shippingDate, setShippingDate] = useState("");
+  const [estimatedDeliveryDate, setEstimatedDeliveryDate] = useState("");
+  const [savingDates, setSavingDates] = useState(false);
+  const [datesSuccess, setDatesSuccess] = useState(false);
+
   // Add-event form state
   const [newStatus, setNewStatus] = useState<ShipmentStatus>("in_transit");
   const [newLocation, setNewLocation] = useState("");
@@ -70,9 +76,31 @@ export default function ShipmentDetailPage({
         .eq("shipment_id", id)
         .order("happened_at", { ascending: true }),
     ]);
-    setShipment(s as Shipment | null);
+    const ship = s as Shipment | null;
+    setShipment(ship);
+    if (ship) {
+      setShippingDate(ship.shipping_date?.slice(0, 10) ?? "");
+      setEstimatedDeliveryDate(ship.estimated_delivery_date?.slice(0, 10) ?? "");
+    }
     setEvents((e ?? []) as ShipmentEvent[]);
     setLoading(false);
+  }
+
+  async function handleSaveDates(e: React.FormEvent) {
+    e.preventDefault();
+    setSavingDates(true);
+    setDatesSuccess(false);
+    await supabase
+      .from("shipments")
+      .update({
+        shipping_date: shippingDate || null,
+        estimated_delivery_date: estimatedDeliveryDate || null,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id);
+    setSavingDates(false);
+    setDatesSuccess(true);
+    fetchData();
   }
 
   async function handleAddEvent(e: React.FormEvent) {
@@ -200,6 +228,8 @@ export default function ShipmentDetailPage({
                   ["Dimensões", shipment.dimensions ?? "—"],
                   ["Valor declarado", shipment.declared_value ? `${shipment.currency} ${shipment.declared_value}` : "—"],
                   ["Ref. transportadora", shipment.carrier_ref ?? "—"],
+                  ["Data de envio", shipment.shipping_date ? new Date(shipment.shipping_date + "T12:00:00").toLocaleDateString("pt-BR") : "—"],
+                  ["Prazo estimado de entrega", shipment.estimated_delivery_date ? new Date(shipment.estimated_delivery_date + "T12:00:00").toLocaleDateString("pt-BR") : "—"],
                   ["Cliente", shipment.client_name ?? "—"],
                   ["E-mail cliente", shipment.client_email ?? "—"],
                 ].map(([label, value]) => (
@@ -369,6 +399,46 @@ export default function ShipmentDetailPage({
                   className="w-full bg-marine text-white hover:bg-marine/90 h-10"
                 >
                   {posting ? "Salvando…" : "Adicionar atualização"}
+                </Button>
+              </form>
+
+              {/* Edit dates */}
+              <form onSubmit={handleSaveDates} className="mt-6 pt-6 border-t border-border space-y-4">
+                <h3 className="font-semibold text-ink text-sm">Datas</h3>
+                {datesSuccess && (
+                  <p className="text-xs text-marine">Datas salvas.</p>
+                )}
+                <div>
+                  <Label htmlFor="shipping_date_edit" className="text-sm text-ink mb-1.5 block">
+                    Data de envio
+                  </Label>
+                  <Input
+                    id="shipping_date_edit"
+                    type="date"
+                    value={shippingDate}
+                    onChange={(e) => setShippingDate(e.target.value)}
+                    className="h-10"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="est_delivery_edit" className="text-sm text-ink mb-1.5 block">
+                    Prazo estimado de entrega
+                  </Label>
+                  <Input
+                    id="est_delivery_edit"
+                    type="date"
+                    value={estimatedDeliveryDate}
+                    onChange={(e) => setEstimatedDeliveryDate(e.target.value)}
+                    className="h-10"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={savingDates}
+                  variant="outline"
+                  className="w-full h-10"
+                >
+                  {savingDates ? "Salvando…" : "Salvar datas"}
                 </Button>
               </form>
             </div>

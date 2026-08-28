@@ -52,12 +52,14 @@ export default function NewShipmentPage() {
         client_name: (form.get("client_name") as string) || null,
         client_email: (form.get("client_email") as string) || null,
         carrier_ref: (form.get("carrier_ref") as string) || null,
+        shipping_date: (form.get("shipping_date") as string) || null,
+        estimated_delivery_date: (form.get("estimated_delivery_date") as string) || null,
       })
       .select()
       .single();
 
     if (insertError || !shipment) {
-      setError("Erro ao registrar envio. Tente novamente.");
+      setError(insertError?.message ?? "Erro ao registrar envio. Tente novamente.");
       setLoading(false);
       return;
     }
@@ -178,6 +180,21 @@ export default function NewShipmentPage() {
               <div>
                 <Label htmlFor="carrier_ref" className="text-sm text-ink mb-1.5 block">Ref. transportadora</Label>
                 <Input id="carrier_ref" name="carrier_ref" className="h-10" />
+              </div>
+            </div>
+          </fieldset>
+
+          {/* Datas */}
+          <fieldset className="bg-surface rounded-lg border border-border p-6 space-y-4">
+            <legend className="font-mono text-[11px] tracking-widest text-steel uppercase px-1">Datas</legend>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="shipping_date" className="text-sm text-ink mb-1.5 block">Data de envio</Label>
+                <Input id="shipping_date" name="shipping_date" type="date" className="h-10" />
+              </div>
+              <div>
+                <Label htmlFor="estimated_delivery_date" className="text-sm text-ink mb-1.5 block">Prazo estimado de entrega</Label>
+                <Input id="estimated_delivery_date" name="estimated_delivery_date" type="date" className="h-10" />
               </div>
             </div>
           </fieldset>
