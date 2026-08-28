@@ -69,6 +69,7 @@
     "exceptionBannerBody": "This shipment is stopped at this stage. The reason appears in the last record below.",
     "notFoundText": "We couldn\u2019t find that number. Check the digits \u2014 the format is DCBR-0000-000000. If it was just issued, it can take a few hours to appear here.",
     "privacyNote": "Recipient details and values are only visible to the client who owns the shipment, after signing in.",
+    "estimatedDelivery": "Estimated delivery: {date}",
     "rateLimited": "Too many lookups in a short time. Wait a minute and try again."
   },
   "status": {

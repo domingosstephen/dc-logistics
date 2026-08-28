@@ -50,7 +50,7 @@ export function TrackingResult({ shipment: initial, code, lang, dict }: Props) {
     return () => clearInterval(interval);
   }, [code]);
 
-  const { status, events, origin_city, origin_country, destination_city, destination_country, pieces, tracking_code } = shipment;
+  const { status, events, origin_city, origin_country, destination_city, destination_country, pieces, tracking_code, estimated_delivery_date } = shipment;
   const latestEvent = events[events.length - 1];
   const isException = isExceptionStatus(status);
   const locale = lang === "pt" ? "pt-BR" : "en-GB";
@@ -99,6 +99,18 @@ export function TrackingResult({ shipment: initial, code, lang, dict }: Props) {
     }
   }
 
+  // Estimated delivery date — only shown when not yet delivered
+  const estimatedDeliveryText = estimated_delivery_date && status !== "delivered"
+    ? dict.tracking.estimatedDelivery.replace(
+        "{date}",
+        new Date(estimated_delivery_date + "T12:00:00").toLocaleDateString(locale, {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
+      )
+    : null;
+
   return (
     <div className="space-y-6">
       {/* Exception banner */}
@@ -133,6 +145,12 @@ export function TrackingResult({ shipment: initial, code, lang, dict }: Props) {
               : dict.tracking.statusLeadBodyDelivered
                   .replace("{event}", dict.status[latestEvent.status as keyof typeof dict.status])
                   .replace("{date}", eventDate)}
+          </p>
+        )}
+        {estimatedDeliveryText && (
+          <p className="inline-flex items-center gap-2 mt-4 text-sm font-medium text-ink bg-border/40 rounded-md px-3 py-1.5">
+            <span aria-hidden="true">📦</span>
+            {estimatedDeliveryText}
           </p>
         )}
       </div>

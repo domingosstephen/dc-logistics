@@ -69,6 +69,7 @@
     "exceptionBannerBody": "Este envio está parado nesta etapa. O motivo aparece no último registro abaixo.",
     "notFoundText": "Não encontramos esse número. Confira se digitou corretamente — o número tem o formato DCBR-0000-000000. Se ele acabou de ser emitido, pode levar algumas horas até aparecer aqui.",
     "privacyNote": "Detalhes do destinatário e valores só aparecem para o cliente responsável pelo envio, após entrar na conta.",
+    "estimatedDelivery": "Previsão de entrega: {date}",
     "rateLimited": "Muitas consultas em pouco tempo. Aguarde um minuto e tente de novo."
   },
   "status": {

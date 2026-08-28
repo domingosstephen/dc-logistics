@@ -86,6 +86,7 @@ export interface PublicShipment {
   destination_city: string;
   destination_country: string;
   pieces: number;
+  estimated_delivery_date: string | null;
   events: PublicShipmentEvent[];
 }
 
